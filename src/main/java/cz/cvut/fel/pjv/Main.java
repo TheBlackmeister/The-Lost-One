@@ -15,5 +15,8 @@ public class Main {
 
         window.setLocationRelativeTo(null); // bude otevreno uprostred obrazovky
         window.setVisible(true);
+
+
+        gamePanel.startGameThread();
     }
 }
