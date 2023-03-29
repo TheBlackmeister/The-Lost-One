@@ -8,7 +8,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // aby slo zavrit
         window.setResizable(false); // nemenna velikost
         window.setTitle("Tank Adventure"); // nazev okna
-
+        System.out.println("Helou");
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
         window.pack();
