@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.Controller;
 import cz.cvut.fel.pjv.entity.Player;
+import cz.cvut.fel.pjv.tile.TileManager;
 
 import java.awt.*;
 import javax.swing.*;
@@ -20,7 +21,24 @@ public class GamePanel extends JPanel implements Runnable{
         return tileSize;
     }
 
+    public int getMaxScreenCol() {
+        return maxScreenCol;
+    }
+
+    public int getMaxScreenRow() {
+        return maxScreenRow;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
     int FPS = 60;
+    TileManager tileM = new TileManager(this);
     KeyHandler keyHand = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this,keyHand);
@@ -76,6 +94,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        tileM.draw(g2); // vykresleni tiles
 
         player.draw(g2); // vykresleni playera
 
