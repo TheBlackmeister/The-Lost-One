@@ -72,18 +72,67 @@ public class Player extends Entity{
         else if(!keyHand.isDownPressed() && direction.equals("down")){
             direction = "downIdle";
         }
+        spriteCounter++;
+        if(spriteCounter > 10) {
+            if(spriteNum == 1)  {
+                spriteNum = 2;
+            }
+            else if(spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
     }
     public void draw(Graphics2D g2){
-        BufferedImage image = switch (direction) {
-            case "up" -> up1;
-            case "down" -> down1;
-            case "right" -> right1;
-            case "left" -> left1;
-            case "upIdle" -> upIdle;
-            case "downIdle" -> downIdle;
-            case "leftIdle" -> left2;
-            case "rightIdle" -> right2;
-            default -> down1;
+        BufferedImage image = null;
+         switch (direction) {
+            case "up":
+                if(spriteNum == 1){
+                    image = up1;
+                }
+                if(spriteNum == 2){
+                    image  = up2;
+                }
+                break;
+             case "down":
+                 if(spriteNum == 1){
+                     image = down1;
+                 }
+                 if(spriteNum == 2){
+                     image  = down2;
+                 }
+                 break;
+             case "right":
+                 if(spriteNum == 1){
+                     image = right1;
+                 }
+                 if(spriteNum == 2){
+                     image  = right2;
+                 }
+                 break;
+             case "left":
+                 if(spriteNum == 1){
+                     image = left1;
+                 }
+                 if(spriteNum == 2){
+                     image  = left2;
+                 }
+                 break;
+             case "upIdle":
+                 image = upIdle;
+                 break;
+             case "downIdle":
+                 image = downIdle;
+                 break;
+             case "leftIdle":
+                 image = left2;
+                 break;
+             case "rightIdle":
+                 image = right2;
+                 break;
+             default:
+                 image = down1;
+                 break;
         };
         g2.drawImage(image, posX, posY, gp.getTileSize(), gp.getTileSize(), null);
         //        g2.setColor(Color.white);

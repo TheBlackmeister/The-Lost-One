@@ -8,6 +8,15 @@ public class Entity {
 
     protected String direction;
     protected int speed;
+
+    protected int spriteCounter = 0;
+    protected int spriteNum = 1;
+
+    // promenne
+
+
+
+
     public int getPosX() {
         return posX;
     }
