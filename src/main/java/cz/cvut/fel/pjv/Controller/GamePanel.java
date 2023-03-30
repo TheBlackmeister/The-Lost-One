@@ -17,6 +17,12 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tileSize * maxScreenCol; // 1536
     final int screenHeight = tileSize * maxScreenRow; // 864
 
+
+    //camera adjust
+    final int maxWorldCol = 100;
+    final int maxWorldRow = 100;
+    final int worldWidth = tileSize * maxWorldCol;
+    final int worldHeigth = tileSize * maxWorldRow;
     public int getTileSize() {
         return tileSize;
     }
@@ -37,11 +43,31 @@ public class GamePanel extends JPanel implements Runnable{
         return screenHeight;
     }
 
+    public int getMaxWorldCol() {
+        return maxWorldCol;
+    }
+
+    public int getMaxWorldRow() {
+        return maxWorldRow;
+    }
+
+    public int getWorldWidth() {
+        return worldWidth;
+    }
+
+    public int getWorldHeigth() {
+        return worldHeigth;
+    }
+
     int FPS = 60;
     TileManager tileM = new TileManager(this);
     KeyHandler keyHand = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this,keyHand);
+
+    public Player getPlayer() {
+        return player;
+    }
 
     // defaultni pozice hrace
 

@@ -11,16 +11,20 @@ import java.io.IOException;
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyHand;
+    public final int screenX;
+    public final int screenY;
 
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
         this.keyHand = keyHand;
         setDefaultValues(); // inicializace
         getPlayerImage(); // images postavy
+        screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
+        screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
     }
-    public void setDefaultValues(){
-        posX = 100;
-        posY = 100;
+    public void setDefaultValues(){ //spawnpoint
+        posX = gp.getTileSize() * 5;
+        posY = gp.getTileSize() * 5;
         speed = 4;
         direction = "down";
     }
@@ -133,8 +137,8 @@ public class Player extends Entity{
              default:
                  image = down1;
                  break;
-        };
-        g2.drawImage(image, posX, posY, gp.getTileSize(), gp.getTileSize(), null);
+        }
+        g2.drawImage(image, screenX, screenY, gp.getTileSize(), gp.getTileSize(), null);
         //        g2.setColor(Color.white);
 //
 //        g2.fillRect(posX,posY,gp.getTileSize(),gp.getTileSize());
