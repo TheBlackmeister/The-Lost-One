@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d86685cb-956a-4f2f-9191-37c4d8247c65" name="Changes" comment="pridani idle obrazku">
+    <list default="true" id="d86685cb-956a-4f2f-9191-37c4d8247c65" name="Changes" comment="test - změna barvy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +108,7 @@
       <workItem from="1680087100250" duration="1024000" />
       <workItem from="1680105915900" duration="25209000" />
       <workItem from="1680197072191" duration="326000" />
-      <workItem from="1680197596448" duration="518000" />
+      <workItem from="1680197596448" duration="1098000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1680024508895</created>
@@ -223,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680194722143</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="test - změna barvy">
+      <created>1680198289172</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1680198289173</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +279,8 @@
     <MESSAGE value="Přidání ptřídy entity, hráče" />
     <MESSAGE value="Přidání spritu hrace, implementace spridu misto ctverce" />
     <MESSAGE value="pridani idle obrazku" />
-    <option name="LAST_COMMIT_MESSAGE" value="pridani idle obrazku" />
+    <MESSAGE value="test - změna barvy" />
+    <option name="LAST_COMMIT_MESSAGE" value="test - změna barvy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -282,6 +289,11 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/GamePanel.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
