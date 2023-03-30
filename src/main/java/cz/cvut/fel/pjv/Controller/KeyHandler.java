@@ -5,6 +5,23 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     protected boolean upPressed, downPressed, leftPressed, rightPressed;
+    protected boolean upReleased, downReleased, leftReleased, rightReleased;
+
+    public boolean isUpReleased() {
+        return upReleased;
+    }
+
+    public boolean isDownReleased() {
+        return downReleased;
+    }
+
+    public boolean isLeftReleased() {
+        return leftReleased;
+    }
+
+    public boolean isRightReleased() {
+        return rightReleased;
+    }
 
     public boolean isUpPressed() {
         return upPressed;
@@ -27,6 +44,10 @@ public class KeyHandler implements KeyListener {
         this.downPressed = false;
         this.leftPressed = false;
         this.rightPressed = false;
+//        this.upReleased = false;
+//        this.downReleased = false;
+//        this.leftReleased = false;
+//        this.rightReleased = false;
     }
 
 
