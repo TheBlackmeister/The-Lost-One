@@ -1,10 +1,26 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.Controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     protected boolean upPressed, downPressed, leftPressed, rightPressed;
+
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    public boolean isDownPressed() {
+        return downPressed;
+    }
+
+    public boolean isLeftPressed() {
+        return leftPressed;
+    }
+
+    public boolean isRightPressed() {
+        return rightPressed;
+    }
 
     public KeyHandler() {
         this.upPressed = false;

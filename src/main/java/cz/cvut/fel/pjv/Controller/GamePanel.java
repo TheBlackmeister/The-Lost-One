@@ -1,4 +1,6 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.Controller;
+import cz.cvut.fel.pjv.entity.Player;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -14,16 +16,18 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tileSize * maxScreenCol; // 1536
     final int screenHeight = tileSize * maxScreenRow; // 864
 
+    public int getTileSize() {
+        return tileSize;
+    }
 
     int FPS = 60;
     KeyHandler keyHand = new KeyHandler();
     Thread gameThread;
+    Player player = new Player(this,keyHand);
 
     // defaultni pozice hrace
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
 
+    // konec promennych
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -31,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHand);
         this.setFocusable(true);
-    }
+    } // konstruktor
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -67,26 +71,13 @@ public class GamePanel extends JPanel implements Runnable{
         }
     } // HLAVNI SEKCE
     public void update() {
-        if(keyHand.upPressed) {
-            playerY -= playerSpeed;
-        }
-        else if(keyHand.downPressed) {
-            playerY += playerSpeed;
-        }
-        else if(keyHand.rightPressed) {
-            playerX += playerSpeed;
-        }
-        else if(keyHand.leftPressed) {
-            playerX -= playerSpeed;
-        } // zaznamenani WASD
+        player.update(); // update playera
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX,playerY,tileSize,tileSize);
+        player.draw(g2); // vykresleni playera
 
         g2.dispose();
     }
