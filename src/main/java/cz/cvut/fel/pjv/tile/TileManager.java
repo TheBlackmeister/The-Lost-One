@@ -46,6 +46,7 @@ public class TileManager {
 
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/ocean.png")));
+            tile[3].collision = true;
 
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/dungeon_wall.png"))); //http://www.alabsoft.com/images/retropixelator/dungeon-wall-texture_16x16.png
