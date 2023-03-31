@@ -28,8 +28,8 @@ public class Player extends Entity{
         screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
     }
     public void setDefaultValues(){ //spawnpoint
-        posX = gp.getTileSize() * 5;
-        posY = gp.getTileSize() * 5;
+        posX = gp.getWorldWidth()/2;
+        posY = gp.getWorldHeigth()/2;
         speed = 4;
         direction = "down";
     }
