@@ -22,39 +22,38 @@ public class CollisionChecker {
         int tileNumber1, tileNumber2;
 
         switch (entity.getDirection()) {
-            case "up": //TODO kdyz player vyjde z mapy, spadne program - podminky pro index mensi nez nula a vetsi nez mapa!
-                entityTopRow = (entityTopWorldY - entity.getSpeed())/gp.tileSize;
+            case "up" -> { //TODO kdyz player vyjde z mapy, spadne program - podminky pro index mensi nez nula a vetsi nez mapa!
+                entityTopRow = (entityTopWorldY - entity.getSpeed()) / gp.tileSize;
                 tileNumber1 = gp.tileM.getMapTileNum()[entityLeftCol][entityTopRow];
                 tileNumber2 = gp.tileM.getMapTileNum()[entityRightCol][entityTopRow];
-                if(gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
+                if (gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
                     entity.setCollisionOn(true);
                 }
-
-                break;
-            case "down":
-                entityBottomRow = (entityBottomWorldY + entity.getSpeed())/gp.tileSize;
+            }
+            case "down" -> {
+                entityBottomRow = (entityBottomWorldY + entity.getSpeed()) / gp.tileSize;
                 tileNumber1 = gp.tileM.getMapTileNum()[entityLeftCol][entityBottomRow];
                 tileNumber2 = gp.tileM.getMapTileNum()[entityRightCol][entityBottomRow];
-                if(gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
+                if (gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
                     entity.setCollisionOn(true);
                 }
-                break;
-            case "left":
-                entityLeftCol = (entityLeftWorldX - entity.getSpeed())/gp.tileSize;
+            }
+            case "left" -> {
+                entityLeftCol = (entityLeftWorldX - entity.getSpeed()) / gp.tileSize;
                 tileNumber1 = gp.tileM.getMapTileNum()[entityLeftCol][entityTopRow];
                 tileNumber2 = gp.tileM.getMapTileNum()[entityLeftCol][entityBottomRow];
-                if(gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
+                if (gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
                     entity.setCollisionOn(true);
                 }
-                break;
-            case "right":
-                entityRightCol = (entityRightWorldX + entity.getSpeed())/gp.tileSize;
+            }
+            case "right" -> {
+                entityRightCol = (entityRightWorldX + entity.getSpeed()) / gp.tileSize;
                 tileNumber1 = gp.tileM.getMapTileNum()[entityRightCol][entityTopRow];
                 tileNumber2 = gp.tileM.getMapTileNum()[entityRightCol][entityBottomRow];
-                if(gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
+                if (gp.tileM.getTile()[tileNumber1].collision || gp.tileM.getTile()[tileNumber2].collision) {
                     entity.setCollisionOn(true);
                 }
-                break;
+            }
         }
     }
 }
