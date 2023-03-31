@@ -63,12 +63,16 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this);
     KeyHandler keyHand = new KeyHandler();
     Thread gameThread;
+    CollisionChecker cChechker = new CollisionChecker(this);
     Player player = new Player(this,keyHand);
 
     public Player getPlayer() {
         return player;
     }
 
+    public CollisionChecker getcChechker() {
+        return cChechker;
+    }
     // defaultni pozice hrace
 
     // konec promennych

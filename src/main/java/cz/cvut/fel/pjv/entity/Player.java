@@ -21,6 +21,7 @@ public class Player extends Entity{
         getPlayerImage(); // images postavy
         screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
         screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
+        solidArea = new Rectangle(8,16,gp.getTileSize()/2, gp.getTileSize()/2);
     }
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getTileSize() * 5;
@@ -76,6 +77,9 @@ public class Player extends Entity{
         else if(!keyHand.isDownPressed() && direction.equals("down")){
             direction = "downIdle";
         }
+
+        collisionOn = false;
+        gp.getcChechker().CheckTile(this);
         spriteCounter++;
         if(spriteCounter > 10) {
             if(spriteNum == 1)  {

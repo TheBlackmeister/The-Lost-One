@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -11,6 +12,9 @@ public class Entity {
 
     protected int spriteCounter = 0;
     protected int spriteNum = 1;
+    protected Rectangle solidArea;
+    protected boolean collisionOn = false;
+
 
     // promenne
 
@@ -112,4 +116,14 @@ public class Entity {
     public void setDirection(String direction) {
         this.direction = direction;
     }
+
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+
+    public boolean isCollisionOn() {
+        return collisionOn;
+    }
 }
+
+
