@@ -16,6 +16,10 @@ public class AssetSetter {
         gp.obj[1] = new OBJ_key();
         gp.obj[1].setPosX(1100);
         gp.obj[1].setPosY(1000);
+
+        gp.obj[2] = new OBJ_key();
+        gp.obj[2].setPosX(2500);
+        gp.obj[2].setPosY(2500);
     }
 
 }
