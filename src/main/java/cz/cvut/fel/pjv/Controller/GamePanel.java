@@ -23,6 +23,25 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxWorldRow = 100;
     final int worldWidth = tileSize * maxWorldCol;
     final int worldHeigth = tileSize * maxWorldRow;
+    int FPS = 60;
+    TileManager tileM = new TileManager(this);
+    KeyHandler keyHand = new KeyHandler();
+    Thread gameThread;
+    protected CollisionChecker collChecker = new CollisionChecker(this); // vypocet kolizi
+    // inicializace promennych konci
+    // gettery a settery nasleduji
+
+
+    public CollisionChecker getCollChecker() {
+        return collChecker;
+    }
+
+    Player player = new Player(this,keyHand);
+
+    public Player getPlayer() {
+        return player;
+    }
+
     public int getTileSize() {
         return tileSize;
     }
@@ -57,16 +76,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public int getWorldHeigth() {
         return worldHeigth;
-    }
-
-    int FPS = 60;
-    TileManager tileM = new TileManager(this);
-    KeyHandler keyHand = new KeyHandler();
-    Thread gameThread;
-    Player player = new Player(this,keyHand);
-
-    public Player getPlayer() {
-        return player;
     }
 
     // defaultni pozice hrace

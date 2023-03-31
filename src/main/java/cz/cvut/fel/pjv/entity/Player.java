@@ -17,6 +17,11 @@ public class Player extends Entity{
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
         this.keyHand = keyHand;
+        collisionBox = new Rectangle(); // COLLISIONBOX
+        collisionBox.x = 8;
+        collisionBox.y = 16;
+        collisionBox.width = 32;
+        collisionBox.height = 32;
         setDefaultValues(); // inicializace
         getPlayerImage(); // images postavy
         screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
@@ -49,19 +54,19 @@ public class Player extends Entity{
     public void update() {
         if(keyHand.isUpPressed()) {
             direction = "up";
-            posY -= speed;
+//            posY -= speed; //presmerovano do collision - pod timto switchem je collcheck
         }
         else if(keyHand.isDownPressed()) {
             direction = "down";
-            posY += speed;
+//            posY += speed; //presmerovano do collision - pod timto switchem je collcheck
         }
         else if(keyHand.isRightPressed()) {
             direction = "right";
-            posX += speed;
+//            posX += speed; //presmerovano do collision - pod timto switchem je collcheck
         }
         else if(keyHand.isLeftPressed()) {
             direction = "left";
-            posX -= speed;
+//            posX -= speed; //presmerovano do collision - pod timto switchem je collcheck
 
         } // zaznamenani WASD
         else if(!keyHand.isRightPressed() && direction.equals("right")){
@@ -76,7 +81,21 @@ public class Player extends Entity{
         else if(!keyHand.isDownPressed() && direction.equals("down")){
             direction = "downIdle";
         }
-        spriteCounter++;
+        // tile collision check
+        collisionOn = false;
+        gp.getCollChecker().checkTile(this); // this protoze player o sobe je entita
+        // if collision je false, player se muze tim smerem hybat
+        if(!isCollisionOn()) {
+            switch (direction) {
+                case "up" -> posY -= speed;
+                case "down" -> posY += speed;
+                case "right" -> posX += speed;
+                case "left" -> posX -= speed;
+                default -> {}
+            }
+        }
+
+        spriteCounter++; // animace hrace
         if(spriteCounter > 10) {
             if(spriteNum == 1)  {
                 spriteNum = 2;
@@ -85,7 +104,7 @@ public class Player extends Entity{
                 spriteNum = 1;
             }
             spriteCounter = 0;
-        }
+        } // konec animace hrace
     }
     public void draw(Graphics2D g2){
         BufferedImage image = null;
