@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.Controller;
 import cz.cvut.fel.pjv.entity.Player;
+import cz.cvut.fel.pjv.obj.SuperObject;
 import cz.cvut.fel.pjv.tile.TileManager;
 
 import java.awt.*;
@@ -35,8 +36,18 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker getCollChecker() {
         return collChecker;
     }
-
+    AssetSetter assetSet = new AssetSetter(this);
     Player player = new Player(this,keyHand);
+    SuperObject[] obj = new SuperObject[10];
+
+
+    public SuperObject[] getObj() {
+        return obj;
+    }
+
+    public AssetSetter getAssetSet() {
+        return assetSet;
+    }
 
     public Player getPlayer() {
         return player;
@@ -78,10 +89,12 @@ public class GamePanel extends JPanel implements Runnable{
         return worldHeigth;
     }
 
+
+
+
     // defaultni pozice hrace
 
     // konec promennych
-
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.gray);
@@ -89,6 +102,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyHand);
         this.setFocusable(true);
     } // konstruktor
+
+    public void setupGame() {
+        getAssetSet().setObject();
+    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -131,7 +148,11 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
 
         tileM.draw(g2); // vykresleni tiles
-
+        for(int i = 0; i < getObj().length; i++) {
+            if(getObj()[i] != null) {
+                getObj()[i].draw(g2, this);
+            }
+        }
         player.draw(g2); // vykresleni playera
 
         g2.dispose();
