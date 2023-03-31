@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d86685cb-956a-4f2f-9191-37c4d8247c65" name="Changes" comment="test - změna barvy">
+    <list default="true" id="d86685cb-956a-4f2f-9191-37c4d8247c65" name="Changes" comment="switch case update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/CollisionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/CollisionChecker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,10 +27,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/Library/Java/JavaVirtualMachines/openjdk-19.0.2/Contents/Home/lib/src.zip!/java.desktop/javax/imageio/ImageIO.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -47,28 +44,31 @@
     </option>
   </component>
   <component name="ProjectId" id="2NeVCkuxTWRcdu6xH6byC1HaluM" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/PJV_SEMESTRALKA/pjv_semestralka_cernym68_cechvit1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/PJV_SEMESTRALKA/pjv_semestralka_cernym68_cechvit1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\PJV_SEMESTRALKA\pjv_semestralka_cernym68_cechvit1\src\main\java\cz\cvut\fel\pjv\res\playerplayer" />
@@ -108,7 +108,9 @@
       <workItem from="1680087100250" duration="1024000" />
       <workItem from="1680105915900" duration="25209000" />
       <workItem from="1680197072191" duration="326000" />
-      <workItem from="1680197596448" duration="1098000" />
+      <workItem from="1680197596448" duration="518000" />
+      <workItem from="1680241669860" duration="613000" />
+      <workItem from="1680245489082" duration="9150000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1680024508895</created>
@@ -222,14 +224,42 @@
       <option name="project" value="LOCAL" />
       <updated>1680194722143</updated>
     </task>
-    <task id="LOCAL-00017" summary="test - změna barvy">
-      <created>1680198289172</created>
+    <task id="LOCAL-00017" summary="vytvoreni mapoveho systemu">
+      <created>1680205519311</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1680198289173</updated>
+      <updated>1680205519311</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="pridani nekolika textur, pridan KOLIZNI SYSTEM">
+      <created>1680252177068</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1680252177068</updated>
+    </task>
+    <task id="LOCAL-00019" summary="zmena grass textury">
+      <created>1680253246585</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1680253246585</updated>
+    </task>
+    <task id="LOCAL-00020" summary="oprava ocean collision">
+      <created>1680254727541</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1680254727541</updated>
+    </task>
+    <task id="LOCAL-00021" summary="switch case update">
+      <created>1680255318022</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1680255318023</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +300,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First commit" />
     <MESSAGE value="another commit and push, snad uz to funguje, mame jeden branch - main a ne vice" />
     <MESSAGE value="vytvoreni okna" />
@@ -279,8 +310,13 @@
     <MESSAGE value="Přidání ptřídy entity, hráče" />
     <MESSAGE value="Přidání spritu hrace, implementace spridu misto ctverce" />
     <MESSAGE value="pridani idle obrazku" />
-    <MESSAGE value="test - změna barvy" />
-    <option name="LAST_COMMIT_MESSAGE" value="test - změna barvy" />
+    <MESSAGE value="finalizaci animaci pohybu hrace" />
+    <MESSAGE value="vytvoreni mapoveho systemu" />
+    <MESSAGE value="pridani nekolika textur, pridan KOLIZNI SYSTEM" />
+    <MESSAGE value="zmena grass textury" />
+    <MESSAGE value="oprava ocean collision" />
+    <MESSAGE value="switch case update" />
+    <option name="LAST_COMMIT_MESSAGE" value="switch case update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -290,9 +326,9 @@
           <option name="timeStamp" value="1" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/Controller/GamePanel.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/pjv/tile/TileManager.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
