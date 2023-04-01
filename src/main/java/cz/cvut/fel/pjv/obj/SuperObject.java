@@ -29,13 +29,13 @@ public class SuperObject {
     }
     //KONEC KONSTRUKTORU
     public void draw(Graphics2D g2, GamePanel gp){
+
         int screenX = posX - gp.getPlayer().getPosX() + gp.getPlayer().screenX;
         int screenY = posY - gp.getPlayer().getPosY() + gp.getPlayer().screenY;
 
-        if(
-                posX + gp.getTileSize() > gp.getPlayer().getPosX() - gp.getPlayer().screenX &&
-                posY - gp.getTileSize() < gp.getPlayer().getPosX() + gp.getPlayer().screenX &&
-                posX + gp.getTileSize() > gp.getPlayer().getPosY() - gp.getPlayer().screenY &&
+        if( posX + gp.getTileSize() > gp.getPlayer().getPosX() - gp.getPlayer().screenX &&
+                posX - gp.getTileSize() <gp.getPlayer().getPosX() + gp.getPlayer().screenX &&
+                posY + gp.getTileSize() > gp.getPlayer().getPosY() - gp.getPlayer().screenY &&
                 posY - gp.getTileSize() < gp.getPlayer().getPosY() + gp.getPlayer().screenY
         ) //tato podminka je kvuli setreni mista pri vykreslovani mapy(aby se nevykreslila cela)
         {g2.drawImage(image, screenX, screenY, gp.getTileSize(), gp.getTileSize(), null);}
