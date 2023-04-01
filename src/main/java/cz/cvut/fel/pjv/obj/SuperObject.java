@@ -9,8 +9,18 @@ public class SuperObject {
     protected BufferedImage image;
     protected String name;
     protected boolean collision = false;
-
+    public Rectangle collisionBox = new Rectangle(0,0,48,48);
+    protected int collisionBoxDefaultX = 0;
+    protected int collisionBoxDefaultY = 0;
     protected int posX, posY;
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
 
     public int getPosX() {
         return posX;
@@ -20,6 +30,18 @@ public class SuperObject {
         this.posX = posX;
     }
 
+    public Rectangle getCollisionBox() {
+        return collisionBox;
+    }
+
+    public int getCollisionBoxDefaultX() {
+        return collisionBoxDefaultX;
+    }
+
+    public int getCollisionBoxDefaultY() {
+        return collisionBoxDefaultY;
+    }
+
     public int getPosY() {
         return posY;
     }
@@ -27,6 +49,9 @@ public class SuperObject {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
+
+
     //KONEC KONSTRUKTORU
     public void draw(Graphics2D g2, GamePanel gp){
 

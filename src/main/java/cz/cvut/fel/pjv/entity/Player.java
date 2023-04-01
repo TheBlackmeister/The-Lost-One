@@ -13,6 +13,7 @@ public class Player extends Entity{
     KeyHandler keyHand;
     public final int screenX;
     public final int screenY;
+    public int keys;
 
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
@@ -26,6 +27,7 @@ public class Player extends Entity{
         getPlayerImage(); // images postavy
         screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
         screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
+        keys = 0;
     }
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;
@@ -49,6 +51,30 @@ public class Player extends Entity{
         }
         catch(IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void pickUpObject(int objectID) {
+        if(objectID!=-0){
+            String objectName = gp.getObj()[objectID].getName();
+
+            switch (objectName) {
+                case "Chest":
+                    break;
+                case "Key":
+                    keys++; // mam o klic vice!
+                    gp.getObj()[objectID] = null;
+                    break;
+                case "Door":
+                    if (keys > 0) {
+                        gp.getObj()[objectID] = null;
+                    }
+                    else {
+                        System.out.println("nemas klice!");
+                    }
+            }
+        }
+        else{
+
         }
     }
     public void update() {
@@ -84,6 +110,10 @@ public class Player extends Entity{
         // tile collision check
         collisionOn = false;
         gp.getCollChecker().checkTile(this); // this protoze player o sobe je entita
+
+        int objectID = gp.getCollChecker().checkObject(this, true); // object coll check
+        pickUpObject(objectID);
+
         // if collision je false, player se muze tim smerem hybat
         if(!isCollisionOn()) {
             switch (direction) {

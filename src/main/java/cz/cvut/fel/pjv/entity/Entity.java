@@ -14,16 +14,16 @@ public class Entity {
     protected int spriteNum = 1;
     protected Rectangle collisionBox;
     protected boolean collisionOn = false;
-    protected int solidAreaDefaultX, solidAreaDefaultY;
+    protected int collisionBoxDefaultX, collisionBoxDefaultY;
     // promenne
 
     // gettery settery
-    public int getSolidAreaDefaultX() {
-        return solidAreaDefaultX;
+    public int getcollisionBoxDefaultX() {
+        return collisionBoxDefaultX;
     }
 
-    public int getSolidAreaDefaultY() {
-        return solidAreaDefaultY;
+    public int getcollisionBoxDefaultY() {
+        return collisionBoxDefaultY;
     }
 
     public int getPosX() {
