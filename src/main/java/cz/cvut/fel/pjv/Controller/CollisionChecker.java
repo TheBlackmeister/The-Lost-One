@@ -58,7 +58,7 @@ public class CollisionChecker {
     }
 
     public int checkObject(Entity entity, boolean player) {
-        int objectID = -0;
+        int objectID = -1;
         for (int i=0;i<gp.getObj().length;i++) {
             if(gp.getObj()[i] != null) {
                 // zjistujeme collision X Y entity

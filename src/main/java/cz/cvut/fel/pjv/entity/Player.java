@@ -54,7 +54,7 @@ public class Player extends Entity{
         }
     }
     public void pickUpObject(int objectID) {
-        if(objectID!=-0){
+        if(objectID!=-1){
             String objectName = gp.getObj()[objectID].getName();
 
             switch (objectName) {
@@ -66,6 +66,7 @@ public class Player extends Entity{
                     break;
                 case "Door":
                     if (keys > 0) {
+                        keys--;
                         gp.getObj()[objectID] = null;
                     }
                     else {
