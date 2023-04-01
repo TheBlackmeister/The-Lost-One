@@ -4,6 +4,7 @@ import cz.cvut.fel.pjv.obj.SuperObject;
 import cz.cvut.fel.pjv.tile.TileManager;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -23,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxWorldCol = 100;
     final int maxWorldRow = 100;
     final int worldWidth = tileSize * maxWorldCol;
-    final int worldHeigth = tileSize * maxWorldRow;
+    final int worldHeight = tileSize * maxWorldRow;
     int FPS = 60;
     TileManager tileM = new TileManager(this);
     KeyHandler keyHand = new KeyHandler();
@@ -85,8 +86,8 @@ public class GamePanel extends JPanel implements Runnable{
         return worldWidth;
     }
 
-    public int getWorldHeigth() {
-        return worldHeigth;
+    public int getWorldHeight() {
+        return worldHeight;
     }
 
 
@@ -143,7 +144,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
         player.update(); // update playera
     }
+
     public void paintComponent(Graphics g){
+//        BufferStrategy bufferStrategy = getB();
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 

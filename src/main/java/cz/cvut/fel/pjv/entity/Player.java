@@ -29,7 +29,7 @@ public class Player extends Entity{
     }
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;
-        posY = gp.getWorldHeigth()/2;
+        posY = gp.getWorldHeight()/2;
         speed = 4;
         direction = "down";
     }

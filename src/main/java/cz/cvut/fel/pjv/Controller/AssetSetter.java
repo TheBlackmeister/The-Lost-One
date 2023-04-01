@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.Controller;
 
+import cz.cvut.fel.pjv.obj.OBJ_chest;
 import cz.cvut.fel.pjv.obj.OBJ_key;
 
 public class AssetSetter {
@@ -18,8 +19,16 @@ public class AssetSetter {
         gp.obj[1].setPosY(1000);
 
         gp.obj[2] = new OBJ_key();
-        gp.obj[2].setPosX(2500);
-        gp.obj[2].setPosY(2500);
+        gp.obj[2].setPosX(54*gp.getTileSize());
+        gp.obj[2].setPosY(54*gp.getTileSize());
+
+        gp.obj[3] = new OBJ_chest();
+        gp.obj[3].setPosX(61*gp.getTileSize());
+        gp.obj[3].setPosY(48*gp.getTileSize());
+
+        gp.obj[4] = new OBJ_chest();
+        gp.obj[4].setPosX(61*gp.getTileSize());
+        gp.obj[4].setPosY(66*gp.getTileSize());
     }
 
 }
