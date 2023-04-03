@@ -4,13 +4,20 @@ import cz.cvut.fel.pjv.obj.OBJ_chest;
 import cz.cvut.fel.pjv.obj.OBJ_door;
 import cz.cvut.fel.pjv.obj.OBJ_key;
 
+
 public class AssetSetter {
     GamePanel gp;
 
+    /**
+     *
+     * @param gp
+     */
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
     }
+
     public void setObject() {
+
         gp.obj[0] = new OBJ_key();
         gp.obj[0].setPosX(1000);
         gp.obj[0].setPosY(1000);
