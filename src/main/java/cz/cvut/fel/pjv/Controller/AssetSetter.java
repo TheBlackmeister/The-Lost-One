@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.Controller;
 
 import cz.cvut.fel.pjv.obj.OBJ_chest;
+import cz.cvut.fel.pjv.obj.OBJ_coin;
 import cz.cvut.fel.pjv.obj.OBJ_door;
 import cz.cvut.fel.pjv.obj.OBJ_key;
 
@@ -41,6 +42,10 @@ public class AssetSetter {
         gp.obj[5] = new OBJ_door();
         gp.obj[5].setPosX(70*gp.getTileSize());
         gp.obj[5].setPosY(70*gp.getTileSize());
+
+        gp.obj[6] = new OBJ_coin();
+        gp.obj[6].setPosX(73*gp.getTileSize());
+        gp.obj[6].setPosY(73*gp.getTileSize());
     }
 
 }

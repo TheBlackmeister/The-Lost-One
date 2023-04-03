@@ -15,6 +15,8 @@ public class Player extends Entity{
     public final int screenY;
     public int keys;
 
+    protected String[] inventory;
+
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
         this.keyHand = keyHand;
@@ -28,6 +30,7 @@ public class Player extends Entity{
         screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
         screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
         keys = 0;
+        inventory = new String[20];
     }
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;

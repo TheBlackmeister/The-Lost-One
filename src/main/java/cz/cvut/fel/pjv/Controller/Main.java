@@ -18,7 +18,6 @@ public class Main {
         mainWindow.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/objects/chest.png")));
         // this adds icon to the window programme
 
-
         mainWindow.setLocationRelativeTo(null); // window will be centered
         mainWindow.setVisible(true);
 
