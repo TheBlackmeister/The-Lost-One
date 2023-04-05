@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyHandler;
-
+import cz.cvut.fel.pjv.UI.Inventory;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,8 +14,10 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int keys;
+    private int[] tmpInv; // pro manipulaci s inventory
+    protected int[] inventory; // indexy: 0 == coin, 1 == key, 2 == chestplate
 
-    protected String[] inventory;
+    private BufferedImage invImage;
 
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
@@ -30,13 +32,25 @@ public class Player extends Entity{
         screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
         screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
         keys = 0;
-        inventory = new String[20];
+        inventory = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;
         posY = gp.getWorldHeight()/2;
         speed = 4;
-        direction = "down";
+        direction = "down"; // default direction of a player
+    }
+
+    public int[] getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int[] inventory) {
+        this.inventory = inventory;
+    }
+
+    public void setInventoryIndex(int i, int value) {
+        this.inventory[i] = value;
     }
 
     public void getPlayerImage() {
@@ -51,6 +65,7 @@ public class Player extends Entity{
             left2 = ImageIO.read(getClass().getResourceAsStream("/player/Hugo_Idle_leftside.png"));
             right1 = ImageIO.read(getClass().getResourceAsStream("/player/Hugo_running_rightside.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("/player/Hugo_Idle_rightside.png"));
+
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -63,14 +78,28 @@ public class Player extends Entity{
             switch (objectName) {
                 case "Chest":
                     break;
+                case "Coin":
+                    tmpInv = getInventory();
+                    tmpInv[0] += 1;
+                    setInventory(tmpInv);
+                    tmpInv = null;
+                    gp.getObj()[objectID] = null;
+                    break;
                 case "Key":
-                    keys++; // mam o klic vice!
+//                    keys++; // mam o klic vice!
+                    tmpInv = getInventory();
+                    tmpInv[1] += 1;
+                    setInventory(tmpInv);
+                    tmpInv = null;
                     gp.getObj()[objectID] = null;
                     break;
                 case "Door":
-                    if (keys > 0) {
-                        keys--;
+                    tmpInv = getInventory();
+                    if (tmpInv[1] > 0) {
+                        tmpInv[1] -= 1;
+                        setInventory(tmpInv);
                         gp.getObj()[objectID] = null;
+                        tmpInv = null;
                     }
                     else {
                         System.out.println("nemas klice!");
@@ -82,6 +111,7 @@ public class Player extends Entity{
         }
     }
     public void update() {
+
         if(keyHand.isUpPressed()) {
             direction = "up";
 //            posY -= speed; //presmerovano do collision - pod timto switchem je collcheck

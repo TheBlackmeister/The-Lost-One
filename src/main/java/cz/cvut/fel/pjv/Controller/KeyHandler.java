@@ -4,8 +4,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-    protected boolean upPressed, downPressed, leftPressed, rightPressed;
-    protected boolean upReleased, downReleased, leftReleased, rightReleased;
+    protected boolean upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed;
+    protected boolean upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased;
+
+    public boolean isEscPressed() {
+        return escPressed;
+    }
+
+    public boolean isEscReleased() {
+        return escReleased;
+    }
 
     public boolean isUpReleased() {
         return upReleased;
@@ -21,6 +29,14 @@ public class KeyHandler implements KeyListener {
 
     public boolean isRightReleased() {
         return rightReleased;
+    }
+
+    public boolean isiPressed() {
+        return iPressed;
+    }
+
+    public boolean isiReleased() {
+        return iReleased;
     }
 
     public boolean isUpPressed() {
@@ -44,6 +60,8 @@ public class KeyHandler implements KeyListener {
         this.downPressed = false;
         this.leftPressed = false;
         this.rightPressed = false;
+        this.iPressed = false;
+        this.escPressed = false;
 //        this.upReleased = false;
 //        this.downReleased = false;
 //        this.leftReleased = false;
@@ -60,7 +78,12 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
+        if(code == KeyEvent.VK_ESCAPE){
+            this.escPressed = true;
+        }
+        if(code == KeyEvent.VK_I){
+            this.iPressed = true;
+        }
         if(code == KeyEvent.VK_W){
             this.upPressed = true;
         }
@@ -79,7 +102,12 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-
+        if(code == KeyEvent.VK_ESCAPE){
+            this.escPressed = false;
+        }
+        if(code == KeyEvent.VK_I){
+            this.iPressed = false;
+        }
         if(code == KeyEvent.VK_W){
             this.upPressed = false;
         }

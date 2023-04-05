@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.Controller;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.obj.SuperObject;
 import cz.cvut.fel.pjv.tile.TileManager;
-
+import cz.cvut.fel.pjv.UI.Inventory;
 import java.awt.*;
 
 import javax.swing.*;
@@ -28,6 +28,8 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
     TileManager tileM = new TileManager(this);
     KeyHandler keyHand = new KeyHandler();
+
+
     Thread gameThread;
     protected CollisionChecker collChecker = new CollisionChecker(this); // vypocet kolizi
     // inicializace promennych konci
@@ -39,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
     AssetSetter assetSet = new AssetSetter(this);
     Player player = new Player(this,keyHand);
+    Inventory inv = new Inventory(keyHand,this, player);
     SuperObject[] obj = new SuperObject[10];
 
 
@@ -143,6 +146,7 @@ public class GamePanel extends JPanel implements Runnable{
     } // HLAVNI SEKCE
     public void update() {
         player.update(); // update playera
+        inv.update();
     }
 
     public void paintComponent(Graphics g){
@@ -157,7 +161,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         player.draw(g2); // vykresleni playera
-
+        inv.draw(g2);
         g2.dispose();
     }
 }

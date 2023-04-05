@@ -46,6 +46,14 @@ public class AssetSetter {
         gp.obj[6] = new OBJ_coin();
         gp.obj[6].setPosX(73*gp.getTileSize());
         gp.obj[6].setPosY(73*gp.getTileSize());
+
+        gp.obj[7] = new OBJ_coin();
+        gp.obj[7].setPosX(52*gp.getTileSize());
+        gp.obj[7].setPosY(54*gp.getTileSize());
+
+        gp.obj[8] = new OBJ_coin();
+        gp.obj[8].setPosX(50*gp.getTileSize());
+        gp.obj[8].setPosY(54*gp.getTileSize());
     }
 
 }
