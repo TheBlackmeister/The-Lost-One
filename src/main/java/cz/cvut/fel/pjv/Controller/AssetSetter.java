@@ -37,8 +37,8 @@ public class AssetSetter {
         gp.obj[4].setPosY(66*gp.getTileSize());
 
         gp.obj[5] = new OBJ_door();
-        gp.obj[5].setPosX(70*gp.getTileSize());
-        gp.obj[5].setPosY(70*gp.getTileSize());
+        gp.obj[5].setPosX(32*gp.getTileSize());
+        gp.obj[5].setPosY(75*gp.getTileSize());
 
         gp.obj[6] = new OBJ_coin();
         gp.obj[6].setPosX(73*gp.getTileSize());
