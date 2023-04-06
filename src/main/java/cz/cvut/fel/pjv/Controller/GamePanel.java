@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     AssetSetter assetSet = new AssetSetter(this);
     Player player = new Player(this,keyHand);
     Inventory inv = new Inventory(keyHand,this, player);
-    SuperObject[] obj = new SuperObject[10];
+    SuperObject[] obj = new SuperObject[20];
 
 
     public SuperObject[] getObj() {

@@ -86,12 +86,11 @@ public class Player extends Entity{
                     gp.getObj()[objectID] = null;
                     break;
                 case "Key":
-//                    keys++; // mam o klic vice!
-                    tmpInv = getInventory();
-                    tmpInv[1] += 1;
-                    setInventory(tmpInv);
-                    tmpInv = null;
-                    gp.getObj()[objectID] = null;
+                    tmpInv = getInventory(); // when an obj colliding is a key, here firstly it gets players inventory
+                    tmpInv[1] += 1; // then it adds one key to the inventory index for keys (1)
+                    setInventory(tmpInv); // and returns changed inventory
+                    tmpInv = null; // deletion of a temporary inventory
+                    gp.getObj()[objectID] = null; // here the object on the map gets deleted
                     break;
                 case "Door":
                     tmpInv = getInventory();
@@ -104,6 +103,38 @@ public class Player extends Entity{
                     else {
                         System.out.println("nemas klice!");
                     }
+                case "Dagger":
+                    tmpInv = getInventory();
+                    if (tmpInv[3] == 0) {// pokud nema dagger TODO po pridani sword and axe pridat podminku obecne na weapon
+                        if (tmpInv[4] != 0){ // podminka na mec
+                            System.out.println("Uz mas mec - jinou zbran!");
+                            break;
+                        }
+                        tmpInv[3] += 1;
+                        setInventory(tmpInv);
+                        gp.getObj()[objectID] = null;
+                        tmpInv = null;
+                    }
+                    else{
+                        System.out.println("Uz mas dyku!");
+                    }
+                case "Sword":
+                    tmpInv = getInventory();
+                    if (tmpInv[4] == 0) {// pokud nema dagger TODO po pridani sword and axe pridat podminku obecne na weapon
+                        if (tmpInv[3] != 0){ // podminka na dyku
+                            System.out.println("Uz mas dyku - jinou zbran!");
+                            break;
+                        }
+                        tmpInv[4] += 1;
+                        setInventory(tmpInv);
+                        gp.getObj()[objectID] = null;
+                        tmpInv = null;
+                    }
+                    else{
+                        System.out.println("Uz mas mec!");
+                    }
+                    break;
+
             }
         }
         else{
