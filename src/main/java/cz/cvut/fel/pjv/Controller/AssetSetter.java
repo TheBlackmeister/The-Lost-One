@@ -2,7 +2,9 @@ package cz.cvut.fel.pjv.Controller;
 
 import cz.cvut.fel.pjv.obj.*;
 
-
+/**
+ *  class assetsetter
+ */
 public class AssetSetter {
     GamePanel gp;
 

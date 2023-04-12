@@ -3,6 +3,9 @@ package cz.cvut.fel.pjv.Controller;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * starting class (has panel)
+ */
 public class Main {
     public static void main(String[] args) {
         JFrame mainWindow = new JFrame(); // nove okno - hlavni okno

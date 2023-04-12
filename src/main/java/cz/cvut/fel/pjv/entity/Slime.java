@@ -3,6 +3,9 @@ package cz.cvut.fel.pjv.entity;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyHandler;
 
+/**
+ * class slime represents a monster
+ */
 public class Slime extends Entity{
     GamePanel gp;
     KeyHandler keyHand;

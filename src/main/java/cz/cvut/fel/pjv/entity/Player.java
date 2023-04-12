@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * class Player represents an actual player HUGO
+ * class has several methods, methods are specified more in their javaDoc
+ */
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyHand;
@@ -19,6 +23,12 @@ public class Player extends Entity{
 
     private BufferedImage invImage;
 
+    /**
+     *
+     * @param gp
+     * @param keyHand
+     *method player is a constructor of this class
+     */
     public Player(GamePanel gp, KeyHandler keyHand) {
         this.gp = gp;
         this.keyHand = keyHand;
@@ -37,7 +47,7 @@ public class Player extends Entity{
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;
         posY = gp.getWorldHeight()/2;
-        speed = 6; // todo
+        speed = 4;
         direction = "down"; // default direction of a player
     }
 

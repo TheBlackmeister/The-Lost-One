@@ -48,7 +48,7 @@ public class Inventory {
     public void getPlayerInv(Player player) {
         int[] inv = player.getInventory();
         for (int i = 0; i < inv.length;i++) {
-            System.out.println("jsem v inventory"); // test
+            System.out.println("jsem v inventory"); // testovani
             switch (i){
                 case 0: // coins
                     this.coins = inv[i];

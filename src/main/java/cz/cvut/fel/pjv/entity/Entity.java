@@ -3,13 +3,16 @@ package cz.cvut.fel.pjv.entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * class Entity is a parent class of every entity, has the basic variables that are needed (colision, speed,...)
+ * and also has getters and settes
+ */
 public class Entity {
     protected int posX, posY;
     protected BufferedImage up1,up2,upIdle,down1,down2,downIdle,left1,left2,right1,right2;
 
     protected String direction;
     protected int speed;
-
     protected int spriteCounter = 0;
     protected int spriteNum = 1;
     protected Rectangle collisionBox;

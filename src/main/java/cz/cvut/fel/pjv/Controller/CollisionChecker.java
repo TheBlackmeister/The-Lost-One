@@ -2,6 +2,9 @@ package cz.cvut.fel.pjv.Controller;
 
 import cz.cvut.fel.pjv.entity.Entity;
 
+/**
+ * class colisionchecker
+ */
 public class CollisionChecker {
     GamePanel gp;
     public CollisionChecker(GamePanel gp) {
@@ -22,7 +25,7 @@ public class CollisionChecker {
         int tileNumber1, tileNumber2;
 
         switch (entity.getDirection()) {
-            case "up" -> { //TODO kdyz player vyjde z mapy, spadne program - podminky pro index mensi nez nula a vetsi nez mapa!
+            case "up" -> {
                 entityTopRow = (entityTopWorldY - entity.getSpeed()) / gp.tileSize;
                 tileNumber1 = gp.tileM.getMapTileNum()[entityLeftCol][entityTopRow];
                 tileNumber2 = gp.tileM.getMapTileNum()[entityRightCol][entityTopRow];

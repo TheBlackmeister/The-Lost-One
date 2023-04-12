@@ -5,6 +5,10 @@ import cz.cvut.fel.pjv.Controller.GamePanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * class SuperObject is a parent of all other objects
+ */
+
 public class SuperObject {
     protected BufferedImage image;
     protected String name;
@@ -58,11 +62,11 @@ public class SuperObject {
         int screenX = posX - gp.getPlayer().getPosX() + gp.getPlayer().screenX;
         int screenY = posY - gp.getPlayer().getPosY() + gp.getPlayer().screenY;
 
-        if( posX + gp.getTileSize() > gp.getPlayer().getPosX() - gp.getPlayer().screenX &&
-                posX - gp.getTileSize() <gp.getPlayer().getPosX() + gp.getPlayer().screenX &&
-                posY + gp.getTileSize() > gp.getPlayer().getPosY() - gp.getPlayer().screenY &&
-                posY - gp.getTileSize() < gp.getPlayer().getPosY() + gp.getPlayer().screenY
-        ) //tato podminka je kvuli setreni mista pri vykreslovani mapy(aby se nevykreslila cela)
+        if(((posX + gp.getTileSize()) > (gp.getPlayer().getPosX() - gp.getPlayer().screenX)) &&
+                ((posX - gp.getTileSize()) < (gp.getPlayer().getPosX() + gp.getPlayer().screenX)) &&
+                ((posY + gp.getTileSize()) > (gp.getPlayer().getPosY() - gp.getPlayer().screenY)) &&
+                ((posY - gp.getTileSize()) < (gp.getPlayer().getPosY() + gp.getPlayer().screenY))
+        ) //tato podminka je kvuli setreni mista pri vykreslovani mapy(aby se nevykreslila cela) // optimalisation
         {g2.drawImage(image, screenX, screenY, gp.getTileSize(), gp.getTileSize(), null);}
     }
 }
