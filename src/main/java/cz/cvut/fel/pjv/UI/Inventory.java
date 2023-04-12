@@ -1,13 +1,14 @@
 package cz.cvut.fel.pjv.UI;
 
+import cz.cvut.fel.pjv.Controller.GamePanel;
+import cz.cvut.fel.pjv.Controller.KeyHandler;
+import cz.cvut.fel.pjv.entity.Player;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
-import cz.cvut.fel.pjv.Controller.GamePanel;
-import cz.cvut.fel.pjv.Controller.KeyHandler;
-import cz.cvut.fel.pjv.entity.Player;
 
 public class Inventory {
     private int coins;

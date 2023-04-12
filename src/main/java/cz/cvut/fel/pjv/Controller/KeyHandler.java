@@ -3,6 +3,9 @@ package cz.cvut.fel.pjv.Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * class key handler ensures movements of hugo with WASD keys, I key is used for inventory
+ */
 public class KeyHandler implements KeyListener {
     protected boolean upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed;
     protected boolean upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased;
