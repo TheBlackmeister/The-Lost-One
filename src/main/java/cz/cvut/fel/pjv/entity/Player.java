@@ -37,7 +37,7 @@ public class Player extends Entity{
     public void setDefaultValues(){ //spawnpoint
         posX = gp.getWorldWidth()/2;
         posY = gp.getWorldHeight()/2;
-        speed = 4;
+        speed = 6; // todo
         direction = "down"; // default direction of a player
     }
 
@@ -103,6 +103,7 @@ public class Player extends Entity{
                     else {
                         System.out.println("nemas klice!");
                     }
+                    break;
                 case "Dagger":
                     tmpInv = getInventory();
                     if (tmpInv[3] == 0) {// pokud nema dagger TODO po pridani sword and axe pridat podminku obecne na weapon
@@ -118,6 +119,7 @@ public class Player extends Entity{
                     else{
                         System.out.println("Uz mas dyku!");
                     }
+                    break;
                 case "Sword":
                     tmpInv = getInventory();
                     if (tmpInv[4] == 0) {// pokud nema dagger TODO po pridani sword and axe pridat podminku obecne na weapon
