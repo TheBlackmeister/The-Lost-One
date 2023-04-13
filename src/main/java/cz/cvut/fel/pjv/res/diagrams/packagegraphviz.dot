@@ -1,0 +1,47 @@
+digraph "package" {
+
+splines  = ortho;
+fontname = "Inconsolata";
+
+node [colorscheme = ylgnbu4];
+edge [colorscheme = dark28, dir = both];
+
+AssetBuffer      [shape = record, pos = "-1.569,4.231!"    , label = "{ AssetBuffer |  }"];
+AssetSetter      [shape = record, pos = "-1.576,3.341!"    , label = "{ AssetSetter | ~ gp : GamePanel\l }"];
+Boss             [shape = record, pos = "7.918,6.526!"     , label = "{ Boss |  }"];
+CollisionChecker [shape = record, pos = "1.065,2.840!"     , label = "{ CollisionChecker | ~ gp : GamePanel\l }"];
+Entity           [shape = record, pos = "3.495,13.861!"    , label = "{ Entity | # left1 : BufferedImage\l # right2 : BufferedImage\l # spriteCounter : int\l # down2 : BufferedImage\l # collisionOn : boolean\l # upIdle : BufferedImage\l # down1 : BufferedImage\l # collisionBoxDefaultY : int\l # left2 : BufferedImage\l # direction : String\l # up1 : BufferedImage\l # up2 : BufferedImage\l # right1 : BufferedImage\l # speed : int\l # collisionBox : Rectangle\l # posX : int\l # posY : int\l # downIdle : BufferedImage\l # spriteNum : int\l # collisionBoxDefaultX : int\l }"];
+ErrorWindow      [shape = record, pos = "6.755,3.578!"     , label = "{ ErrorWindow |  }"];
+FightMechanic    [shape = record, pos = "-1.518,5.122!"    , label = "{ FightMechanic |  }"];
+GameLogic        [shape = record, pos = "-1.518,5.894!"    , label = "{ GameLogic |  }"];
+GamePanel        [shape = record, pos = "-1.518,13.861!"   , label = "{ GamePanel | ~ maxScreenRow : int\l ~ player : Player\l ~ worldHeight : int\l ~ tileM : TileManager\l ~ tileSize : int\l ~ scale : int\l ~ worldWidth : int\l ~ keyHand : KeyHandler\l ~ gameThread : Thread\l ~ assetSet : AssetSetter\l ~ maxWorldCol : int\l ~ FPS : int\l ~ maxWorldRow : int\l ~ inv : Inventory\l ~ obj : SuperObject[]\l ~ originalTileSize : int\l ~ maxScreenCol : int\l # collChecker : CollisionChecker\l ~ screenWidth : int\l ~ screenHeight : int\l ~ sound : Sound\l }"];
+Inventory        [shape = record, pos = "17.096,6.319!"    , label = "{ Inventory | - swordImage : BufferedImage\l - keyImage : BufferedImage\l ~ gp : GamePanel\l - daggerImage : BufferedImage\l - invDetailImage : BufferedImage\l - wasPressed : boolean\l - sword : int\l - dagger : int\l ~ keyHand : KeyHandler\l - coinImage : BufferedImage\l - keys : int\l - invImage : BufferedImage\l - coins : int\l ~ player : Player\l }"];
+KeyHandler       [shape = record, pos = "14.035,6.319!"    , label = "{ KeyHandler | # downPressed : boolean\l # downReleased : boolean\l # leftReleased : boolean\l # rightPressed : boolean\l # upReleased : boolean\l # rightReleased : boolean\l # escReleased : boolean\l # iPressed : boolean\l # iReleased : boolean\l # escPressed : boolean\l # leftPressed : boolean\l # upPressed : boolean\l }"];
+Launcher         [shape = record, pos = "6.755,4.448!"     , label = "{ Launcher |  }"];
+Main             [shape = record, pos = "6.755,5.283!"     , label = "{ Main |  }"];
+OBJ_chest        [shape = record, pos = "12.386,7.438!"    , label = "{ OBJ_chest |  }"];
+OBJ_coin         [shape = record, pos = "16.461,7.403!"    , label = "{ OBJ_coin |  }"];
+OBJ_dagger       [shape = record, pos = "14.326,7.403!"    , label = "{ OBJ_dagger |  }"];
+OBJ_door         [shape = record, pos = "10.465,7.403!"    , label = "{ OBJ_door |  }"];
+OBJ_key          [shape = record, pos = "8.682,7.438!"     , label = "{ OBJ_key |  }"];
+OBJ_sword        [shape = record, pos = "18.318,7.403!"    , label = "{ OBJ_sword |  }"];
+Player           [shape = record, pos = "3.495,6.526!"     , label = "{ Player | - tmpInv : int[]\l + screenY : int\l + keys : int\l ~ keyHand : KeyHandler\l ~ gp : GamePanel\l - invImage : BufferedImage\l + screenX : int\l # inventory : int[]\l }"];
+Slime            [shape = record, pos = "0.857,6.526!"     , label = "{ Slime | + screenX : int\l ~ gp : GamePanel\l + screenY : int\l ~ keyHand : KeyHandler\l }"];
+Sound            [shape = record, pos = "1.065,4.231!"     , label = "{ Sound | ~ clip : Clip\l ~ soundURL : URL[]\l }"];
+SuperObject      [shape = record, pos = "11.970,13.861!"   , label = "{ SuperObject | + collisionBox : Rectangle\l # posY : int\l # image : BufferedImage\l # name : String\l # collisionBoxDefaultY : int\l # posX : int\l # collision : boolean\l # collisionBoxDefaultX : int\l }"];
+Tile             [shape = record, pos = "11.085,6.107!"    , label = "{ Tile | + image : BufferedImage\l + collision : boolean\l }"];
+TileManager      [shape = record, pos = "11.252,4.638!"    , label = "{ TileManager | ~ tile : Tile[]\l ~ gp : GamePanel\l ~ mapTileNum : int[][]\l }"];
+Trader           [shape = record, pos = "6.236,6.526!"     , label = "{ Trader |  }"];
+
+Boss             -> Entity           [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_chest        -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_coin         -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_dagger       -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_door         -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_key          -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+OBJ_sword        -> SuperObject      [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+Player           -> Entity           [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+Slime            -> Entity           [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+Trader           -> Entity           [color = "#000082", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "", headlabel = ""];
+
+}

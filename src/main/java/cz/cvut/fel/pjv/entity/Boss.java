@@ -1,4 +1,4 @@
 package cz.cvut.fel.pjv.entity;
 
-public class Boss {
+public class Boss extends Entity{
 }
