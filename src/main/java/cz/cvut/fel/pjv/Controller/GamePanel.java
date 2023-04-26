@@ -11,6 +11,7 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable{
     Thread gameThread; // main game thread
     Player player;
+    KeyListener keyList;
     int FPS = 90;
     public GamePanel() {
         this.setPreferredSize(new Dimension(800,600));
@@ -18,7 +19,9 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
 //        this.addKeyListener(keyHand);
         this.setFocusable(true);
-        player = new Player(100,100);
+        keyList = new KeyListener();
+        this.addKeyListener(keyList);
+        player = new Player(100,300, keyList);
         startGameThread();
 
     } // konstruktor
@@ -66,13 +69,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
         player.update();
-        System.out.println("update");
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         player.draw(g);
-        System.out.println("drawing");
         //vykresluji
     }
 }
