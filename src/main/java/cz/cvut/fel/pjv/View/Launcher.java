@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Launcher is a class that implements the first window with settings of the game, etc.
+ */
 public class Launcher implements ActionListener {
     protected boolean logOn;
     JFrame launcher = new JFrame();
@@ -43,6 +46,10 @@ public class Launcher implements ActionListener {
 
     }
 
+    /**
+     * this is the action listener for the buttons.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==starter){
