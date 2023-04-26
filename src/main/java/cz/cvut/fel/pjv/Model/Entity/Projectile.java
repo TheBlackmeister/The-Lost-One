@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
+import cz.cvut.fel.pjv.Controller.GamePanel;
+import cz.cvut.fel.pjv.Model.Setuper.ProjectileSetup;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
@@ -9,44 +11,27 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Projectile extends Entity {
-
-    ProjectileDirections direction;
-    public Projectile(int actualX, int actualY,ProjectileDirections direction) {
+    GamePanel gp;
+    ErrorWindow err;
+    Player.PlayerDirections direction;
+    public Projectile(int actualX, int actualY, Player.PlayerDirections direction, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
         this.direction = direction;
-        this.speed = 30;
+        this.speed = 10; //todo test
+        this.gp = gp;
+        err = new ErrorWindow();
+        gp.prSetup.setUpProjectile();
+        gp.projectile.add(this);
     }
-    public enum ProjectileDirections {
-        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
-    }
-    ErrorWindow err;
-    BufferedImage projectileImageUP,projectileImageDOWN,projectileImageLEFT,projectileImageRIGHT,projectileImageUPLEFT,projectileImageUPRIGHT,projectileImageDOWNLEFT,projectileImageDOWNRIGHT;
+//    public enum ProjectileDirections {
+//        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
+//    }
 
-
-    public void setUpProjectile() {
-        try {
-            projectileImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/projectile/projectiles_up.gif")));
-            projectileImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_down.gif")));
-            projectileImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_left.gif")));
-            projectileImageRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_right.gif")));
-            projectileImageUPLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_upleft.gif")));
-            projectileImageUPRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_upright.gif")));
-            projectileImageDOWNLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_downleft.gif")));
-            projectileImageDOWNRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/projectiles_downright.gif")));
-            // green player texture is from here https://www.deviantart.com/friendlyfirefox/art/Pimp-My-Sprite-Top-down-Soldier-467311032
-            // Other colors are colored by me.
-            direction = Projectile.ProjectileDirections.DOWN;
-        } catch (IOException | NullPointerException e) {
-            err.IOExceptionErrorHandler("Projectile Image", 5);
-            throw new RuntimeException(e);
-        }
-    }
 //    public void newProjectile(int actualX, int actualY, ProjectileDirections direction){
 //
 //    }
     public void update(){
-        System.out.println("test");
         switch (direction){
             case DOWN -> actualY += speed;
             case UP -> actualY -= speed;
@@ -56,8 +41,12 @@ public class Projectile extends Entity {
             case UPRIGHT -> {actualX += speed/2; actualY -= speed/2;}
             case DOWNLEFT -> {actualX -= speed/2; actualY += speed/2;}
             case DOWNRIGHT -> {actualX += speed/2; actualY += speed/2;}
-
         }
+
+        if(actualX < -100 || actualY < -100 || actualX > 900 || actualY > 700){
+            gp.toRemove.add(this); //this adds the projectile to the arraylist used to remove it from main arraylist
+        }
+
 
     }
     public void draw(Graphics g){
@@ -66,14 +55,14 @@ public class Projectile extends Entity {
         BufferedImage PlayerImage = null;
 
         switch (direction){
-            case DOWN -> PlayerImage = projectileImageDOWN;
-            case UP -> PlayerImage = projectileImageUP;
-            case LEFT -> PlayerImage = projectileImageLEFT;
-            case RIGHT -> PlayerImage = projectileImageRIGHT;
-            case UPLEFT -> PlayerImage = projectileImageUPLEFT;
-            case DOWNLEFT -> PlayerImage = projectileImageDOWNLEFT;
-            case UPRIGHT -> PlayerImage = projectileImageUPRIGHT;
-            case DOWNRIGHT -> PlayerImage = projectileImageDOWNRIGHT;
+            case DOWN -> PlayerImage = gp.prSetup.getProjectileImageDOWN();
+            case UP -> PlayerImage = gp.prSetup.getProjectileImageUP();
+            case LEFT -> PlayerImage = gp.prSetup.getProjectileImageLEFT();
+            case RIGHT -> PlayerImage = gp.prSetup.getProjectileImageRIGHT();
+            case UPLEFT -> PlayerImage = gp.prSetup.getProjectileImageUPLEFT();
+            case DOWNLEFT -> PlayerImage = gp.prSetup.getProjectileImageDOWNLEFT();
+            case UPRIGHT -> PlayerImage = gp.prSetup.getProjectileImageUPRIGHT();
+            case DOWNRIGHT -> PlayerImage = gp.prSetup.getProjectileImageDOWNRIGHT();
         }
 
         g2d.drawImage(PlayerImage,actualX,actualY,null);

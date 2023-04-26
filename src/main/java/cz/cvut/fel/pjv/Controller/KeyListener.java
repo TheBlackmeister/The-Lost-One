@@ -70,6 +70,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        if(code == KeyEvent.VK_M){
+            this.mPressed = true;
+        }
         if(code == KeyEvent.VK_ESCAPE){
             this.escPressed = true;
         }
@@ -95,6 +98,9 @@ public class KeyListener implements java.awt.event.KeyListener {
         int code = e.getKeyCode();
         if(code == KeyEvent.VK_ESCAPE){
             this.escPressed = false;
+        }
+        if(code == KeyEvent.VK_M){
+            this.mPressed = false;
         }
         if(code == KeyEvent.VK_I){
             this.iPressed = false;

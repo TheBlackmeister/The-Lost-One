@@ -1,4 +1,5 @@
 package cz.cvut.fel.pjv.Model.Entity;
+import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyListener;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
@@ -15,11 +16,12 @@ public class Player extends Entity{
     public enum PlayerDirections {
         UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
     }
+    GamePanel gp;
     ErrorWindow err;
     KeyListener keyList;
     BufferedImage playerImageUP,playerImageDOWN,playerImageLEFT,playerImageRIGHT, playerImageUPLEFT, playerImageUPRIGHT,playerImageDOWNLEFT,playerImageDOWNRIGHT;
     PlayerDirections direction;
-    public Player(int actualX, int actualY, KeyListener keyList) {
+    public Player(int actualX, int actualY, KeyListener keyList, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
         this.speed = 3;
@@ -27,6 +29,7 @@ public class Player extends Entity{
         err = new ErrorWindow();
         setUpPlayer();
         direction = PlayerDirections.DOWN;
+        this.gp = gp;
     }
     public void setUpPlayer() {
         try {
@@ -48,7 +51,10 @@ public class Player extends Entity{
     }
     public void update(){
         if(keyList.ismPressed()) {
-            Projectile projectile = new Projectile(actualX,actualY,direction); //todo
+            if (gp.prSetup.canBeShot(System.nanoTime())){
+                Projectile projectile = new Projectile(actualX,actualY,direction,gp); //todo
+                System.out.println("M pressed"); //testing
+            }
         }
 
         if(keyList.isDownPressed()) {
