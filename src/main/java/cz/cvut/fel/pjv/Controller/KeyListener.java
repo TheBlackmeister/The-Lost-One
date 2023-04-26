@@ -3,8 +3,16 @@ package cz.cvut.fel.pjv.Controller;
 import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
-    protected boolean upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed;
-    protected boolean upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased;
+    protected boolean upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed, mPressed;
+    protected boolean upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased, mReleased;
+
+    public boolean ismPressed() {
+        return mPressed;
+    }
+
+    public boolean ismReleased() {
+        return mReleased;
+    }
 
     public boolean isUpPressed() {
         return upPressed;

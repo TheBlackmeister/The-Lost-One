@@ -47,6 +47,9 @@ public class Player extends Entity{
         }
     }
     public void update(){
+        if(keyList.ismPressed()) {
+            Projectile projectile = new Projectile(actualX,actualY,direction); //todo
+        }
 
         if(keyList.isDownPressed()) {
             direction = PlayerDirections.DOWN;
