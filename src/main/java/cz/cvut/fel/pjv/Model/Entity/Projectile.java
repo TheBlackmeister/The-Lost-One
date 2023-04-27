@@ -1,27 +1,23 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
 import cz.cvut.fel.pjv.Controller.GamePanel;
-import cz.cvut.fel.pjv.Model.Setuper.ProjectileSetup;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Projectile extends Entity {
     GamePanel gp;
     ErrorWindow err;
-    Player.PlayerDirections direction;
-    public Projectile(int actualX, int actualY, Player.PlayerDirections direction, GamePanel gp) {
+    Directions direction;
+    public Projectile(int actualX, int actualY, Directions direction, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
         this.direction = direction;
         this.speed = 10; //todo test
         this.gp = gp;
         err = new ErrorWindow();
-        gp.prSetup.setUpProjectile();
+        gp.prSetup.setUpProjectile(); // todo maybe delete to optimize
         gp.projectile.add(this);
     }
 //    public enum ProjectileDirections {

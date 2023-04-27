@@ -5,4 +5,7 @@ public class Entity {
     protected int actualY;
     protected int speed;
     protected Inventory inv;
+    public enum Directions {
+        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
+    }
 }

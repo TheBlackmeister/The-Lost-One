@@ -7,11 +7,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * ProjectileSetup is used to setup the projectile images and implement the necessary methods.
+ */
 public class ProjectileSetup {
 
     long canBeShotInitialTime;
     ErrorWindow err;
     BufferedImage projectileImageUP,projectileImageDOWN,projectileImageLEFT,projectileImageRIGHT,projectileImageUPLEFT,projectileImageUPRIGHT,projectileImageDOWNLEFT,projectileImageDOWNRIGHT;
+
+    public ProjectileSetup(){
+        err = new ErrorWindow();
+    }
     public void setUpProjectile() {
         try {
             projectileImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/projectile/projectiles_up.gif")));
@@ -37,6 +44,7 @@ public class ProjectileSetup {
         }
         return false;
     }
+
 
     public BufferedImage getProjectileImageUP() {
         return projectileImageUP;
