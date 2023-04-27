@@ -12,15 +12,11 @@ import java.util.Objects;
  * This is the Player class. it
  */
 public class Player extends Entity{
-
-    public enum PlayerDirections {
-        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
-    }
     GamePanel gp;
     ErrorWindow err;
     KeyListener keyList;
     BufferedImage playerImageUP,playerImageDOWN,playerImageLEFT,playerImageRIGHT, playerImageUPLEFT, playerImageUPRIGHT,playerImageDOWNLEFT,playerImageDOWNRIGHT;
-    PlayerDirections direction;
+    Directions direction;
     public Player(int actualX, int actualY, KeyListener keyList, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
@@ -28,7 +24,7 @@ public class Player extends Entity{
         this.keyList = keyList;
         err = new ErrorWindow();
         setUpPlayer();
-        direction = PlayerDirections.DOWN;
+        direction = Directions.DOWN;
         this.gp = gp;
     }
     public void setUpPlayer() {
@@ -43,7 +39,7 @@ public class Player extends Entity{
             playerImageDOWNRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/greensoldier_DOWN_RIGHT.png")));
             // green player texture is from here https://www.deviantart.com/friendlyfirefox/art/Pimp-My-Sprite-Top-down-Soldier-467311032
             // Other colors are colored by me.
-            direction = PlayerDirections.DOWN;
+            direction = Directions.DOWN;
         } catch (IOException | NullPointerException e) {
             err.IOExceptionErrorHandler("Player Image", 5);
             throw new RuntimeException(e);
@@ -57,36 +53,44 @@ public class Player extends Entity{
             }
         }
 
+        //todo test
+        if (keyList.isEscPressed()) {
+            if (gp.twSetup.towerCanBeShot(System.nanoTime())){
+                Tower tower = new Tower(225,289,gp); //todo test
+                System.out.println("esc pressed"); //testing
+            }
+        }
+
         if(keyList.isDownPressed()) {
-            direction = PlayerDirections.DOWN;
+            direction = Directions.DOWN;
             actualY += speed;
         }
 
         if(keyList.isUpPressed()) {
-            direction = PlayerDirections.UP;
+            direction = Directions.UP;
             actualY -= speed;
         }
 
         if(keyList.isRightPressed()) {
-            direction = PlayerDirections.RIGHT;
+            direction = Directions.RIGHT;
             actualX += speed;
         }
 
         if(keyList.isLeftPressed()) {
-            direction = PlayerDirections.LEFT;
+            direction = Directions.LEFT;
             actualX -= speed;
         }
         if(keyList.isDownPressed() && keyList.isLeftPressed()){
-            direction = PlayerDirections.DOWNLEFT;
+            direction = Directions.DOWNLEFT;
         }
         if(keyList.isUpPressed() && keyList.isLeftPressed()){
-            direction = PlayerDirections.UPLEFT;
+            direction = Directions.UPLEFT;
         }
         if(keyList.isDownPressed() && keyList.isRightPressed()){
-            direction = PlayerDirections.DOWNRIGHT;
+            direction = Directions.DOWNRIGHT;
         }
         if(keyList.isUpPressed() && keyList.isRightPressed()){
-            direction = PlayerDirections.UPRIGHT;
+            direction = Directions.UPRIGHT;
         }
 //        switch (direction){
 //            case DOWN -> actualY += speed;
