@@ -1,11 +1,12 @@
 package cz.cvut.fel.pjv.Controller;
 
-import cz.cvut.fel.pjv.Model.Entity.EnemyProjectile;
-import cz.cvut.fel.pjv.Model.Entity.Player;
-import cz.cvut.fel.pjv.Model.Entity.Projectile;
-import cz.cvut.fel.pjv.Model.Entity.Tower;
+import cz.cvut.fel.pjv.Model.Entity.*;
+import cz.cvut.fel.pjv.Model.Map.Room;
+import cz.cvut.fel.pjv.Model.Setuper.ConfigFileSetup;
+import cz.cvut.fel.pjv.Model.Setuper.MapSetup;
 import cz.cvut.fel.pjv.Model.Setuper.ProjectileSetup;
 import cz.cvut.fel.pjv.Model.Setuper.TowerSetup;
+import cz.cvut.fel.pjv.View.MapView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,11 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements Runnable{
     Thread gameThread; // main game thread
     Player player;
-
+    ArrayList<Room> map;
+    ConfigFileSetup config;
+    MapSetup mapsetup;
+    MapView mapView;
+    int[][][] worldMap;
     public ProjectileSetup prSetup; // nacteni textur pro bullet
     public ArrayList<Projectile> toRemove;
     public ArrayList<Projectile> projectile; // public used for manipulation from projectile class
@@ -31,15 +36,24 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Tower> towersToRemove;
     public ArrayList<EnemyProjectile> enemyProjectileToRemove;
     public ArrayList<EnemyProjectile> enemyProjectile; // public used for manipulation from projectile class
+    public ArrayList<EnemySoldier> enemySoldiers;
+
     KeyListener keyList;
-//    MapSetup map;
+
     int FPS = 90;
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(800,600));
+        /*
+        * config is used to initialize and hold all the configuration variables.
+        */
+        config = new ConfigFileSetup();
+        config.getTheConfig();
+
+        mapsetup = new MapSetup(this);
+        mapsetup.mapInit();
+        this.setPreferredSize(new Dimension(config.getScreenWidth(),config.getScreenHeight()));
         this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
-//        this.addKeyListener(keyHand);
         this.setFocusable(true);
         keyList = new KeyListener();
         prSetup = new ProjectileSetup(); // projectile texture setup
@@ -52,7 +66,9 @@ public class GamePanel extends JPanel implements Runnable{
         enemyProjectileToRemove = new ArrayList<EnemyProjectile>();
         towers = new ArrayList<Tower>();
         towersToRemove = new ArrayList<Tower>();
-//        map = new MapSetup();
+        enemySoldiers = new ArrayList<EnemySoldier>();
+
+        mapView = new MapView(enemySoldiers,towers,MapView.RoomType.CLOSED, mapsetup.getMap());
         startGameThread();
 
     } // konstruktor
@@ -69,9 +85,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        /*
-         * FPS COUNTER INIT
-         * */
+/**
+ * fps counter init
+ */
         double drawInterval = 1_000_000_000 / FPS; // 0.0166 periodickych sekund
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -80,14 +96,14 @@ public class GamePanel extends JPanel implements Runnable{
         long timer = 0; // fps counter
         int drawCount = 0; // fps counter
 
-
+    //setups the game
         setupGame();
 
 
         while (gameThread != null) {
-            /*
-             * FPS COUNTER START
-             * */
+            /**
+             * fps counter start
+             */
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime); // fps counter
@@ -105,13 +121,14 @@ public class GamePanel extends JPanel implements Runnable{
                 drawCount = 0;
                 timer = 0;
             } // FPS COUNTER
-            /*
-             * FPS COUNTER END
-             * */
+            /**
+             * fps counter end
+             */
         }
     }
 
     public void update() {
+        mapView.update();
         player.update();
         /**
          * updating player projectile
@@ -136,6 +153,8 @@ public class GamePanel extends JPanel implements Runnable{
             enemyProjectileToRemove.clear();
             //vykresluji
         } // updating enemy projectiles
+
+
         /**
          * updating towers
          */
@@ -147,6 +166,8 @@ public class GamePanel extends JPanel implements Runnable{
             towers.removeAll(towersToRemove);
             towersToRemove.clear();
         }
+
+
     }
 
 
@@ -154,6 +175,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        mapView.draw(g);
         player.draw(g);
         /**
          * drawing player projectile
@@ -192,9 +214,19 @@ public class GamePanel extends JPanel implements Runnable{
             towers.removeAll(towersToRemove);
             towersToRemove.clear();
         }
+
+
     }
+
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Getter to reach configuration object from other classes
+     * @return configuration object
+     */
+    public ConfigFileSetup getConfig() {
+        return config;
+    }
 }

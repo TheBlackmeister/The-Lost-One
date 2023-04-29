@@ -20,13 +20,7 @@ public class Projectile extends Entity {
         gp.prSetup.setUpProjectile(); // todo maybe delete to optimize
         gp.projectile.add(this);
     }
-//    public enum ProjectileDirections {
-//        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
-//    }
 
-//    public void newProjectile(int actualX, int actualY, ProjectileDirections direction){
-//
-//    }
     public void update(){
         switch (direction){
             case DOWN -> actualY += speed;
@@ -39,7 +33,7 @@ public class Projectile extends Entity {
             case DOWNRIGHT -> {actualX += speed/2; actualY += speed/2;}
         }
 
-        if(actualX < -100 || actualY < -100 || actualX > 900 || actualY > 700){
+        if(actualX < -100 || actualY < -100 || actualX > gp.getConfig().getScreenWidth()+100 || actualY > gp.getConfig().getScreenHeight()+100){
             gp.toRemove.add(this); //this adds the projectile to the arraylist used to remove it from main arraylist
         }
 

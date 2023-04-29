@@ -6,25 +6,30 @@ import cz.cvut.fel.pjv.View.ErrorWindow;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static java.lang.Math.*;
+
 public class EnemyProjectile extends Entity{
     GamePanel gp;
     ErrorWindow err;
-    double vx,vy;
-    public EnemyProjectile(int actualX, int actualY, double vx,double vy, GamePanel gp) {
+    double polar;
+    double tmpX,tmpY;
+
+    public EnemyProjectile(int actualX, int actualY, double polar, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
-        this.vx = vx;
-        this.vy = vy;
-        this.speed = 2; //todo test
+        this.polar = polar;
+        tmpX = actualX; //tmp variable because it has to be double
+        tmpY = actualY; //tmp variable because it has to be double
+        this.speed = 5; //todo test
         this.gp = gp;
         err = new ErrorWindow();
         gp.twSetup.setUpTower();
         gp.enemyProjectile.add(this);
     }
     public void update(){
-        actualX += vx;
-        actualY += vy;
-        if(actualX < -100 || actualY < -100 || actualX > 900 || actualY > 700){
+        tmpX += cos(polar) * speed;
+        tmpY += sin(polar)  * speed;
+        if(actualX < -100 || actualY < -100 || actualX > gp.getConfig().getScreenWidth()+100 || actualY > gp.getConfig().getScreenHeight()+100){
             gp.enemyProjectileToRemove.add(this); //this adds the projectile to the arraylist used to remove it from main arraylist
         }
     }
@@ -33,7 +38,7 @@ public class EnemyProjectile extends Entity{
         g2d = (Graphics2D)g;
         BufferedImage PlayerImage = gp.twSetup.getTowerImageBullet();
 
-        g2d.drawImage(PlayerImage,actualX,actualY,16,16,null);
+        g2d.drawImage(PlayerImage,(int) tmpX,(int)tmpY,16,16,null);
     }
 
 }

@@ -30,8 +30,8 @@ public class Tower extends Entity{
     public void update(){
 
             if (gp.twSetup.towerCanBeShot(System.nanoTime())){
-                double[] directionValues = mgm.directionVector(actualX,actualY,gp.getPlayer().actualX,gp.getPlayer().actualY);
-                EnemyProjectile newTowerProjectile = new EnemyProjectile(actualX,actualY,directionValues[0],directionValues[1],gp); //todo
+                double directionValue = mgm.directionVector(actualX,actualY,gp.getPlayer().actualX,gp.getPlayer().actualY);
+                EnemyProjectile newTowerProjectile = new EnemyProjectile(actualX,actualY,directionValue,gp); //todo
                  //todo
 //                System.out.println(""); //testing
             }
