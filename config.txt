@@ -1,0 +1,3 @@
+map = "sample_map.txt"
+gameWidth = 800
+gameHeight = 600

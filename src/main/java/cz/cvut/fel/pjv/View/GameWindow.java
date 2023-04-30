@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.View;
 
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Model.Setuper.ConfigFileSetup;
-import cz.cvut.fel.pjv.Model.Setuper.MapSetup;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class GameWindow {
         gameWindow.setPreferredSize(new Dimension(config.getScreenWidth(),config.getScreenHeight())); // size of the window
 
         GamePanel gamePanel = new GamePanel();
-
+        gameWindow.setUndecorated(true); // deletes the outer windows todo rework
         gameWindow.add(gamePanel);
         gameWindow.pack();
         gameWindow.setLocationRelativeTo(null); // window will be centered

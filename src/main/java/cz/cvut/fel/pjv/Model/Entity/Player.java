@@ -119,4 +119,6 @@ public class Player extends Entity{
         g2d.drawImage(PlayerImage,actualX,actualY,null);
 
     }
+
+
 }

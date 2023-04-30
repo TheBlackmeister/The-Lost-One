@@ -1,14 +1,16 @@
 package cz.cvut.fel.pjv.Model.Map.Tile;
 
+import java.awt.image.BufferedImage;
+
 public class Tile {
+    BufferedImage image;
     private int tileX;
     private int tileY;
     private int tileSize;
     private boolean solid;
 
-    public Tile(int x, int y) {
-        this.tileX = x;
-        this.tileY = y;
+    public Tile(BufferedImage image) {
+        this.image = image;
         this.solid = false;
         tileSize = 16;
     }
@@ -25,7 +27,12 @@ public class Tile {
         return this.solid;
     }
 
-    public void setPassable(boolean solid) {
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setSolid(boolean solid) {
         this.solid = solid;
     }
 }
+

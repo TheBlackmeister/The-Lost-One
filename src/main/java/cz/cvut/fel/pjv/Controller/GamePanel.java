@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
     ConfigFileSetup config;
     MapSetup mapsetup;
     MapView mapView;
+    RoomMover roomMover;
     int[][][] worldMap;
     public ProjectileSetup prSetup; // nacteni textur pro bullet
     public ArrayList<Projectile> toRemove;
@@ -51,6 +52,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         mapsetup = new MapSetup(this);
         mapsetup.mapInit();
+        mapsetup.tileInit();
+
+
         this.setPreferredSize(new Dimension(config.getScreenWidth(),config.getScreenHeight()));
         this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
@@ -64,11 +68,13 @@ public class GamePanel extends JPanel implements Runnable{
         toRemove = new ArrayList<Projectile>();
         enemyProjectile = new ArrayList<EnemyProjectile>();
         enemyProjectileToRemove = new ArrayList<EnemyProjectile>();
-        towers = new ArrayList<Tower>();
-        towersToRemove = new ArrayList<Tower>();
-        enemySoldiers = new ArrayList<EnemySoldier>();
+        towers = new ArrayList<Tower>();//todo presunout do nejake controller class
+        towersToRemove = new ArrayList<Tower>();//todo presunout do nejake controller class
+        enemySoldiers = new ArrayList<EnemySoldier>(); //todo presunout do nejake controller class
 
-        mapView = new MapView(enemySoldiers,towers,MapView.RoomType.CLOSED, mapsetup.getMap());
+        roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
+
+        mapView = new MapView(mapsetup.getRooms().get(0),this); // zero is the first and default starting room.
         startGameThread();
 
     } // konstruktor
@@ -128,6 +134,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
+        roomMover.update();
         mapView.update();
         player.update();
         /**
@@ -220,6 +227,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * getter to reach mapsetup from different class (specifically from MapView)
+     * @return MapSetup
+     */
+    public MapSetup getMapsetup() {
+        return mapsetup;
     }
 
     /**
