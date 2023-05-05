@@ -53,7 +53,7 @@ public class Launcher implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==starter){
-            GameWindow mainWindow = new GameWindow();
+            GameWindow mainWindow = new GameWindow(this);
             launcher.setVisible(false); // 'temporarily closes' the launcher after the mainwindow is opened
         }
         if(e.getSource()==logging){
@@ -67,5 +67,9 @@ public class Launcher implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Logging is turned off.");
             }
         }
+    }
+
+    public JFrame getLauncher() {
+        return launcher;
     }
 }

@@ -2,11 +2,14 @@ package cz.cvut.fel.pjv.Model.Map.Tile;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * to be deleted
+ */
 public class Tile {
     BufferedImage image;
     private int tileX;
     private int tileY;
-    private int tileSize;
+    private final int tileSize;
     private boolean solid;
 
     public Tile(BufferedImage image) {
@@ -15,13 +18,7 @@ public class Tile {
         tileSize = 16;
     }
 
-    public int getX() {
-        return this.tileX;
-    }
 
-    public int getY() {
-        return this.tileY;
-    }
 
     public boolean isPassable() {
         return this.solid;

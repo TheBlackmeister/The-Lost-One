@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TowerSetup {
-    long canBeShotInitialTime;
     ErrorWindow err;
     BufferedImage towerImage,towerImageBullet;
     public TowerSetup(){
@@ -23,13 +22,8 @@ public class TowerSetup {
             err.IOExceptionErrorHandler("Tower Image", 5);
             throw new RuntimeException(e);
         }
-        canBeShotInitialTime = System.nanoTime();
     }
-    public boolean towerCanBeShot(long timePressed){
-        // 1 sec
 
-        return canBeShotInitialTime < (timePressed - 1_000_000_000);
-    }
 
 
     public BufferedImage getTowerImage() {

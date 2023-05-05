@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.Model.Map;
 
 import cz.cvut.fel.pjv.Model.Entity.EnemySoldier;
 import cz.cvut.fel.pjv.Model.Entity.Tower;
+import cz.cvut.fel.pjv.Model.Utils.Tuple;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Room {
     private final int tileSize = 16;
-    private ArrayList<EnemySoldier> enemies;
-    private ArrayList<Tower> towers;
+    private ArrayList<Tuple> enemies;
+    private ArrayList<Tuple> towers;
     private int[][] map;
     private boolean closed;
     private int upRoomIndex;
@@ -21,7 +22,7 @@ public class Room {
     private int downRoomIndex;
     private int leftRoomIndex;
 
-    public Room(ArrayList<EnemySoldier> enemies, ArrayList<Tower> towers,int[][] map,int upRoomIndex,int rightRoomIndex,int downRoomIndex,int leftRoomIndex, boolean closed){
+    public Room(ArrayList<Tuple> enemies, ArrayList<Tuple> towers, int[][] map, int upRoomIndex, int rightRoomIndex, int downRoomIndex, int leftRoomIndex, boolean closed){
         this.map = map;
         this.enemies = enemies;
         this.towers = towers;
@@ -32,11 +33,19 @@ public class Room {
         this.downRoomIndex = downRoomIndex;
     }
 
-    public ArrayList<EnemySoldier> getEnemies() {
+    public void setEnemies(ArrayList<Tuple> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setTowers(ArrayList<Tuple> towers) {
+        this.towers = towers;
+    }
+
+    public ArrayList<Tuple> getEnemies() {
         return enemies;
     }
 
-    public ArrayList<Tower> getTowers() {
+    public ArrayList<Tuple> getTowers() {
         return towers;
     }
 

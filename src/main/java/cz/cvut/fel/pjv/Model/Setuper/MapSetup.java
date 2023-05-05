@@ -5,6 +5,7 @@ import cz.cvut.fel.pjv.Model.Entity.EnemySoldier;
 import cz.cvut.fel.pjv.Model.Entity.Entity;
 import cz.cvut.fel.pjv.Model.Entity.Tower;
 import cz.cvut.fel.pjv.Model.Map.Room;
+import cz.cvut.fel.pjv.Model.Utils.Tuple;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
@@ -25,8 +26,9 @@ public class MapSetup {
     File mapFile;
     BufferedReader bReader;
     BufferedImage tile0, tile1;
-    private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex;
+    private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex, numberOfEnemies, numberOfTowers;
     private boolean closed;
+    private int widthOfBoundaries;
     int[][] map;
     int rows;
     int cols;
@@ -35,8 +37,9 @@ public class MapSetup {
         mapFile = new File(gp.getConfig().mapName);
         err = new ErrorWindow();
         rooms = new ArrayList<Room>();
+        this.gp = gp;
         mapInit();
-
+        tileInit();
     }
     public void mapInit(){
         /*
@@ -61,6 +64,28 @@ public class MapSetup {
                 downRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room under?
                 leftRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
                 closed = Boolean.parseBoolean(bReader.readLine()); // is it closed?
+                numberOfEnemies = Integer.parseInt(bReader.readLine()); // how many enemies are in the room?
+                numberOfTowers = Integer.parseInt(bReader.readLine()); // how many towers are in the room?
+
+                ArrayList<Tuple> listOfEnemies = new ArrayList<Tuple>();
+                ArrayList<Tuple> listOfTowers = new ArrayList<Tuple>();
+
+                for (int enemy = 0; enemy < numberOfEnemies; enemy++) {
+                    String enemyTmp = bReader.readLine();
+                    enemyTmp = enemyTmp.substring(1,enemyTmp.length()-1);
+                    String[] parts = enemyTmp.split(",");
+                    int coordX = Integer.parseInt(parts[0].trim()); // parse the first part as an coordX and trim any whitespace
+                    int coordY = Integer.parseInt(parts[1].trim()); // parse the second part as an coordY and trim any whitespace
+                    listOfEnemies.add(new Tuple(coordX,coordY));
+                }
+                for (int tower = 0; tower < numberOfTowers; tower++) {
+                    String towerTmp = bReader.readLine();
+                    towerTmp = towerTmp.substring(1,towerTmp.length()-1);
+                    String[] parts = towerTmp.split(",");
+                    int coordX = Integer.parseInt(parts[0].trim()); // parse the first part as an coordX and trim any whitespace
+                    int coordY = Integer.parseInt(parts[1].trim()); // parse the second part as an coordY and trim any whitespace
+                    listOfTowers.add(new Tuple(coordX,coordY));
+                }
                 map = new int[rows][cols];
                 String lineTmp;
                 String[] nums;
@@ -72,8 +97,11 @@ public class MapSetup {
 
                     }
                 }
-                Room newRoom = new Room(new ArrayList<EnemySoldier>(),new ArrayList<Tower>(),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed); //todo
+
+                Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed);
                 rooms.add(newRoom);
+                listOfEnemies.clear();
+                listOfTowers.clear();
             }
             bReader.close();
 

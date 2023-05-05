@@ -16,14 +16,14 @@ public class MapView {
     GamePanel gp; // to access the tile textures and load them only once.
 
     public MapView(Room room, GamePanel gp) {
-        this.enemies = room.getEnemies();
-        this.towers = room.getTowers();
+//        this.enemies = room.getEnemies();
+//        this.towers = room.getTowers();
         this.map = room.getMap();
         this.gp = gp;
     }
     public void setRoom(Room room) {
-        this.enemies = room.getEnemies();
-        this.towers = room.getTowers();
+//        this.enemies = room.getEnemies();
+//        this.towers = room.getTowers();
         this.map = room.getMap();
     }
 

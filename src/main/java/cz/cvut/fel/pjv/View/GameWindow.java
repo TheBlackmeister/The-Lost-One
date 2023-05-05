@@ -8,9 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow {
+    Launcher launcher;
     JFrame gameWindow = new JFrame(); // nove okno - hlavni okno
 
-    GameWindow() {
+    GameWindow(Launcher launcher) {
+        this.launcher = launcher;
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to be able to close the window
         gameWindow.setResizable(false); // nemenna velikost
         gameWindow.setTitle("The Lost One"); // name of the window
@@ -19,7 +21,7 @@ public class GameWindow {
 
         gameWindow.setPreferredSize(new Dimension(config.getScreenWidth(),config.getScreenHeight())); // size of the window
 
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel(gameWindow,this.launcher);
         gameWindow.setUndecorated(true); // deletes the outer windows todo rework
         gameWindow.add(gamePanel);
         gameWindow.pack();

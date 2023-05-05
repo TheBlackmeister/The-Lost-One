@@ -1,6 +1,8 @@
 package cz.cvut.fel.pjv.Model.Entity;
+import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyListener;
+import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
@@ -12,6 +14,7 @@ import java.util.Objects;
  * This is the Player class. it
  */
 public class Player extends Entity{
+    CollisionEntityChecker collEntCheck;
     GamePanel gp;
     ErrorWindow err;
     KeyListener keyList;
@@ -26,6 +29,8 @@ public class Player extends Entity{
         setUpPlayer();
         direction = Directions.DOWN;
         this.gp = gp;
+        this.healthBar = new HealthBar(100);
+        collEntCheck = new CollisionEntityChecker(gp);
     }
     public void setUpPlayer() {
         try {
@@ -46,39 +51,49 @@ public class Player extends Entity{
         }
     }
     public void update(){
+        if(collEntCheck.checkEntityCollisionPlayer(this)){
+            healthBar.decreaseHealth();
+        }
         if(keyList.ismPressed()) {
             if (gp.prSetup.canBeShot(System.nanoTime())){
                 Projectile projectile = new Projectile(actualX,actualY,direction,gp); //todo
                 System.out.println("M pressed"); //testing
             }
         }
-
-        //todo test
-        if (keyList.isEscPressed()) {
-            if (gp.twSetup.towerCanBeShot(System.nanoTime())){
-                Tower tower = new Tower(225,289,gp); //todo test
-                System.out.println("esc pressed"); //testing
-            }
-        }
-
         if(keyList.isDownPressed()) {
             direction = Directions.DOWN;
             actualY += speed;
+            if(gp.getCollCheck().checkTileCollisionPlayer(this)){
+                actualY -= speed;
+                // todo collision sound could be played here
+            }
         }
 
         if(keyList.isUpPressed()) {
             direction = Directions.UP;
             actualY -= speed;
+            if(gp.getCollCheck().checkTileCollisionPlayer(this)){
+                actualY += speed;
+                // todo collision sound could be played here
+            }
         }
 
         if(keyList.isRightPressed()) {
             direction = Directions.RIGHT;
             actualX += speed;
+            if(gp.getCollCheck().checkTileCollisionPlayer(this)){
+                actualX -= speed;
+                // todo collision sound could be played here
+            }
         }
 
         if(keyList.isLeftPressed()) {
             direction = Directions.LEFT;
             actualX -= speed;
+            if(gp.getCollCheck().checkTileCollisionPlayer(this)){
+                actualX += speed;
+                // todo collision sound could be played here
+            }
         }
         if(keyList.isDownPressed() && keyList.isLeftPressed()){
             direction = Directions.DOWNLEFT;

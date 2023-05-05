@@ -36,7 +36,7 @@ public class ConfigFileSetup {
                 screenHeight = scanner.nextInt();
                 scanner.close();
             } catch (Exception e) {
-                err.IOExceptionErrorHandler("Config file", 3);
+                err.BadConfigFileErrorHandler("Config file", 3);
                 throw new RuntimeException(e);
             }
 

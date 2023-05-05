@@ -41,4 +41,19 @@ public class EnemyProjectile extends Entity{
         g2d.drawImage(PlayerImage,(int) tmpX,(int)tmpY,16,16,null);
     }
 
+    public double getTmpX() {
+        return tmpX;
+    }
+
+    public void setTmpX(double tmpX) {
+        this.tmpX = tmpX;
+    }
+
+    public double getTmpY() {
+        return tmpY;
+    }
+
+    public void setTmpY(double tmpY) {
+        this.tmpY = tmpY;
+    }
 }
