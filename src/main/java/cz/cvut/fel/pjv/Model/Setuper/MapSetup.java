@@ -26,9 +26,8 @@ public class MapSetup {
     File mapFile;
     BufferedReader bReader;
     BufferedImage tile0, tile1;
-    private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex, numberOfEnemies, numberOfTowers;
+    private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex, numberOfEnemies, numberOfTowers, numberOfFountains;
     private boolean closed;
-    private int widthOfBoundaries;
     int[][] map;
     int rows;
     int cols;
@@ -66,9 +65,11 @@ public class MapSetup {
                 closed = Boolean.parseBoolean(bReader.readLine()); // is it closed?
                 numberOfEnemies = Integer.parseInt(bReader.readLine()); // how many enemies are in the room?
                 numberOfTowers = Integer.parseInt(bReader.readLine()); // how many towers are in the room?
+                numberOfFountains  = Integer.parseInt(bReader.readLine()); // how many fountains are in the room?
 
                 ArrayList<Tuple> listOfEnemies = new ArrayList<Tuple>();
                 ArrayList<Tuple> listOfTowers = new ArrayList<Tuple>();
+                ArrayList<Tuple> listOfFountains = new ArrayList<Tuple>();
 
                 for (int enemy = 0; enemy < numberOfEnemies; enemy++) {
                     String enemyTmp = bReader.readLine();
@@ -86,6 +87,16 @@ public class MapSetup {
                     int coordY = Integer.parseInt(parts[1].trim()); // parse the second part as an coordY and trim any whitespace
                     listOfTowers.add(new Tuple(coordX,coordY));
                 }
+                for (int fountain = 0; fountain < numberOfFountains; fountain++) {
+                    String fountainTMP = bReader.readLine();
+                    fountainTMP = fountainTMP.substring(1,fountainTMP.length()-1);
+                    String[] parts = fountainTMP.split(",");
+                    int coordX = Integer.parseInt(parts[0].trim()); // parse the first part as an coordX and trim any whitespace
+                    int coordY = Integer.parseInt(parts[1].trim()); // parse the second part as an coordY and trim any whitespace
+                    listOfFountains.add(new Tuple(coordX,coordY));
+                }
+
+
                 map = new int[rows][cols];
                 String lineTmp;
                 String[] nums;
@@ -98,10 +109,11 @@ public class MapSetup {
                     }
                 }
 
-                Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed);
+                Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers), new ArrayList<>(listOfFountains),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed);
                 rooms.add(newRoom);
                 listOfEnemies.clear();
                 listOfTowers.clear();
+                listOfFountains.clear();
             }
             bReader.close();
 

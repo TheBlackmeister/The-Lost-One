@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.Model.Map;
 
 import cz.cvut.fel.pjv.Model.Entity.EnemySoldier;
+import cz.cvut.fel.pjv.Model.Entity.Fountain;
 import cz.cvut.fel.pjv.Model.Entity.Tower;
 import cz.cvut.fel.pjv.Model.Utils.Tuple;
 
@@ -15,6 +16,7 @@ public class Room {
     private final int tileSize = 16;
     private ArrayList<Tuple> enemies;
     private ArrayList<Tuple> towers;
+    private ArrayList<Tuple> fountains;
     private int[][] map;
     private boolean closed;
     private int upRoomIndex;
@@ -22,10 +24,11 @@ public class Room {
     private int downRoomIndex;
     private int leftRoomIndex;
 
-    public Room(ArrayList<Tuple> enemies, ArrayList<Tuple> towers, int[][] map, int upRoomIndex, int rightRoomIndex, int downRoomIndex, int leftRoomIndex, boolean closed){
+    public Room(ArrayList<Tuple> enemies, ArrayList<Tuple> towers, ArrayList<Tuple> fountains, int[][] map, int upRoomIndex, int rightRoomIndex, int downRoomIndex, int leftRoomIndex, boolean closed){
         this.map = map;
         this.enemies = enemies;
         this.towers = towers;
+        this.fountains = fountains;
         this.closed = closed;
         this.upRoomIndex = upRoomIndex;
         this.rightRoomIndex = rightRoomIndex;
@@ -41,12 +44,20 @@ public class Room {
         this.towers = towers;
     }
 
+    public void setFountains(ArrayList<Tuple> fountains) {
+        this.fountains = fountains;
+    }
+
     public ArrayList<Tuple> getEnemies() {
         return enemies;
     }
 
     public ArrayList<Tuple> getTowers() {
         return towers;
+    }
+
+    public ArrayList<Tuple> getFountains() {
+        return fountains;
     }
 
     public int[][] getMap() {

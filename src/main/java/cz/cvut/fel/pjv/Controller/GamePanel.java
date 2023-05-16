@@ -40,6 +40,8 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<EnemyProjectile> enemyProjectile; // public used for manipulation from projectile class
     public ArrayList<EnemySoldier> enemySoldiers;
     public ArrayList<EnemySoldier> enemySoldiersToRemove;
+    public ArrayList<Fountain> fountains;
+    public ArrayList<Fountain> fountainsToRemove;
 
     KeyListener keyList;
 
@@ -71,10 +73,12 @@ public class GamePanel extends JPanel implements Runnable{
         toRemove = new ArrayList<Projectile>();
         enemyProjectile = new ArrayList<EnemyProjectile>();
         enemyProjectileToRemove = new ArrayList<EnemyProjectile>();
-        towers = new ArrayList<Tower>();//todo presunout do nejake controller class
-        towersToRemove = new ArrayList<Tower>();//todo presunout do nejake controller class
-        enemySoldiers = new ArrayList<EnemySoldier>(); //todo presunout do nejake controller class
+        towers = new ArrayList<Tower>();
+        towersToRemove = new ArrayList<Tower>();
+        enemySoldiers = new ArrayList<EnemySoldier>();
         enemySoldiersToRemove = new ArrayList<EnemySoldier>();
+        fountains = new ArrayList<Fountain>();
+        fountainsToRemove = new ArrayList<Fountain>();
 
         mapsetup = new MapSetup(this);
 
@@ -204,6 +208,18 @@ public class GamePanel extends JPanel implements Runnable{
             enemySoldiersToRemove.clear();
         }
 
+        /**
+         * updating fountains
+         */
+
+        if(!fountains.isEmpty()){
+            for (Fountain fountainTmp : fountains) {
+                fountainTmp.update();
+            }
+            fountains.removeAll(fountainsToRemove);
+            fountainsToRemove.clear();
+        }
+
     }
 
 
@@ -261,6 +277,18 @@ public class GamePanel extends JPanel implements Runnable{
             }
             enemySoldiers.removeAll(enemySoldiersToRemove);
             enemySoldiersToRemove.clear();
+        }
+
+        /**
+         * drawing fountains
+         */
+
+        if(!fountains.isEmpty()){
+            for (Fountain fountainTmp : fountains) {
+                fountainTmp.draw(g);
+            }
+            fountains.removeAll(fountainsToRemove);
+            fountainsToRemove.clear();
         }
 
 

@@ -45,15 +45,8 @@ public class EnemyProjectile extends Entity{
         return tmpX;
     }
 
-    public void setTmpX(double tmpX) {
-        this.tmpX = tmpX;
-    }
-
     public double getTmpY() {
         return tmpY;
     }
 
-    public void setTmpY(double tmpY) {
-        this.tmpY = tmpY;
-    }
 }

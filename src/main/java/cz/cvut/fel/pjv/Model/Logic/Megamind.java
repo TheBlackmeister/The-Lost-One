@@ -15,9 +15,9 @@ public class Megamind {
      * @param y2 is the Y coordinate of the target point.
      * @return direction in Radians (double)
      */
-    public double directionVector(double x1,double x2,double y1,double y2){ //y-x = y1-x1; y2-x2 // todo could be static
-        double dx = y1-x1;
-        double dy = y2-x2;
+    public double directionVector(double x1,double y1,double x2,double y2){ //y-x = y1-x1; y2-x2 // todo could be static
+        double dx = x2-x1;
+        double dy = y2-y1;
 
         return Math.atan2(dy,dx);
     }

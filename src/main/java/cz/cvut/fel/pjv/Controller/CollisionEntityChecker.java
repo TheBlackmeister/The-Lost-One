@@ -47,4 +47,10 @@ public class CollisionEntityChecker {
         }
         return false;
     }
+    public boolean checkIsPlayerInsideFountain(Fountain fountain,Player player){
+        Rectangle rectF1 = new Rectangle(fountain.getActualX()+21, fountain.getActualY(), 22, 64);
+        Rectangle rectF2 = new Rectangle(fountain.getActualX(), fountain.getActualY()+21, 64, 22);
+        Rectangle rectP = new Rectangle(player.getActualX(), player.getActualY(), 32, 32);
+        return rectF1.intersects(rectP) || rectF2.intersects(rectP);
+    }
 }

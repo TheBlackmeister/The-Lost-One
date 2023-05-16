@@ -50,6 +50,7 @@ public class Player extends Entity{
             throw new RuntimeException(e);
         }
     }
+
     public void update(){
         if(collEntCheck.checkEntityCollisionPlayer(this)){
             healthBar.decreaseHealth();
@@ -67,6 +68,10 @@ public class Player extends Entity{
                 actualY -= speed;
                 // todo collision sound could be played here
             }
+            if(gp.getRoomMover().isClosedPlayerOutOfRoomDown()){
+                actualY -= speed;
+                System.out.println("closed!");
+            }
         }
 
         if(keyList.isUpPressed()) {
@@ -75,6 +80,10 @@ public class Player extends Entity{
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualY += speed;
                 // todo collision sound could be played here
+            }
+            if(gp.getRoomMover().isClosedPlayerOutOfRoomUp()){
+                actualY += speed;
+                System.out.println("closed!");
             }
         }
 
@@ -85,6 +94,10 @@ public class Player extends Entity{
                 actualX -= speed;
                 // todo collision sound could be played here
             }
+            if(gp.getRoomMover().isClosedPlayerOutOfRoomRight()){
+                actualX -= speed;
+                System.out.println("closed!");
+            }
         }
 
         if(keyList.isLeftPressed()) {
@@ -93,6 +106,10 @@ public class Player extends Entity{
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualX += speed;
                 // todo collision sound could be played here
+            }
+            if(gp.getRoomMover().isClosedPlayerOutOfRoomLeft()){
+                actualX += speed;
+                System.out.println("closed!");
             }
         }
         if(keyList.isDownPressed() && keyList.isLeftPressed()){

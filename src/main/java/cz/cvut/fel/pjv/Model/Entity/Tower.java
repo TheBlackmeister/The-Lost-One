@@ -6,13 +6,8 @@ import cz.cvut.fel.pjv.Model.Logic.Megamind;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 import cz.cvut.fel.pjv.View.HealthBarTowerUI;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Tower extends Entity{
     CollisionEntityChecker collEntCheck;
