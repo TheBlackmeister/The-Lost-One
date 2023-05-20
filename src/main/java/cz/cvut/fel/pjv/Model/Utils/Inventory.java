@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.Model.Entity;
+package cz.cvut.fel.pjv.Model.Utils;
 
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
@@ -20,11 +20,20 @@ public class Inventory {
             err.IOExceptionErrorHandler("Inventory Image", 5);
             throw new RuntimeException(e);
         }
-        inv = new int[]{1, 0, 0}; // player has a pistol by default
+        inv = new int[]{1, 1, 0}; // player has a pistol by default
     }
 
     public int[] getInv() {
         return inv;
+    }
+
+
+    public boolean addIntoInventory(int index){
+        if(inv[index] >= 1) return false;
+        else {
+            inv[index] = 1;
+           return true;
+        }
     }
 
     /**
@@ -38,5 +47,7 @@ public class Inventory {
           return true;
       } return false;
     }
+
+
 
 }

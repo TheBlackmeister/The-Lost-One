@@ -39,27 +39,18 @@ public class ProjectileSetup {
         canBeShotInitialTime = System.nanoTime();
     }
     public boolean canBeShot(long timePressed){
-
-        if (canBeShotInitialTime < timePressed - 800_000_000){ // 0.8 secs
-            return true;
-        }
-        return false;
+        // 0.8 secs
+        return canBeShotInitialTime < timePressed - 800_000_000;
     }
 
     public boolean canBeShotMG(long timePressed){
-
-        if (canBeShotInitialTime < timePressed - 300_000_000){ // 0.3 secs
-            return true;
-        }
-        return false;
+        // 0.2 secs
+        return canBeShotInitialTime < timePressed - 200_000_000;
     }
 
     public boolean canBeShotRL(long timePressed){
-
-        if (canBeShotInitialTime < timePressed - 150_000_000){ // 0.15 secs
-            return true;
-        }
-        return false;
+        // 2 secs
+        return canBeShotInitialTime < timePressed - 2_000_000_000;
     }
 
 

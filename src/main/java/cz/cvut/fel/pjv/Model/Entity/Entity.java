@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
+import cz.cvut.fel.pjv.Model.Utils.Inventory;
 
 public class Entity {
     protected int actualX;
@@ -22,6 +23,10 @@ public class Entity {
 
     public int getActualY() {
         return actualY;
+    }
+
+    public Inventory getInv() {
+        return inv;
     }
 
     public void setActualX(int actualX) {

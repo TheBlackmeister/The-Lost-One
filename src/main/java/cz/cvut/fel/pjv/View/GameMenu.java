@@ -6,30 +6,25 @@ import cz.cvut.fel.pjv.Controller.KeyListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
 public class GameMenu implements Runnable {
     ErrorWindow err;
-    boolean isPaused = false;
-    boolean menuOpen = false;
     GamePanel gp;
     KeyListener keyListener;
-    boolean paused = false;
     Thread guiThread;
     long canBePressed, menuCanBePressed = 0;
     String[] menu;
     int actualMenuItem = 0;
     BufferedImage backMenu,arrow;
 
-    public GameMenu(GamePanel gp, JFrame gw, KeyListener keyList) {
+    public GameMenu(GamePanel gp, KeyListener keyList) {
         err = new ErrorWindow();
         this.gp = gp;
         this.keyListener = keyList;
         menu = new String[]{"Save the game","Reset the game","Quit the Game"};
-        int chosenMenuItem = 0;
         guiThread = new Thread(this);
         guiThread.start();
 
@@ -46,7 +41,7 @@ public class GameMenu implements Runnable {
     @Override
     public void run() {
 
-        double drawInterval = (float) 1_000_000_000 / 30; // obnovovaci frekvence
+        double drawInterval = (float) 1_000_000_000 / 30; // refresh rate
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -108,11 +103,6 @@ public class GameMenu implements Runnable {
 
 
     public void resetGame(){
-//        gp.getGw().remove(gp);
-//        gp.towersToRemove.addAll(gp.towers);
-//        gp.enemyProjectileToRemove.addAll(gp.enemyProjectile);
-//        gp.enemySoldiersToRemove.addAll(gp.enemySoldiers);
-//        gp.fountainsToRemove.addAll(gp.fountains);
         JButton starter = gp.getLauncher().starter;
         gp.exitGame();
         starter.doClick();
@@ -169,11 +159,6 @@ public class GameMenu implements Runnable {
             g2d.drawString(menu[i], gp.getConfig().getScreenWidth() / 2 -100, (gp.getConfig().getScreenHeight()*(i+1)/menu.length)-100);
         }
     }
-
-    public Thread getGuiThread() {
-        return guiThread;
-    }
-
     public void setGuiThread(Thread guiThread) {
         this.guiThread = guiThread;
     }

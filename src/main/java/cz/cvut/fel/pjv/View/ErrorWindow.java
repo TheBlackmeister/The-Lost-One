@@ -11,6 +11,7 @@ import javax.swing.*;
  * 4 == opened unsupported file
  * 5 == texture not found
  * 6 == saving the game problems
+ * 7 == sound not found or corrupted
  */
 public class ErrorWindow {
 
@@ -29,6 +30,11 @@ public class ErrorWindow {
     public void badOpenedFile(String whatFailed, int errorID){
         JOptionPane.showMessageDialog(null, whatFailed + " is either not a .txt file or is corrupted.\nTry choosing different file.\nError ID: " + errorID,
                 "Error while opening the file", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void badOpenedSoundFile(String whatFailed, int errorID){
+        JOptionPane.showMessageDialog(null, whatFailed + " is either not a .wav file or is corrupted.\nTry reinstalling the game.\nError ID: " + errorID,
+                "Error while opening the sound file", JOptionPane.ERROR_MESSAGE);
     }
 
 

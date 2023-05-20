@@ -29,10 +29,11 @@ public class GamePanel extends JPanel implements Runnable{
     ConfigFileSetup config;
     MapSetup mapsetup;
     MapView mapView;
+    GUIView guiView;
     RoomMover roomMover;
     CollisionTileChecker collCheck;
     HealthBarPlayerUI hbUI;
-    public ProjectileSetup prSetup; // nacteni textur pro bullet
+    public ProjectileSetup prSetup; // loading textures for bullets
     public ArrayList<Projectile> toRemove;
     public ArrayList<Projectile> projectile; // public used for manipulation from projectile class
 
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
     /**
      * tower arraylists to keep all the entities
      */
-    public TowerSetup twSetup; // nacteni textur pro bullet
+    public TowerSetup twSetup; // loading textures for bullets
     public EnemySetup enSetup; // loading textures for enemies
     public ArrayList<Tower> towers;
     public ArrayList<Tower> towersToRemove;
@@ -50,11 +51,8 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<EnemySoldier> enemySoldiersToRemove;
     public ArrayList<Fountain> fountains;
     public ArrayList<Fountain> fountainsToRemove;
-
     KeyListener keyList;
-
     int FPS = 90;
-
     GameMenu gameMenu;
 
     public GamePanel(JFrame gw, Launcher launcher, String mapFilePath) {
@@ -75,50 +73,48 @@ public class GamePanel extends JPanel implements Runnable{
         keyList = new KeyListener();
         prSetup = new ProjectileSetup(); // projectile texture setup
         twSetup = new TowerSetup(); // tower texture setup
-        enSetup = new EnemySetup(); // enemysoldier texture setup
+        enSetup = new EnemySetup(); // enemySoldier texture setup
         this.addKeyListener(keyList);
-        projectile = new ArrayList<Projectile>();
-        toRemove = new ArrayList<Projectile>();
-        enemyProjectile = new ArrayList<EnemyProjectile>();
-        enemyProjectileToRemove = new ArrayList<EnemyProjectile>();
-        towers = new ArrayList<Tower>();
-        towersToRemove = new ArrayList<Tower>();
-        enemySoldiers = new ArrayList<EnemySoldier>();
-        enemySoldiersToRemove = new ArrayList<EnemySoldier>();
-        fountains = new ArrayList<Fountain>();
-        fountainsToRemove = new ArrayList<Fountain>();
+        projectile = new ArrayList<>();
+        toRemove = new ArrayList<>();
+        enemyProjectile = new ArrayList<>();
+        enemyProjectileToRemove = new ArrayList<>();
+        towers = new ArrayList<>();
+        towersToRemove = new ArrayList<>();
+        enemySoldiers = new ArrayList<>();
+        enemySoldiersToRemove = new ArrayList<>();
+        fountains = new ArrayList<>();
+        fountainsToRemove = new ArrayList<>();
 
         mapsetup = new MapSetup(this,mapFilePath);
         player = new Player(mapsetup.getPlayerStartingCoords().getFirst(),mapsetup.getPlayerStartingCoords().getSecond(), keyList, this);
         roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
-
+        guiView = new GUIView(player.getInv(),this);
         mapView = new MapView(mapsetup.getRooms().get(mapsetup.getPlayerStartingRoom()),this); // zero is the first and default starting room.
 
         collCheck = new CollisionTileChecker(this);
 
         hbUI = new HealthBarPlayerUI(this,player.getHealthBar());
-        gameMenu = new GameMenu(this, gw,keyList);
+        gameMenu = new GameMenu(this,keyList);
         startGameThread();
 
-    } // konstruktor
+    } // constructor
 
     public void startGameThread() {
         gameThread = new Thread(this);
-        gameThread.start(); // spusti se loop
+        gameThread.start(); // starting loop
     } // starting main game thread
     public void setupGame(){
 
     }
 
-
-
     @Override
     public void run() {
-    /**
+    /*
      * fps counter init
      */
 
-        double drawInterval = (float)1_000_000_000 / FPS; // 0.0166 periodickych sekund
+        double drawInterval = (float)1_000_000_000 / FPS; // 0.0166 periodic seconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -140,8 +136,8 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             if (delta >= 1) {
-                update(); // updatuje napr pozice hrace
-                repaint(); // vykresluje zmeny, obrazovku
+                update(); // updates
+                repaint(); // draws
                 delta--;
                 drawCount++; //fps counter
             }
@@ -270,7 +266,7 @@ public class GamePanel extends JPanel implements Runnable{
             player.update();
             hbUI.update();
 
-            /**
+            /*
              * updating player projectile
              */
 
@@ -281,7 +277,7 @@ public class GamePanel extends JPanel implements Runnable{
                 projectile.removeAll(toRemove);
                 toRemove.clear();
             } //drawing player projectiles
-            /**
+            /*
              * updating enemy projectile (including towers)
              */
 
@@ -291,11 +287,11 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 enemyProjectile.removeAll(enemyProjectileToRemove);
                 enemyProjectileToRemove.clear();
-                //vykresluji
+                //drawing
             } // updating enemy projectiles
 
 
-            /**
+            /*
              * updating towers
              */
 
@@ -307,7 +303,7 @@ public class GamePanel extends JPanel implements Runnable{
                 towersToRemove.clear();
             }
 
-            /**
+            /*
              * updating enemy soldiers
              */
 
@@ -319,7 +315,7 @@ public class GamePanel extends JPanel implements Runnable{
                 enemySoldiersToRemove.clear();
             }
 
-            /**
+            /*
              * updating fountains
              */
 
@@ -344,7 +340,8 @@ public class GamePanel extends JPanel implements Runnable{
         mapView.draw(g);
         player.draw(g);
         hbUI.draw(g);
-        /**
+
+        /*
          * drawing player projectile
          */
 
@@ -357,7 +354,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
         } //drawing player projectiles
-        /**
+        /*
          * drawing enemy projectile (including towers)
          */
 
@@ -367,10 +364,10 @@ public class GamePanel extends JPanel implements Runnable{
             }
             enemyProjectile.removeAll(enemyProjectileToRemove);
             enemyProjectileToRemove.clear();
-            //vykresluji
+            //drawing
         } // drawing enemy projectiles
 
-        /**
+        /*
          * drawing towers
          */
 
@@ -382,7 +379,7 @@ public class GamePanel extends JPanel implements Runnable{
             towersToRemove.clear();
         }
 
-        /**
+        /*
          * drawing enemy soldiers
          */
 
@@ -394,7 +391,7 @@ public class GamePanel extends JPanel implements Runnable{
             enemySoldiersToRemove.clear();
         }
 
-        /**
+        /*
          * drawing fountains
          */
 
@@ -404,7 +401,11 @@ public class GamePanel extends JPanel implements Runnable{
             }
             fountains.removeAll(fountainsToRemove);
             fountainsToRemove.clear();
+
         }
+
+        guiView.draw(g);
+
         if(menuOpen){
             gameMenu.draw(g);
         }
@@ -416,7 +417,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     /**
-     * getter to reach mapsetup from different class (specifically from MapView)
+     * getter to reach mapSetup from different class (specifically from MapView)
      * @return MapSetup
      */
     public MapSetup getMapsetup() {
@@ -443,10 +444,6 @@ public class GamePanel extends JPanel implements Runnable{
         return roomMover;
     }
 
-    public Thread getGameThread() {
-        return gameThread;
-    }
-
     public boolean isPaused() {
         return isPaused;
     }
@@ -455,23 +452,11 @@ public class GamePanel extends JPanel implements Runnable{
         isPaused = paused;
     }
 
-    public boolean isMenuOpen() {
-        return menuOpen;
-    }
-
     public void setMenuOpen(boolean menuOpen) {
         this.menuOpen = menuOpen;
     }
 
     public Launcher getLauncher() {
         return launcher;
-    }
-
-    public JFrame getGw() {
-        return gw;
-    }
-
-    public void setGameThread(Thread gameThread) {
-        this.gameThread = gameThread;
     }
 }

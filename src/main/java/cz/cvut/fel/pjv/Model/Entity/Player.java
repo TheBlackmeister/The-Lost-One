@@ -3,6 +3,8 @@ import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyListener;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
+import cz.cvut.fel.pjv.Model.Utils.Inventory;
+import cz.cvut.fel.pjv.Model.Utils.Sound;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
@@ -10,17 +12,25 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
+
 /**
  * This is the Player class. it
  */
 public class Player extends Entity{
+    int selectedInventoryIndex = 0;
     CollisionEntityChecker collEntCheck;
     GamePanel gp;
     ErrorWindow err;
     KeyListener keyList;
     BufferedImage playerImageUP,playerImageDOWN,playerImageLEFT,playerImageRIGHT, playerImageUPLEFT, playerImageUPRIGHT,playerImageDOWNLEFT,playerImageDOWNRIGHT;
     Directions direction;
+    Sound gunShot,walkingSound;
+    long walkingTimer = 0;
+    long switchTimer = 0;
+    Random random;
     public Player(int actualX, int actualY, KeyListener keyList, GamePanel gp) {
+
         this.actualX = actualX;
         this.actualY = actualY;
         this.speed = 3;
@@ -32,6 +42,10 @@ public class Player extends Entity{
         this.healthBar = new HealthBar(gp.getMapsetup().getPlayerStartingHP());
         collEntCheck = new CollisionEntityChecker(gp);
         this.inv = new Inventory();
+         random = new Random();
+        //setting the sounds
+        gunShot = new Sound();
+        walkingSound = new Sound();
     }
     public void setUpPlayer() {
         try {
@@ -52,28 +66,66 @@ public class Player extends Entity{
         }
     }
 
+    private void playGunSound(int index){
+        gunShot.setFile(index);
+        gunShot.play();
+    }
+
+    public void canBeWalkedAndWalk(long timePressed){
+        if (walkingTimer < timePressed - 450_000_000){ // 0.45 secs
+            walkingSound.setFile(random.nextInt(5)+5);
+            walkingSound.play();
+            walkingTimer = timePressed;
+
+        }
+    }
+
+    public void canBeSwitchedThenSwitch(long timePressed){
+        if (switchTimer < timePressed - 250_000_000){ // 0.25 secs
+            walkingSound.setFile(12);
+            walkingSound.play();
+            selectedInventoryIndex++;
+            if(selectedInventoryIndex > 2) selectedInventoryIndex = 0;
+            while(inv.getInv()[selectedInventoryIndex]==0){
+                if(selectedInventoryIndex > 2) selectedInventoryIndex = 0;
+                selectedInventoryIndex++;
+                if(selectedInventoryIndex > 2) selectedInventoryIndex = 0;
+            }
+            switchTimer = timePressed;
+        }
+    }
+
     public void update(){
         if(collEntCheck.checkEntityCollisionPlayer(this)){
             healthBar.decreaseHealth();
         }
+        if(keyList.isnPressed()) {
+            canBeSwitchedThenSwitch(System.nanoTime());
+        }
         if(keyList.ismPressed()) {
-            if (inv.getInv()[1] == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
+            if (selectedInventoryIndex == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
+                playGunSound(3);
                 Projectile projectile = new Projectile(actualX, actualY, direction, gp);
 
-            } else if (inv.getInv()[2] == 1 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has MiniGun
+            } else if (selectedInventoryIndex == 2 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has MiniGun
                 Projectile projectile = new Projectile(actualX, actualY, direction, gp);
 
-            } else if (inv.getInv()[0] == 1 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
+            } else if (selectedInventoryIndex == 0 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
+                playGunSound(2);
                 Projectile projectile = new Projectile(actualX, actualY, direction, gp);
             }
         }
 
         if(keyList.isDownPressed()) {
+            // set direction
             direction = Directions.DOWN;
+            // move player
             actualY += speed;
+            //play a sound
+            canBeWalkedAndWalk(System.nanoTime());
+            // if player collides, return to original place
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualY -= speed;
-                // todo collision sound could be played here
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomDown()){
                 actualY -= speed;
@@ -82,11 +134,15 @@ public class Player extends Entity{
         }
 
         if(keyList.isUpPressed()) {
+            // set direction
             direction = Directions.UP;
+            // move player
             actualY -= speed;
+            //play a sound
+            canBeWalkedAndWalk(System.nanoTime());
+            // if player collides, return to original place
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualY += speed;
-                // todo collision sound could be played here
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomUp()){
                 actualY += speed;
@@ -95,11 +151,15 @@ public class Player extends Entity{
         }
 
         if(keyList.isRightPressed()) {
+            // set direction
             direction = Directions.RIGHT;
+            // move player
             actualX += speed;
+            //play a sound
+            canBeWalkedAndWalk(System.nanoTime());
+            // if player collides, return to original place
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualX -= speed;
-                // todo collision sound could be played here
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomRight()){
                 actualX -= speed;
@@ -108,11 +168,15 @@ public class Player extends Entity{
         }
 
         if(keyList.isLeftPressed()) {
+            // set direction
             direction = Directions.LEFT;
+            // move player
             actualX -= speed;
+            //play a sound
+            canBeWalkedAndWalk(System.nanoTime());
+            // if player collides, return to original place
             if(gp.getCollCheck().checkTileCollisionPlayer(this)){
                 actualX += speed;
-                // todo collision sound could be played here
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomLeft()){
                 actualX += speed;
@@ -131,13 +195,6 @@ public class Player extends Entity{
         if(keyList.isUpPressed() && keyList.isRightPressed()){
             direction = Directions.UPRIGHT;
         }
-//        switch (direction){
-//            case DOWN -> actualY += speed;
-//            case UP -> actualY -= speed;
-//            case LEFT -> actualX -= speed;
-//            case RIGHT -> actualX += speed;
-//        }
-
     }
     public void draw(Graphics g){
         Graphics2D g2d;
@@ -159,5 +216,7 @@ public class Player extends Entity{
 
     }
 
-
+    public int getSelectedInventoryIndex() {
+        return selectedInventoryIndex;
+    }
 }
