@@ -221,8 +221,7 @@ public class GamePanel extends JPanel implements Runnable{
                     savedString.append(map[row][col]).append(" ");
                 }
             }
-            savedString.append("\n"); // todo testing
-            //todo uz jen ulozit
+            savedString.append("\n");
         }
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/savegame"));
@@ -253,7 +252,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
     }
-        //todo call roommover, in roommover make a new getter for a map , z te mapy ktera je aktualni nacist do stringbuilderu a ten pak ulozit do .txt
+
 
 
     public void exitGame(){

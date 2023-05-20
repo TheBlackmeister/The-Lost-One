@@ -158,7 +158,7 @@ public class GameMenu implements Runnable {
     public void draw(Graphics g) {
         Graphics2D g2d;
         g2d = (Graphics2D) g;
-        g2d.setColor(Color.blue); //todo testing
+        g2d.setColor(Color.red);
         g2d.drawImage(backMenu, 0, 0, gp.getConfig().getScreenWidth(), gp.getConfig().getScreenHeight(), null);
 
         for (int i = 0; i < menu.length; i++) {
