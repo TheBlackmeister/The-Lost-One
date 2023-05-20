@@ -92,28 +92,28 @@ public class Room {
         this.map = map;
     }
 
-    public void update(){
-
-    }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
-        BufferedImage PlayerImage = null;
-
-        for (int row = 0; row < 45; row++) {
-            for (int col = 0; col < 80; col++) {
-
-                int typeOfTile = map[row][col];
-
-                if(typeOfTile == 0){
-                    g2d.setColor(Color.green);
-                }
-                if(typeOfTile == 1){
-                    g2d.setColor(Color.black);
-                }
-                g2d.fillRect(col*16,row*16,16,16);
-            }
-        }
-    }
+//    public void update(){
+//
+//    }
+//    public void draw(Graphics g){
+//        Graphics2D g2d;
+//        g2d = (Graphics2D)g;
+//        BufferedImage PlayerImage = null;
+//
+//        for (int row = 0; row < 45; row++) {
+//            for (int col = 0; col < 80; col++) {
+//
+//                int typeOfTile = map[row][col];
+//
+//                if(typeOfTile == 0){
+//                    g2d.setColor(Color.green);
+//                }
+//                if(typeOfTile == 1){
+//                    g2d.setColor(Color.black);
+//                }
+//                g2d.fillRect(col*16,row*16,16,16);
+//            }
+//        }
+//    }
 
 }

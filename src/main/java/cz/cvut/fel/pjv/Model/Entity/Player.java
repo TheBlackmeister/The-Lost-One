@@ -29,8 +29,9 @@ public class Player extends Entity{
         setUpPlayer();
         direction = Directions.DOWN;
         this.gp = gp;
-        this.healthBar = new HealthBar(100);
+        this.healthBar = new HealthBar(gp.getMapsetup().getPlayerStartingHP());
         collEntCheck = new CollisionEntityChecker(gp);
+        this.inv = new Inventory();
     }
     public void setUpPlayer() {
         try {
@@ -56,11 +57,17 @@ public class Player extends Entity{
             healthBar.decreaseHealth();
         }
         if(keyList.ismPressed()) {
-            if (gp.prSetup.canBeShot(System.nanoTime())){
-                Projectile projectile = new Projectile(actualX,actualY,direction,gp); //todo
-                System.out.println("M pressed"); //testing
+            if (inv.getInv()[1] == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
+                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
+
+            } else if (inv.getInv()[2] == 1 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has MiniGun
+                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
+
+            } else if (inv.getInv()[0] == 1 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
+                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
             }
         }
+
         if(keyList.isDownPressed()) {
             direction = Directions.DOWN;
             actualY += speed;

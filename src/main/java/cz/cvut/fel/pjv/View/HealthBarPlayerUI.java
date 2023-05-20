@@ -22,7 +22,7 @@ public class HealthBarPlayerUI {
         this.gp = gp;
         this.hb = hb;
         err = new ErrorWindow();
-        maxHealth = hb.getHealth();
+        maxHealth = hb.getMaxHealth();
         currentHealth = hb.getHealth();
         percentage = currentHealth / maxHealth;
         try {

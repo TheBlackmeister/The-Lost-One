@@ -24,7 +24,7 @@ public class RoomMover {
     public RoomMover(ArrayList<Room> rooms, GamePanel gp){
         this.rooms = rooms;
         this.gp = gp;
-        roomIndex = 0;
+        roomIndex = gp.mapsetup.getPlayerStartingRoom();
         actualRoom = rooms.get(roomIndex);
         moveOffset = 50;
         listOfEnemies = new ArrayList<>(actualRoom.getEnemies());
@@ -147,5 +147,9 @@ public class RoomMover {
 
     public Room getActualRoom() {
         return actualRoom;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
     }
 }

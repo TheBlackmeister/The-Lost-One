@@ -24,10 +24,6 @@ public class Entity {
         return actualY;
     }
 
-    public int getSpeed() {
-        return speed;
-    }//todo mozna nepotrebne
-
     public void setActualX(int actualX) {
         this.actualX = actualX;
     }

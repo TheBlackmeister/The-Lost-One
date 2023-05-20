@@ -1,9 +1,6 @@
 package cz.cvut.fel.pjv.Model.Setuper;
 
 import cz.cvut.fel.pjv.Controller.GamePanel;
-import cz.cvut.fel.pjv.Model.Entity.EnemySoldier;
-import cz.cvut.fel.pjv.Model.Entity.Entity;
-import cz.cvut.fel.pjv.Model.Entity.Tower;
 import cz.cvut.fel.pjv.Model.Map.Room;
 import cz.cvut.fel.pjv.Model.Utils.Tuple;
 import cz.cvut.fel.pjv.View.ErrorWindow;
@@ -13,27 +10,28 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * Class to set up the maps and tiles.
- * basic inspiration from 'ForeignGuyMike',26. 1. 2013 (https://youtu.be/FUgn-PA7yzc)
+ * basic inspiration from 'ForeignGuyMike',26. 1. 2013 (https://youtu.be/FUgn-PA7yzc), yet it is already very different.
  */
 public class MapSetup {
-    ArrayList<Room> rooms;
-    GamePanel gp;
-    ErrorWindow err;
-    File mapFile;
-    BufferedReader bReader;
-    BufferedImage tile0, tile1;
+    private ArrayList<Room> rooms;
+    private GamePanel gp;
+    private ErrorWindow err;
+    private File mapFile;
+    private BufferedReader bReader;
+    private BufferedImage tile0, tile1;
     private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex, numberOfEnemies, numberOfTowers, numberOfFountains;
     private boolean closed;
-    int[][] map;
-    int rows;
-    int cols;
-    int numberOfMaps;
-    public MapSetup(GamePanel gp){
-        mapFile = new File(gp.getConfig().mapName);
+    private int[][] map;
+    private int rows;
+    private int cols;
+    private int numberOfMaps;
+    private Tuple playerStartingCoords;
+    private int playerStartingRoom, playerStartingHP;
+    public MapSetup(GamePanel gp, String mapFilePath){
+        mapFile = new File(mapFilePath);
         err = new ErrorWindow();
         rooms = new ArrayList<Room>();
         this.gp = gp;
@@ -57,6 +55,16 @@ public class MapSetup {
             rows = Integer.parseInt(bReader.readLine()); // *16 == image height
             cols = Integer.parseInt(bReader.readLine()); // *16 == image width
             numberOfMaps = Integer.parseInt(bReader.readLine());
+
+            String coordsTMP = bReader.readLine();
+            coordsTMP = coordsTMP.substring(1,coordsTMP.length()-1);
+            String[] partsCoordsPlayer = coordsTMP.split(",");
+            int coordPlayerX = Integer.parseInt(partsCoordsPlayer[0].trim()); // parse the first part as an coordX and trim any whitespace
+            int coordPlayerY = Integer.parseInt(partsCoordsPlayer[1].trim()); // parse the second part as an coordY and trim any whitespace
+            playerStartingCoords = new Tuple(coordPlayerX,coordPlayerY);
+            playerStartingRoom = Integer.parseInt(bReader.readLine()); // what is the first room's index
+            playerStartingHP = Integer.parseInt(bReader.readLine()); // how many hp
+            if (playerStartingHP > 100) playerStartingHP = 100;
             for (int mapIndex = 0; mapIndex < numberOfMaps; mapIndex++) {
                 upRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room above?
                 rightRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
@@ -122,6 +130,10 @@ public class MapSetup {
             err.IOExceptionErrorHandler("Level map", 1);
             throw new RuntimeException(e);
         }
+        catch (Exception e) {
+            err.BadConfigFileErrorHandler("Selected map",4);
+
+        }
     }
     public void tileInit(){
         try {
@@ -145,8 +157,16 @@ public class MapSetup {
         return tile1;
     }
 
-    public int[][] getMap() {
-        return map;
+    public Tuple getPlayerStartingCoords() {
+        return playerStartingCoords;
+    }
+
+    public int getPlayerStartingRoom() {
+        return playerStartingRoom;
+    }
+
+    public int getPlayerStartingHP() {
+        return playerStartingHP;
     }
 }
 

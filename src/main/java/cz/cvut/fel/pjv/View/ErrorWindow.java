@@ -5,10 +5,12 @@ import javax.swing.*;
 
 /**
  * error exit values:
- * 5 == texture not found
  * 1 == map not found
  * 2 == config file not found
  * 3 == config file corrupted or has incorrectly written lines
+ * 4 == opened unsupported file
+ * 5 == texture not found
+ * 6 == saving the game problems
  */
 public class ErrorWindow {
 
@@ -22,6 +24,11 @@ public class ErrorWindow {
         JOptionPane.showMessageDialog(null, whatFailed + " is probably corrupted or has incorrectly written lines. Cannot continue with execution." + "\nError ID: " + errorID,
                 "IO Exception error", JOptionPane.ERROR_MESSAGE);
         System.exit(errorID);
+    }
+
+    public void badOpenedFile(String whatFailed, int errorID){
+        JOptionPane.showMessageDialog(null, whatFailed + " is either not a .txt file or is corrupted.\nTry choosing different file.\nError ID: " + errorID,
+                "Error while opening the file", JOptionPane.ERROR_MESSAGE);
     }
 
 
