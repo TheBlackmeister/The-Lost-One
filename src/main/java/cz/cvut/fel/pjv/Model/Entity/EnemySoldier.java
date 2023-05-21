@@ -4,17 +4,21 @@ import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Model.Logic.Megamind;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
+import cz.cvut.fel.pjv.Model.Utils.Sound;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 import cz.cvut.fel.pjv.View.HealthBarEnemyUI;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class EnemySoldier extends Entity{
+    Sound shoot = new Sound();
+    Random random;
     CollisionEntityChecker collEntCheck;
     ErrorWindow err;
     GamePanel gp;
@@ -25,6 +29,7 @@ public class EnemySoldier extends Entity{
     double tmpY;
     double directionValue;
     public EnemySoldier(int actualX, int actualY, GamePanel gp){
+        random = new Random();
         this.actualX = actualX;
         this.actualY = actualY;
         tmpX = actualX;
@@ -56,6 +61,9 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 1){
             healthBar.decreaseHealth();
             if(healthBar.getHealth()<0){
+                Sound sound = new Sound();
+                sound.setFile(random.nextInt(4) + 16);
+                sound.play();
                 gp.enemySoldiersToRemove.add(this);
             }
         }
@@ -63,12 +71,17 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 2){
             healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
+                Sound sound = new Sound();
+                sound.setFile(random.nextInt(4) + 16);
+                sound.play();
                 gp.enemySoldiersToRemove.add(this);
             }
         }
         directionValue = mgm.directionVector(actualX,actualY,gp.getPlayer().actualX,gp.getPlayer().actualY);
         if (enemyCanBeShot(System.nanoTime())){
-            EnemyProjectile newEnemyProjectile = new EnemyProjectile(actualX,actualY,directionValue,gp);
+            shoot.setFile(1);
+            shoot.play();
+            new EnemyProjectile(actualX,actualY,directionValue,gp);
         }
         tmpX += cos(directionValue) * speed;
         tmpY += sin(directionValue) * speed;

@@ -1,5 +1,8 @@
 package cz.cvut.fel.pjv.Model.Logic;
 
+/**
+ * This class stores mathematical functions.
+ */
 public class Megamind {
     // calculating the direction of a tower shot to be towards player
     // Calculate vector components

@@ -105,14 +105,14 @@ public class Player extends Entity{
         if(keyList.ismPressed()) {
             if (selectedInventoryIndex == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
                 playGunSound(3);
-                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
+                new Projectile(actualX, actualY, direction, gp);
 
             } else if (selectedInventoryIndex == 2 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has an RPG
-                Rocket rocket = new Rocket(actualX, actualY, gp, direction);
+                new Rocket(actualX, actualY, gp, direction);
                 playGunSound(10);
             } else if (selectedInventoryIndex == 0 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
                 playGunSound(2);
-                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
+                new Projectile(actualX, actualY, direction, gp);
             }
         }
 

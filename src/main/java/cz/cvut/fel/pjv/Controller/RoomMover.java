@@ -37,7 +37,7 @@ public class RoomMover {
             gp.fountains.add(new Fountain(fountain.getFirst(), fountain.getSecond(), gp));
         }
     }
-    public void changeRoom(DirectionsEnum.Directions direction, int newRoomIndex){ // direction is původní směr pohybu
+    public void changeRoom(DirectionsEnum.Directions direction, int newRoomIndex){ // direction of movement from origin
         // update player coords
         if(direction == DirectionsEnum.Directions.LEFT){
             gp.getPlayer().setActualX(gp.getConfig().getScreenWidth()-moveOffset);
@@ -54,19 +54,19 @@ public class RoomMover {
 
         listOfTowers.clear();
         listOfEnemies.clear();
-        ArrayList<Tuple> tmpEnemies = new ArrayList<Tuple>();
+        ArrayList<Tuple> tmpEnemies = new ArrayList<>();
         for (EnemySoldier enemy:gp.enemySoldiers) {
             tmpEnemies.add(new Tuple(enemy.getActualX(), enemy.getActualY()));
         }
         actualRoom.setEnemies(tmpEnemies);
 
-        ArrayList<Tuple> tmpTowers = new ArrayList<Tuple>();
+        ArrayList<Tuple> tmpTowers = new ArrayList<>();
         for (Tower tower:gp.towers) {
             tmpTowers.add(new Tuple(tower.getActualX(), tower.getActualY()));
         }
         actualRoom.setTowers(tmpTowers);
 
-        ArrayList<Tuple> tmpFountains = new ArrayList<Tuple>();
+        ArrayList<Tuple> tmpFountains = new ArrayList<>();
         for (Fountain fountain:gp.fountains) {
             tmpFountains.add(new Tuple(fountain.getActualX(), fountain.getActualY()));
         }

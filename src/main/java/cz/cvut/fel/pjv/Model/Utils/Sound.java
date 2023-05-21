@@ -16,6 +16,8 @@ import static javax.sound.sampled.AudioSystem.getClip;
 /**
  * class Sound adds sounds to the game
  * class Sound has several methods
+ * I was inspired when creating this class by channel 'RYISnow'. The tutorial showed me how to work with sounds in java.
+ * https://youtu.be/nUHh_J2Acy8
  */
 public class Sound {
     ErrorWindow err;
@@ -38,7 +40,14 @@ public class Sound {
             soundURL[10] = getClass().getResource("/sound/gun/rocketLaunch.wav"); // rocket launch
             soundURL[11] = getClass().getResource("/sound/gun/explosion.wav"); // rocket explosion
             soundURL[12] = getClass().getResource("/sound/UI/click.wav"); // UI click
-
+            soundURL[13] = getClass().getResource("/sound/UI/horn.wav"); // horn
+            soundURL[14] = getClass().getResource("/sound/UI/applause.wav"); // applause
+            soundURL[15] = getClass().getResource("/sound/entity/towerDestructionSound.wav"); // tower fall
+            soundURL[16] = getClass().getResource("/sound/entity/death1.wav"); // death
+            soundURL[17] = getClass().getResource("/sound/entity/death2.wav"); // death
+            soundURL[18] = getClass().getResource("/sound/entity/death3.wav"); // death
+            soundURL[19] = getClass().getResource("/sound/entity/death4.wav"); // death
+            soundURL[20] = getClass().getResource("/sound/entity/death5.wav"); // death
         }
         catch (Exception e1) {
             err.IOExceptionErrorHandler("Initializing the sounds",7);

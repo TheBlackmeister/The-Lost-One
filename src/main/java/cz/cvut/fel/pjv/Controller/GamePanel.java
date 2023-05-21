@@ -155,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable{
              * fps counter end
              */
             if(player.getHealthBar().getHealth()<0){
-                JOptionPane.showMessageDialog(null,"You died!"); // test
+                JOptionPane.showMessageDialog(null,"You died!");
                 exitGame();
             }
         }

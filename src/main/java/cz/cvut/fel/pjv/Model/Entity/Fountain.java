@@ -2,9 +2,11 @@ package cz.cvut.fel.pjv.Model.Entity;
 
 import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
+import cz.cvut.fel.pjv.Model.Utils.Sound;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -34,8 +36,14 @@ public class Fountain extends Entity{
     }
     public void update(){
         if(collEntCheck.checkIsPlayerInsideFountain(this,gp.getPlayer())){
-            System.out.println("konececececec");
-            //todo ending
+            Sound sound = new Sound();
+            Sound applause = new Sound();
+            applause.setFile(14);
+            applause.play();
+            sound.setFile(13);
+            sound.play();
+            JOptionPane.showMessageDialog(null,"Congratulations! You completed the level!");
+            gp.exitGame();
         }
     }
 
