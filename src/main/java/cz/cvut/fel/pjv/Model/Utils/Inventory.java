@@ -20,7 +20,7 @@ public class Inventory {
             err.IOExceptionErrorHandler("Inventory Image", 5);
             throw new RuntimeException(e);
         }
-        inv = new int[]{1, 1, 0}; // player has a pistol by default
+        inv = new int[]{1, 1, 1}; // player has a pistol by default
     }
 
     public int[] getInv() {

@@ -24,7 +24,7 @@ public class Player extends Entity{
     ErrorWindow err;
     KeyListener keyList;
     BufferedImage playerImageUP,playerImageDOWN,playerImageLEFT,playerImageRIGHT, playerImageUPLEFT, playerImageUPRIGHT,playerImageDOWNLEFT,playerImageDOWNRIGHT;
-    Directions direction;
+    DirectionsEnum.Directions direction;
     Sound gunShot,walkingSound;
     long walkingTimer = 0;
     long switchTimer = 0;
@@ -37,7 +37,7 @@ public class Player extends Entity{
         this.keyList = keyList;
         err = new ErrorWindow();
         setUpPlayer();
-        direction = Directions.DOWN;
+        direction = DirectionsEnum.Directions.DOWN;
         this.gp = gp;
         this.healthBar = new HealthBar(gp.getMapsetup().getPlayerStartingHP());
         collEntCheck = new CollisionEntityChecker(gp);
@@ -59,7 +59,7 @@ public class Player extends Entity{
             playerImageDOWNRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/greensoldier_DOWN_RIGHT.png")));
             // green player texture is from here https://www.deviantart.com/friendlyfirefox/art/Pimp-My-Sprite-Top-down-Soldier-467311032
             // Other colors are colored by me.
-            direction = Directions.DOWN;
+            direction = DirectionsEnum.Directions.DOWN;
         } catch (IOException | NullPointerException e) {
             err.IOExceptionErrorHandler("Player Image", 5);
             throw new RuntimeException(e);
@@ -107,9 +107,9 @@ public class Player extends Entity{
                 playGunSound(3);
                 Projectile projectile = new Projectile(actualX, actualY, direction, gp);
 
-            } else if (selectedInventoryIndex == 2 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has MiniGun
-                Projectile projectile = new Projectile(actualX, actualY, direction, gp);
-
+            } else if (selectedInventoryIndex == 2 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has an RPG
+                Rocket rocket = new Rocket(actualX, actualY, gp, direction);
+                playGunSound(10);
             } else if (selectedInventoryIndex == 0 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
                 playGunSound(2);
                 Projectile projectile = new Projectile(actualX, actualY, direction, gp);
@@ -118,7 +118,7 @@ public class Player extends Entity{
 
         if(keyList.isDownPressed()) {
             // set direction
-            direction = Directions.DOWN;
+            direction = DirectionsEnum.Directions.DOWN;
             // move player
             actualY += speed;
             //play a sound
@@ -135,7 +135,7 @@ public class Player extends Entity{
 
         if(keyList.isUpPressed()) {
             // set direction
-            direction = Directions.UP;
+            direction = DirectionsEnum.Directions.UP;
             // move player
             actualY -= speed;
             //play a sound
@@ -152,7 +152,7 @@ public class Player extends Entity{
 
         if(keyList.isRightPressed()) {
             // set direction
-            direction = Directions.RIGHT;
+            direction = DirectionsEnum.Directions.RIGHT;
             // move player
             actualX += speed;
             //play a sound
@@ -169,7 +169,7 @@ public class Player extends Entity{
 
         if(keyList.isLeftPressed()) {
             // set direction
-            direction = Directions.LEFT;
+            direction = DirectionsEnum.Directions.LEFT;
             // move player
             actualX -= speed;
             //play a sound
@@ -184,16 +184,16 @@ public class Player extends Entity{
             }
         }
         if(keyList.isDownPressed() && keyList.isLeftPressed()){
-            direction = Directions.DOWNLEFT;
+            direction = DirectionsEnum.Directions.DOWNLEFT;
         }
         if(keyList.isUpPressed() && keyList.isLeftPressed()){
-            direction = Directions.UPLEFT;
+            direction = DirectionsEnum.Directions.UPLEFT;
         }
         if(keyList.isDownPressed() && keyList.isRightPressed()){
-            direction = Directions.DOWNRIGHT;
+            direction = DirectionsEnum.Directions.DOWNRIGHT;
         }
         if(keyList.isUpPressed() && keyList.isRightPressed()){
-            direction = Directions.UPRIGHT;
+            direction = DirectionsEnum.Directions.UPRIGHT;
         }
     }
     public void draw(Graphics g){

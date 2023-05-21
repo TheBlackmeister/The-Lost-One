@@ -9,15 +9,15 @@ import java.awt.image.BufferedImage;
 public class Projectile extends Entity {
     GamePanel gp;
     ErrorWindow err;
-    Directions direction;
-    public Projectile(int actualX, int actualY, Directions direction, GamePanel gp) {
+    DirectionsEnum.Directions direction;
+    public Projectile(int actualX, int actualY, DirectionsEnum.Directions direction, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;
         this.direction = direction;
-        this.speed = 10; //todo test
+        this.speed = 10;
         this.gp = gp;
         err = new ErrorWindow();
-        gp.prSetup.setUpProjectile(); // todo maybe delete to optimize
+        gp.prSetup.setUpProjectile();
         gp.projectile.add(this);
     }
 

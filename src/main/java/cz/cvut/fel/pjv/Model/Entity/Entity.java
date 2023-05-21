@@ -9,9 +9,6 @@ public class Entity {
     protected int speed;
     protected Inventory inv;
     protected HealthBar healthBar;
-    public enum Directions {
-        UP, DOWN, LEFT, RIGHT, UPLEFT, DOWNLEFT, UPRIGHT, DOWNRIGHT
-    }
 
     public HealthBar getHealthBar() {
         return healthBar;

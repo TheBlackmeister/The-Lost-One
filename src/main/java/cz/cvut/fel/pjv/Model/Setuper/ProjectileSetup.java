@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class ProjectileSetup {
 
-    long canBeShotInitialTime;
+    long canBeShotInitialTime, canBeShotInitialTimeRL;
     ErrorWindow err;
     BufferedImage projectileImageUP,projectileImageDOWN,projectileImageLEFT,projectileImageRIGHT,projectileImageUPLEFT,projectileImageUPRIGHT,projectileImageDOWNLEFT,projectileImageDOWNRIGHT;
 
@@ -50,7 +50,11 @@ public class ProjectileSetup {
 
     public boolean canBeShotRL(long timePressed){
         // 2 secs
-        return canBeShotInitialTime < timePressed - 2_000_000_000;
+        if (canBeShotInitialTimeRL < timePressed - 2_000_000_000){
+            canBeShotInitialTimeRL = timePressed;
+            return true;
+        }
+        return false;
     }
 
 

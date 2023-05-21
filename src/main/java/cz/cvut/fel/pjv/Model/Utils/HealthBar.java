@@ -18,6 +18,14 @@ public class HealthBar {
         return health;
     }
 
+    public void decreaseHealthBy(int howMuch){
+        health -= howMuch;
+    }
+
+    public void increaseHealthBy(int howMuch){
+        health -= howMuch;
+    }
+
     public int getMaxHealth() {
         return maxHealth;
     }

@@ -52,8 +52,16 @@ public class EnemySoldier extends Entity{
 
     public void update(){
         hbEnUI.update(); // updates the UI healthBar
-        if(collEntCheck.checkEntityCollisionEnemy(this)){
+        //checking for projectiles
+        if(collEntCheck.checkEntityCollisionEnemy(this) == 1){
             healthBar.decreaseHealth();
+            if(healthBar.getHealth()<0){
+                gp.enemySoldiersToRemove.add(this);
+            }
+        }
+        //checking for rockets
+        if(collEntCheck.checkEntityCollisionEnemy(this) == 2){
+            healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
                 gp.enemySoldiersToRemove.add(this);
             }

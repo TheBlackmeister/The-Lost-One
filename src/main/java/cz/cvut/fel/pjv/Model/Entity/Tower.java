@@ -40,8 +40,16 @@ public class Tower extends Entity{
     }
     public void update(){
         hbTwUI.update(); // updates the UI healthBar
-        if(collEntCheck.checkEntityCollisionTower(this)){
+        //checking for projectiles
+        if(collEntCheck.checkEntityCollisionTower(this) == 1){
             healthBar.decreaseHealth();
+            if(healthBar.getHealth()<0){
+                gp.towersToRemove.add(this);
+            }
+        }
+        //checking for rockets
+        if(collEntCheck.checkEntityCollisionTower(this) == 2){
+            healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
                 gp.towersToRemove.add(this);
             }

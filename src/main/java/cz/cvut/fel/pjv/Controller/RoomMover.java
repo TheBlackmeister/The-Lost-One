@@ -1,9 +1,6 @@
 package cz.cvut.fel.pjv.Controller;
 
-import cz.cvut.fel.pjv.Model.Entity.EnemySoldier;
-import cz.cvut.fel.pjv.Model.Entity.Entity;
-import cz.cvut.fel.pjv.Model.Entity.Fountain;
-import cz.cvut.fel.pjv.Model.Entity.Tower;
+import cz.cvut.fel.pjv.Model.Entity.*;
 import cz.cvut.fel.pjv.Model.Map.Room;
 import cz.cvut.fel.pjv.Model.Utils.Tuple;
 
@@ -40,18 +37,18 @@ public class RoomMover {
             gp.fountains.add(new Fountain(fountain.getFirst(), fountain.getSecond(), gp));
         }
     }
-    public void changeRoom(Entity.Directions direction,int newRoomIndex){ // direction is původní směr pohybu
+    public void changeRoom(DirectionsEnum.Directions direction, int newRoomIndex){ // direction is původní směr pohybu
         // update player coords
-        if(direction == Entity.Directions.LEFT){
+        if(direction == DirectionsEnum.Directions.LEFT){
             gp.getPlayer().setActualX(gp.getConfig().getScreenWidth()-moveOffset);
         }
-        if(direction == Entity.Directions.RIGHT){
+        if(direction == DirectionsEnum.Directions.RIGHT){
             gp.getPlayer().setActualX(moveOffset);
         }
-        if(direction == Entity.Directions.UP){
+        if(direction == DirectionsEnum.Directions.UP){
             gp.getPlayer().setActualY(gp.getConfig().getScreenHeight()-moveOffset);
         }
-        if(direction == Entity.Directions.DOWN){
+        if(direction == DirectionsEnum.Directions.DOWN){
             gp.getPlayer().setActualY(moveOffset);
         }
 
@@ -102,16 +99,16 @@ public class RoomMover {
         playerY = gp.getPlayer().getActualY();
         if(!actualRoom.isClosed()) {
             if (playerX < 0 && actualRoom.getLeftRoomIndex() != -1) {
-                changeRoom(Entity.Directions.LEFT, actualRoom.getLeftRoomIndex());
+                changeRoom(DirectionsEnum.Directions.LEFT, actualRoom.getLeftRoomIndex());
             }
             if (playerX > gp.getConfig().getScreenWidth() && actualRoom.getRightRoomIndex() != -1) {
-                changeRoom(Entity.Directions.RIGHT, actualRoom.getRightRoomIndex());
+                changeRoom(DirectionsEnum.Directions.RIGHT, actualRoom.getRightRoomIndex());
             }
             if (playerY < 0 && actualRoom.getUpRoomIndex() != -1) {
-                changeRoom(Entity.Directions.UP, actualRoom.getUpRoomIndex());
+                changeRoom(DirectionsEnum.Directions.UP, actualRoom.getUpRoomIndex());
             }
             if (playerY > gp.getConfig().getScreenHeight() && actualRoom.getDownRoomIndex() != -1) {
-                changeRoom(Entity.Directions.DOWN, actualRoom.getDownRoomIndex());
+                changeRoom(DirectionsEnum.Directions.DOWN, actualRoom.getDownRoomIndex());
             }
         }
         if(gp.enemySoldiers.isEmpty()&&gp.towers.isEmpty()){

@@ -55,6 +55,9 @@ public class Sound {
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             err.IOExceptionErrorHandler(String.valueOf(soundURL[index]),7);
             throw new RuntimeException(e);
+        } catch (Exception e1){
+            err.IOExceptionErrorHandler("Sound " + index,7);
+            throw new RuntimeException(e1);
         }
 
     }

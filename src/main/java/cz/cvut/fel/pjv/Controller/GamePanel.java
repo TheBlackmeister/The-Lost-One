@@ -47,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Tower> towersToRemove;
     public ArrayList<EnemyProjectile> enemyProjectileToRemove;
     public ArrayList<EnemyProjectile> enemyProjectile; // public used for manipulation from projectile class
+    public ArrayList<Rocket> rockets;
+    public ArrayList<Rocket> rocketsToRemove;
     public ArrayList<EnemySoldier> enemySoldiers;
     public ArrayList<EnemySoldier> enemySoldiersToRemove;
     public ArrayList<Fountain> fountains;
@@ -85,6 +87,8 @@ public class GamePanel extends JPanel implements Runnable{
         enemySoldiersToRemove = new ArrayList<>();
         fountains = new ArrayList<>();
         fountainsToRemove = new ArrayList<>();
+        rockets = new ArrayList<>();
+        rocketsToRemove = new ArrayList<>();
 
         mapsetup = new MapSetup(this,mapFilePath);
         player = new Player(mapsetup.getPlayerStartingCoords().getFirst(),mapsetup.getPlayerStartingCoords().getSecond(), keyList, this);
@@ -326,6 +330,19 @@ public class GamePanel extends JPanel implements Runnable{
                 fountains.removeAll(fountainsToRemove);
                 fountainsToRemove.clear();
             }
+
+            /*
+             * updating rockets
+             */
+
+            if(!rockets.isEmpty()){
+                for (Rocket rocketTmp : rockets) {
+                    rocketTmp.update();
+                }
+                rockets.removeAll(rocketsToRemove);
+                rocketsToRemove.clear();
+
+            }
         }
         if(menuOpen){
             gameMenu.update();
@@ -401,6 +418,19 @@ public class GamePanel extends JPanel implements Runnable{
             }
             fountains.removeAll(fountainsToRemove);
             fountainsToRemove.clear();
+
+        }
+
+        /*
+         * drawing rockets
+         */
+
+        if(!rockets.isEmpty()){
+            for (Rocket rocketTmp : rockets) {
+                rocketTmp.draw(g);
+            }
+            rockets.removeAll(rocketsToRemove);
+            rocketsToRemove.clear();
 
         }
 
