@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.Model.Utils;
 
+import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
 import javax.imageio.ImageIO;
@@ -11,8 +12,10 @@ public class Inventory {
     ErrorWindow err;
     BufferedImage inventoryGUIImage;
     private int[] inv;
+    GamePanel gp;
 
-    public Inventory(){
+    public Inventory(GamePanel gp){
+        this.gp = gp;
         err = new ErrorWindow();
         try {
             inventoryGUIImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/inv/inventory_GUIWIcons.png")));
@@ -20,7 +23,7 @@ public class Inventory {
             err.IOExceptionErrorHandler("Inventory Image", 5);
             throw new RuntimeException(e);
         }
-        inv = new int[]{1, 1, 1}; // player has a pistol by default
+        inv = new int[]{gp.getMapsetup().getFirstInvIndex(), gp.getMapsetup().getSecondInvIndex(), gp.getMapsetup().getThirdInvIndex()}; // player has a pistol by default
     }
 
     public int[] getInv() {

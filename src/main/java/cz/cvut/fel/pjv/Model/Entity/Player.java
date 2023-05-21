@@ -41,7 +41,7 @@ public class Player extends Entity{
         this.gp = gp;
         this.healthBar = new HealthBar(gp.getMapsetup().getPlayerStartingHP());
         collEntCheck = new CollisionEntityChecker(gp);
-        this.inv = new Inventory();
+        this.inv = new Inventory(gp);
          random = new Random();
         //setting the sounds
         gunShot = new Sound();

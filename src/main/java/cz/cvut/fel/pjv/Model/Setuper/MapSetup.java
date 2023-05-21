@@ -30,6 +30,7 @@ public class MapSetup {
     private int numberOfMaps;
     private Tuple playerStartingCoords;
     private int playerStartingRoom, playerStartingHP;
+    private int firstInvIndex, secondInvIndex, thirdInvIndex;
     public MapSetup(GamePanel gp, String mapFilePath){
         mapFile = new File(mapFilePath);
         err = new ErrorWindow();
@@ -64,7 +65,11 @@ public class MapSetup {
             playerStartingCoords = new Tuple(coordPlayerX,coordPlayerY);
             playerStartingRoom = Integer.parseInt(bReader.readLine()); // what is the first room's index
             playerStartingHP = Integer.parseInt(bReader.readLine()); // how many hp
-            if (playerStartingHP > 100) playerStartingHP = 100;
+            if (playerStartingHP > 100) playerStartingHP = 100; // player cannot start with more than 100 hp
+            firstInvIndex = Integer.parseInt(bReader.readLine()); // starting inventory
+            secondInvIndex = Integer.parseInt(bReader.readLine()); // starting inventory
+            thirdInvIndex = Integer.parseInt(bReader.readLine()); // starting inventory
+
             for (int mapIndex = 0; mapIndex < numberOfMaps; mapIndex++) {
                 upRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room above?
                 rightRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
@@ -143,6 +148,18 @@ public class MapSetup {
             err.IOExceptionErrorHandler("Player Image", 5);
             throw new RuntimeException(e);
         }
+    }
+
+    public int getFirstInvIndex() {
+        return firstInvIndex;
+    }
+
+    public int getSecondInvIndex() {
+        return secondInvIndex;
+    }
+
+    public int getThirdInvIndex() {
+        return thirdInvIndex;
     }
 
     public ArrayList<Room> getRooms() {

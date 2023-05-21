@@ -169,9 +169,12 @@ public class GamePanel extends JPanel implements Runnable{
         savedString.append("(").append(player.getActualX()).append(",").append(player.getActualY()).append(")\n");
         savedString.append(roomMover.getRooms().indexOf(roomMover.getActualRoom())).append("\n");
         savedString.append(player.getHealthBar().getHealth()).append("\n");
+        savedString.append(mapsetup.getFirstInvIndex()).append("\n");
+        savedString.append(mapsetup.getSecondInvIndex()).append("\n");
+        savedString.append(mapsetup.getThirdInvIndex()).append("\n");
+
         for (int roomIndex = 0; roomIndex < roomMover.getRooms().size(); roomIndex++) {
             if(roomIndex == roomMover.getRooms().indexOf(roomMover.getActualRoom())){
-
                 savedString.append(roomMover.getActualRoom().getUpRoomIndex()).append("\n");
                 savedString.append(roomMover.getActualRoom().getRightRoomIndex()).append("\n");
                 savedString.append(roomMover.getActualRoom().getDownRoomIndex()).append("\n");

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * ProjectileSetup is used to setup the projectile images and implement the necessary methods.
+ * ProjectileSetup is used to set up the projectile images and implement the necessary methods.
  */
 public class ProjectileSetup {
 

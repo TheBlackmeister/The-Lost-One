@@ -27,8 +27,4 @@ public class EnemySetup {
     public BufferedImage getEnemyImage() {
         return enemyImage;
     }
-
-    public BufferedImage getEnemyImageBullet() {
-        return enemyImageBullet;
-    }
 }
