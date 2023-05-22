@@ -34,8 +34,9 @@ public class Inventory {
     public boolean addIntoInventory(int index){
         if(inv[index] >= 1) return false;
         else {
+            if(inv[0] == 0 && inv[1]  == 0 && inv[2] == 0) gp.getPlayer().setSelectedInventoryIndex(index);
             inv[index] = 1;
-           return true;
+            return true;
         }
     }
 

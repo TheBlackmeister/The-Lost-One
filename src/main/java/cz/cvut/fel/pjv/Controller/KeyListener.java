@@ -3,8 +3,8 @@ package cz.cvut.fel.pjv.Controller;
 import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
-    protected boolean nPressed,enterPressed, upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed, mPressed;
-    protected boolean nReleased,enterReleased, upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased, mReleased;
+    protected boolean oPressed,nPressed,enterPressed, upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed, mPressed;
+    protected boolean oReleased,nReleased,enterReleased, upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased, mReleased;
 
     public boolean isEnterPressed() {
         return enterPressed;
@@ -20,6 +20,14 @@ public class KeyListener implements java.awt.event.KeyListener {
 
     public boolean isnReleased() {
         return nReleased;
+    }
+
+    public boolean isoPressed() {
+        return oPressed;
+    }
+
+    public boolean isoReleased() {
+        return oReleased;
     }
 
     public boolean ismPressed() {
@@ -86,6 +94,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        if(code == KeyEvent.VK_O){
+            this.oPressed = true;
+        }
         if(code == KeyEvent.VK_N){
             this.nPressed = true;
         }
@@ -118,6 +129,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
+        if(code == KeyEvent.VK_O){
+            this.oPressed = false;
+        }
         if(code == KeyEvent.VK_ESCAPE){
             this.escPressed = false;
         }

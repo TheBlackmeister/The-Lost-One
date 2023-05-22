@@ -80,7 +80,7 @@ public class RoomMover {
         gp.towers.clear();
         gp.enemySoldiers.clear();
         gp.fountains.clear();
-
+        gp.objGunsToRemove.addAll(gp.objGuns);
         // update the mapView
         gp.mapView.setRoom(actualRoom);
         for (Tuple enemy: actualRoom.getEnemies()) {
@@ -113,6 +113,7 @@ public class RoomMover {
         }
         if(gp.enemySoldiers.isEmpty()&&gp.towers.isEmpty()){
             actualRoom.setClosed(false);
+            gp.getGameConsole().changeLabel("You unlocked the room!");
         }
     }
     public boolean isClosedPlayerOutOfRoomRight() {

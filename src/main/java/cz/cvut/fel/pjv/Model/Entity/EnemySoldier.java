@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
 import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
+import cz.cvut.fel.pjv.Controller.CollisionTileChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Model.Logic.Megamind;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
@@ -19,6 +20,7 @@ import static java.lang.Math.sin;
 public class EnemySoldier extends Entity{
     Sound shoot = new Sound();
     Random random;
+    CollisionTileChecker collTileCheck;
     CollisionEntityChecker collEntCheck;
     ErrorWindow err;
     GamePanel gp;
@@ -42,6 +44,7 @@ public class EnemySoldier extends Entity{
         gp.enSetup.setUpEnemy();
 
         this.healthBar = new HealthBar(10);
+        collTileCheck = new CollisionTileChecker(gp);
         collEntCheck = new CollisionEntityChecker(gp);
         hbEnUI = new HealthBarEnemyUI(gp,this,healthBar);
     }
@@ -61,6 +64,7 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 1){
             healthBar.decreaseHealth();
             if(healthBar.getHealth()<0){
+                if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(random.nextInt(4) + 16);
                 sound.play();
@@ -71,6 +75,7 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 2){
             healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
+                if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(random.nextInt(4) + 16);
                 sound.play();
@@ -87,6 +92,13 @@ public class EnemySoldier extends Entity{
         tmpY += sin(directionValue) * speed;
         actualX = (int) tmpX;
         actualY = (int) tmpY;
+
+        if(collTileCheck.checkTileCollisionEnemy(this)){
+            tmpX -= cos(directionValue) * speed;
+            tmpY -= sin(directionValue) * speed;
+            actualX = (int) tmpX;
+            actualY = (int) tmpY;
+        }
     }
 
     public void draw(Graphics g){

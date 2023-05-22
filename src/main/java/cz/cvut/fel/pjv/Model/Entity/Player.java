@@ -84,6 +84,10 @@ public class Player extends Entity{
         if (switchTimer < timePressed - 250_000_000){ // 0.25 secs
             walkingSound.setFile(12);
             walkingSound.play();
+            if(inv.getInv()[0] == 0 && inv.getInv()[1]  == 0 && inv.getInv()[2] == 0){
+                switchTimer = timePressed;
+                return;
+            }
             selectedInventoryIndex++;
             if(selectedInventoryIndex > 2) selectedInventoryIndex = 0;
             while(inv.getInv()[selectedInventoryIndex]==0){
@@ -99,20 +103,36 @@ public class Player extends Entity{
         if(collEntCheck.checkEntityCollisionPlayer(this)){
             healthBar.decreaseHealth();
         }
+        if(keyList.isoPressed()){
+            if(inv.dropTheGun(selectedInventoryIndex)) gp.objGuns.add(new ObjGun(actualX,actualY,selectedInventoryIndex,gp));
+        }
         if(keyList.isnPressed()) {
             canBeSwitchedThenSwitch(System.nanoTime());
         }
         if(keyList.ismPressed()) {
-            if (selectedInventoryIndex == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
-                playGunSound(3);
-                new Projectile(actualX, actualY, direction, gp);
-
+            if(inv.getInv()[0]==0&&inv.getInv()[1]==0&&inv.getInv()[2]==0) {
+                gp.getGameConsole().changeLabel("You don't have any weapons equipped. Cannot shoot!");
+            } else if (selectedInventoryIndex == 1 && gp.prSetup.canBeShotMG(System.nanoTime())) { // player has MG
+                if(inv.getInv()[1]==0){
+                    gp.getGameConsole().changeLabel("You dropped this gun. Press N to change equipped slot!");
+                } else {
+                    playGunSound(3);
+                    new Projectile(actualX, actualY, direction, gp);
+                }
             } else if (selectedInventoryIndex == 2 && gp.prSetup.canBeShotRL(System.nanoTime())) { // player has an RPG
-                new Rocket(actualX, actualY, gp, direction);
-                playGunSound(10);
+                if(inv.getInv()[2]==0){
+                    gp.getGameConsole().changeLabel("You dropped this gun. Press N to change equipped slot!");
+                } else {
+                    new Rocket(actualX, actualY, gp, direction);
+                    playGunSound(10);
+                }
             } else if (selectedInventoryIndex == 0 && gp.prSetup.canBeShot(System.nanoTime())) { // player has pistol
-                playGunSound(2);
-                new Projectile(actualX, actualY, direction, gp);
+                if(inv.getInv()[0]==0){
+                    gp.getGameConsole().changeLabel("You dropped this gun. Press N to change equipped slot!");
+                } else {
+                    playGunSound(2);
+                    new Projectile(actualX, actualY, direction, gp);
+                }
             }
         }
 
@@ -129,7 +149,7 @@ public class Player extends Entity{
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomDown()){
                 actualY -= speed;
-                System.out.println("closed!");
+                gp.getGameConsole().changeLabel("Door is closed. Kill all enemies!");
             }
         }
 
@@ -146,7 +166,7 @@ public class Player extends Entity{
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomUp()){
                 actualY += speed;
-                System.out.println("closed!");
+                gp.getGameConsole().changeLabel("Door is closed. Kill all enemies!");
             }
         }
 
@@ -163,7 +183,7 @@ public class Player extends Entity{
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomRight()){
                 actualX -= speed;
-                System.out.println("closed!");
+                gp.getGameConsole().changeLabel("Door is closed. Kill all enemies!");
             }
         }
 
@@ -180,7 +200,7 @@ public class Player extends Entity{
             }
             if(gp.getRoomMover().isClosedPlayerOutOfRoomLeft()){
                 actualX += speed;
-                System.out.println("closed!");
+                gp.getGameConsole().changeLabel("Door is closed. Kill all enemies!");
             }
         }
         if(keyList.isDownPressed() && keyList.isLeftPressed()){
@@ -218,5 +238,9 @@ public class Player extends Entity{
 
     public int getSelectedInventoryIndex() {
         return selectedInventoryIndex;
+    }
+
+    public void setSelectedInventoryIndex(int selectedInventoryIndex) {
+        this.selectedInventoryIndex = selectedInventoryIndex;
     }
 }

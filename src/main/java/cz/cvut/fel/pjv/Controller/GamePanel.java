@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * GamePanel is one of the main classes of the project. It updates the game status.
  */
 public class GamePanel extends JPanel implements Runnable{
+    GameConsole gameConsole;
     ErrorWindow err;
     boolean isPaused = false;
     boolean menuOpen = false;
@@ -36,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable{
     public ProjectileSetup prSetup; // loading textures for bullets
     public ArrayList<Projectile> toRemove;
     public ArrayList<Projectile> projectile; // public used for manipulation from projectile class
-
+    public ArrayList<ObjGun> objGuns; // used for gun drops from towers and enemies
+    public ArrayList<ObjGun> objGunsToRemove;
 
     /**
      * tower arraylists to keep all the entities
@@ -62,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
         * config is used to initialize and hold all the configuration variables.
         */
         err = new ErrorWindow();
+        gameConsole = new GameConsole(this);
         this.gw = gw;
         this.launcher = launcher;
         config = new ConfigFileSetup();
@@ -89,7 +92,8 @@ public class GamePanel extends JPanel implements Runnable{
         fountainsToRemove = new ArrayList<>();
         rockets = new ArrayList<>();
         rocketsToRemove = new ArrayList<>();
-
+        objGuns = new ArrayList<>();
+        objGunsToRemove = new ArrayList<>();
         mapsetup = new MapSetup(this,mapFilePath);
         player = new Player(mapsetup.getPlayerStartingCoords().getFirst(),mapsetup.getPlayerStartingCoords().getSecond(), keyList, this);
         roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
@@ -148,6 +152,7 @@ public class GamePanel extends JPanel implements Runnable{
 
             if (timer >= 1_000_000_000) {
                 System.out.println("FPS: " + drawCount);
+                gameConsole.changeLabelFPS("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
             } // FPS COUNTER
@@ -344,7 +349,18 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 rockets.removeAll(rocketsToRemove);
                 rocketsToRemove.clear();
+            }
 
+            /*
+             * drawing gun drops
+             */
+
+            if(!objGuns.isEmpty()){
+                for (ObjGun gun : objGuns) {
+                    gun.update();
+                }
+                objGuns.removeAll(objGunsToRemove);
+                objGunsToRemove.clear();
             }
         }
         if(menuOpen){
@@ -437,8 +453,23 @@ public class GamePanel extends JPanel implements Runnable{
 
         }
 
-        guiView.draw(g);
+        /*
+         * drawing gun drops
+         */
 
+        if(!objGuns.isEmpty()){
+            for (ObjGun gun : objGuns) {
+                gun.draw(g);
+            }
+            objGuns.removeAll(objGunsToRemove);
+            objGunsToRemove.clear();
+
+        }
+
+
+
+        guiView.draw(g);
+        gameConsole.draw(g);
         if(menuOpen){
             gameMenu.draw(g);
         }
@@ -491,5 +522,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public Launcher getLauncher() {
         return launcher;
+    }
+
+    public GameConsole getGameConsole() {
+        return gameConsole;
     }
 }

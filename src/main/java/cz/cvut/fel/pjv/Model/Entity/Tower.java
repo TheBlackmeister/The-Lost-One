@@ -9,11 +9,13 @@ import cz.cvut.fel.pjv.View.ErrorWindow;
 import cz.cvut.fel.pjv.View.HealthBarTowerUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * This class represents enemy towers throughout the map.
  */
 public class Tower extends Entity{
+    Random random;
     Sound shoot;
     CollisionEntityChecker collEntCheck;
     ErrorWindow err;
@@ -22,6 +24,7 @@ public class Tower extends Entity{
     long timeOfLastShot;
     HealthBarTowerUI hbTwUI;
     public Tower(int actualX, int actualY, GamePanel gp){
+        random = new Random();
         //to make a sound
         shoot = new Sound();
         //coords
@@ -65,6 +68,7 @@ public class Tower extends Entity{
         if(collEntCheck.checkEntityCollisionTower(this) == 1){
             healthBar.decreaseHealth();
             if(healthBar.getHealth()<0){
+                if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(15);
                 sound.play();
@@ -75,6 +79,7 @@ public class Tower extends Entity{
         if(collEntCheck.checkEntityCollisionTower(this) == 2){
             healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
+                if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(15);
                 sound.play();
