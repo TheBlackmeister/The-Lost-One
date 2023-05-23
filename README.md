@@ -22,17 +22,33 @@ Autorem je [Martin Černý](https://www.linkedin.com/in/martin--cerny/), ČVUT F
 
 ## 1. Přehled projektu
 Projekt je RPG hra nazvaná *The Lost One*. Je to RPG Room únikovka.
-Cílem hry je postupně se jako ztracený průzkumník dostat k fontáně, ve které se skrývá tajný východ z katakomb.
-Na cestě jsou ale na hráče připraveny vlny protivníků, které se hráči snaží jakkoliv zabránit dostat se k fontáně.
+Cílem hry je postupně se jako ztracený průzkumník dostat k fontáně, ve 
+které se skrývá tajný východ z katakomb.
+Na cestě jsou ale na hráče připraveny vlny protivníků, 
+které se hráči snaží jakkoliv zabránit dostat se k fontáně.
+
+![GameWindow](src/main/resources/docs/imagesForREADME/GameWindow.png)
+
+Na projektu jsem celkově strávil 96 hodin čistého vývoje. 
+V commitech si můžete prohlédnout díky dddonu od vývojáře Jana Poláka na sledování času prohlédnout, kolik času mi jaký commit zabral.
+
+![commits](src/main/resources/docs/imagesForREADME/commits.png)
 
 ## 2. Ovládání, jak hru spustit
 Projekt má dvě hlavní okna, *Launcher* a *GameWindow*.
 
+![Launcher](src/main/resources/docs/imagesForREADME/Launcher.png)
+
 ### 2.1 Spuštění hry
-V okně *Launcher* máte dvě možnosti, buď Zapnout menší, defaultní hru, nebo si můžete vybrat svoji vlastní, nebo uloženou mapu. Doporučuji otevřít si mapu *BiggerTestMap.txt*, která se nachází v adresáři /resources/map/.
+V okně *Launcher* máte dvě možnosti, buď Zapnout menší, defaultní hru, nebo si můžete vybrat svoji vlastní, nebo uloženou mapu. 
+Doporučuji otevřít si mapu *BiggerTestMap.txt*, která se nachází v 
+adresáři /resources/map/.
 Poté se vám otevře GameWindow se samotnou hrou.
 ### 2.2 Ovládání, klávesy
-Na začátku se jako hráč spawnete většinou v úvodní roomce. Zpravidla máte na začátku lehkou zbraň - pistoli.
+Na začátku se jako hráč spawnete většinou v úvodní roomce. Zpravidla máte na 
+začátku lehkou zbraň - pistoli.
+
+![Starting inventory](src/main/resources/docs/imagesForREADME/starting_inv.png)
 
 Pohybujete se klávesami *šipkami*.
 
@@ -49,34 +65,57 @@ Zbraň zahodíte pomocí klávesy *O*.
 ### 2.3 Logika hry
 Roomky jsou zamčené, dokud neporazíte všechny vojáky a věže. Poté se odemknou všechny dveře a můžete postoupit dál. Z poražených věží a z vojáků mohou spadnout nějaké lepší zbraně. Ty můžete sebrat. POZOR! Můžete je sebrat pouze dokud neodejdete do jiné roomky.
 
+![Closed](src/main/resources/docs/imagesForREADME/GameConsole.png)
+
+![PickUp](src/main/resources/docs/imagesForREADME/PickUp.png)
+
 Modré, vygenerované čtverečky jsou voda, většinou podzemní jezírka. Lze přes ně střílet, ale nelze přes ně chodit.
 
 Hra končí, pokud se Vaše zdraví dostane pod nulu (to jste prohráli), nebo se dostanete k fontáně (to jste vyhráli).
 
+![EndWin](src/main/resources/docs/imagesForREADME/LevelCompleted.png)
+
+![EndLose](src/main/resources/docs/imagesForREADME/YouDied.png)
+
 ### 2.4 Uložení hry
 Po stisknutí klávesy *escape* máme možnost hru uložit. Napište jméno + *.txt* a uložte.
+
+![saving](src/main/resources/docs/imagesForREADME/savingFile.png)
+
+![saved](src/main/resources/docs/imagesForREADME/savedFile.png)
 
 ### 2.5 Otevření uložené hry
 V launcheru máte možnost otevřít si jakoukoli uloženou hru, dokonce svojí. Stačí ji najít v adresáři.
 
+
+
 ### 2.6 Jak číst soubor uložené hry
 Při ruční úpravě souboru s mapou se řiďte takto:
+
+![howtoreadTXT](src/main/resources/docs/imagesForREADME/PopisCteniSouboruUkladani.png)
 
 ## 3 GUI
 GUI se skládá z několika částí. Jedna z nich je inventář, ve kterém je vidět, jaké zbraně vlastníme. Také tam vidíme zdraví, kadenci zbraně a rychlost pohybu.
 
+![inventory](src/main/resources/docs/imagesForREADME/Inventory.png)
+
 Zdraví také můžete sledovat v baru v levém horním rohu.
+
+![HealthBar](src/main/resources/docs/imagesForREADME/HealthBar.png)
 
 V pravém horním rohu se zobrazuje FPS counter.
 
+
+
 V pravém spodním rohu se zobrazují důležité hráčovy interakce s hrou.
 
-
+![Closed](src/main/resources/docs/imagesForREADME/GameConsole.png)
 
 ## 4 Technická implementace
 
 ### 4.1 JavaDoc
 JavaDoc se nachází v repozitáři v adresáři /resources/docs/javadoc/.
+
 
 ### 4.2 Struktura aplikace
 Zde jsou stručně popsané třídy a balíčky projektu. Další informace lze najít v JavaDocu, popř. podrobnějších v komentářích v kódu.
@@ -118,7 +157,11 @@ Třída reprezentující nepřátelské projektily.
 
 Class `EnemySoldier`
 
+![EnemySoldier](src/main/resources/docs/imagesForREADME/enemysoldier.png)
+
 Třída reprezentující nepřátelské vojáky.
+
+
 
 Class `Entity`
 
@@ -207,6 +250,8 @@ Class `GameConsole`
 GameConsole vypisuje na obrazovku FPS a informativní hlášky spojené s hrou.
 
 Class `GameMenu`
+
+![GameMenu](src/main/resources/docs/imagesForREADME/GameMenu.png)
 
 GameMenu je třída implementující herní menu, dostupné klávesou ESC. Běží na jiném vlákně, dokážeme z ní ukládat, resetovat hru a zavřít hru. 
 
