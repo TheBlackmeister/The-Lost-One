@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
 
+/**
+ * game window is the window in which is the game played.
+ */
 public class GameWindow {
     private static final Logger logger = Logger.getLogger(GameWindow.class.getName());
     Launcher launcher;

@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Represents new thread, that creates the Game menu. it can be shown by pressing 'esc'.
+ * Via this menu user can save, quit and reset game.
+ */
 public class GameMenu implements Runnable {
     private static final Logger logger = Logger.getLogger(GameMenu.class.getName());
     ErrorWindow err;

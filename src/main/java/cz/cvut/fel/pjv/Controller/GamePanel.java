@@ -17,27 +17,27 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
- * GamePanel is one of the main classes of the project. It updates the game status.
+ * GamePanel is one of the main classes of the project. It updates the game status, draws classes that are being updated.
  */
 public class GamePanel extends JPanel implements Runnable{
     private static final Logger logger = Logger.getLogger(GamePanel.class.getName());
-    GameConsole gameConsole;
-    ErrorWindow err;
-    boolean isPaused = false;
-    boolean menuOpen = false;
-    Launcher launcher;
-    JFrame gw;
-    Thread gameThread; // main game thread
-    Player player;
-    ConfigFileSetup config;
-    MapSetup mapsetup;
-    MapView mapView;
-    GUIView guiView;
-    RoomMover roomMover;
-    CollisionTileChecker collCheck;
-    HealthBarPlayerUI hbUI;
+    private final GameConsole gameConsole;
+    private final ErrorWindow err;
+    private boolean isPaused = false;
+    private boolean menuOpen = false;
+    private final Launcher launcher;
+    private final JFrame gw;
+    private Thread gameThread; // main game thread
+    private final Player player;
+    private final ConfigFileSetup config;
+    private final MapSetup mapsetup;
+    private final MapView mapView;
+    private final GUIView guiView;
+    private final RoomMover roomMover;
+    private CollisionTileChecker collCheck;
+    private final HealthBarPlayerUI hbUI; // player healthBar
     public ProjectileSetup prSetup; // loading textures for bullets
-    public ArrayList<Projectile> toRemove;
+    public ArrayList<Projectile> toRemove; // projectiles that are being removed
     public ArrayList<Projectile> projectile; // public used for manipulation from projectile class
     public ArrayList<ObjGun> objGuns; // used for gun drops from towers and enemies
     public ArrayList<ObjGun> objGunsToRemove;
@@ -47,28 +47,35 @@ public class GamePanel extends JPanel implements Runnable{
      */
     public TowerSetup twSetup; // loading textures for bullets
     public EnemySetup enSetup; // loading textures for enemies
-    public ArrayList<Tower> towers;
-    public ArrayList<Tower> towersToRemove;
+    public ArrayList<Tower> towers; // towers
+    public ArrayList<Tower> towersToRemove; // towers that are being removed
     public ArrayList<EnemyProjectile> enemyProjectileToRemove;
     public ArrayList<EnemyProjectile> enemyProjectile; // public used for manipulation from projectile class
-    public ArrayList<Rocket> rockets;
-    public ArrayList<Rocket> rocketsToRemove;
+    public ArrayList<Rocket> rockets; // player rockets
+    public ArrayList<Rocket> rocketsToRemove; // rockets to remove
     public ArrayList<EnemySoldier> enemySoldiers;
     public ArrayList<EnemySoldier> enemySoldiersToRemove;
     public ArrayList<Fountain> fountains;
     public ArrayList<Fountain> fountainsToRemove;
     KeyListener keyList;
-    int FPS = 90;
+    int FPS = 90; // default fps
     GameMenu gameMenu;
 
+    /**
+     * GamePanel constructor.
+     * @param gw gameFrame
+     * @param launcher launcher
+     * @param mapFilePath filepath that is used to select the level.
+     */
     public GamePanel(JFrame gw, Launcher launcher, String mapFilePath) {
-        /*
-        * config is used to initialize and hold all the configuration variables.
-        */
+
         err = new ErrorWindow();
         gameConsole = new GameConsole();
         this.gw = gw;
         this.launcher = launcher;
+        /*
+         * config is used to initialize and hold all the configuration variables.
+         */
         config = new ConfigFileSetup();
         config.getTheConfig();
 
@@ -82,6 +89,8 @@ public class GamePanel extends JPanel implements Runnable{
         twSetup = new TowerSetup(); // tower texture setup
         enSetup = new EnemySetup(); // enemySoldier texture setup
         this.addKeyListener(keyList);
+
+        // Initializing the arraylists that store entities.
         projectile = new ArrayList<>();
         toRemove = new ArrayList<>();
         enemyProjectile = new ArrayList<>();
@@ -96,10 +105,15 @@ public class GamePanel extends JPanel implements Runnable{
         rocketsToRemove = new ArrayList<>();
         objGuns = new ArrayList<>();
         objGunsToRemove = new ArrayList<>();
+
+        // initializing the level map, player, GUI.
         mapsetup = new MapSetup(mapFilePath);
-        player = new Player(mapsetup.getPlayerStartingCoords().getFirst(),mapsetup.getPlayerStartingCoords().getSecond(), keyList, this);
+        player = new Player(mapsetup.getPlayerStartingCoords().first(),mapsetup.getPlayerStartingCoords().second(), keyList, this);
         guiView = new GUIView(player.getInv(),this);
+
+        // setup inventory counters
         guiView.setMyHealth(String.valueOf(mapsetup.getPlayerStartingHP()));
+
         double attackSpeed = 0;
         if(player.getSelectedInventoryIndex() == 0){
             attackSpeed = 1.25;
@@ -112,7 +126,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
         guiView.setMySpeed(String.valueOf(player.getSpeed()));
         guiView.setMyAttackSpeed(String.valueOf(attackSpeed));
-        roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
+
+        roomMover = new RoomMover(mapsetup.getRooms(),this); // I need gp to get playerXY
 
         mapView = new MapView(mapsetup.getRooms().get(mapsetup.getPlayerStartingRoom()),this); // zero is the first and default starting room.
 
@@ -120,6 +135,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         hbUI = new HealthBarPlayerUI(this,player.getHealthBar());
         gameMenu = new GameMenu(this,keyList);
+
+        // starting game thread
         startGameThread();
 
     } // constructor
@@ -129,9 +146,6 @@ public class GamePanel extends JPanel implements Runnable{
         logger.info("Started game thread");
         gameThread.start(); // starting loop
     } // starting main game thread
-    public void setupGame(){
-
-    }
 
     @Override
     public void run() {
@@ -146,9 +160,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         long timer = 0; // fps counter
         int drawCount = 0; // fps counter
-
-    //setups the game
-        setupGame();
 
 
         while (gameThread != null) {
@@ -166,7 +177,7 @@ public class GamePanel extends JPanel implements Runnable{
                 delta--;
                 drawCount++; //fps counter
             }
-
+            // one second
             if (timer >= 1_000_000_000) {
                 System.out.println("FPS: " + drawCount);
                 gameConsole.changeLabelFPS("FPS: " + drawCount);
@@ -184,23 +195,37 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
+
+    /**
+     * SaveGame method is used to save the game when user selects this option from the game menu.
+     */
     public void saveGame() {
         logger.info("Started saving the game");
+        // started string
         String filePath;
         StringBuilder savedString = new StringBuilder();
         logger.info("Made new StringBuilder");
+        // width and height
         savedString.append(getConfig().getScreenHeight() / 16).append("\n");
         savedString.append(getConfig().getScreenWidth() / 16).append("\n");
+        // number of rooms
         savedString.append(roomMover.getRooms().size()).append("\n");
+        // player X Y
         savedString.append("(").append(player.getActualX()).append(",").append(player.getActualY()).append(")\n");
+        // room that is active
         savedString.append(roomMover.getRooms().indexOf(roomMover.getActualRoom())).append("\n");
+        // health saving
         savedString.append(player.getHealthBar().getHealth()).append("\n");
+        // inventory saving
         savedString.append(mapsetup.getFirstInvIndex()).append("\n");
         savedString.append(mapsetup.getSecondInvIndex()).append("\n");
         savedString.append(mapsetup.getThirdInvIndex()).append("\n");
         logger.info("Saved player");
+
+        // saving rooms
         for (int roomIndex = 0; roomIndex < roomMover.getRooms().size(); roomIndex++) {
             logger.info("Started saving rooms");
+            // if index == active room - store differently
             if(roomIndex == roomMover.getRooms().indexOf(roomMover.getActualRoom())){
                 savedString.append(roomMover.getActualRoom().getUpRoomIndex()).append("\n");
                 savedString.append(roomMover.getActualRoom().getRightRoomIndex()).append("\n");
@@ -220,7 +245,7 @@ public class GamePanel extends JPanel implements Runnable{
                 for (Fountain fountain : fountains) {
                     savedString.append("(").append(fountain.getActualX()).append(",").append(fountain.getActualY()).append(")\n");
                 }
-
+            // if not, save normally
             } else{
                 logger.info("Saving room " + roomIndex);
                 Room room = roomMover.getRooms().get(roomIndex);
@@ -233,17 +258,19 @@ public class GamePanel extends JPanel implements Runnable{
                 savedString.append(room.getTowers().size()).append("\n");
                 savedString.append(room.getFountains().size()).append("\n");
                 logger.info("Saving entities from room " + roomIndex);
+                // saving entities as tuples
                 for (Tuple enemy : room.getEnemies()) {
-                    savedString.append("(").append(enemy.getFirst()).append(",").append(enemy.getSecond()).append(")\n");
+                    savedString.append("(").append(enemy.first()).append(",").append(enemy.second()).append(")\n");
                 }
                 for (Tuple tower : room.getTowers()) {
-                    savedString.append("(").append(tower.getFirst()).append(",").append(tower.getSecond()).append(")\n");
+                    savedString.append("(").append(tower.first()).append(",").append(tower.second()).append(")\n");
                 }
                 for (Tuple fountain : room.getFountains()) {
-                    savedString.append("(").append(fountain.getFirst()).append(",").append(fountain.getSecond()).append(")\n");
+                    savedString.append("(").append(fountain.first()).append(",").append(fountain.second()).append(")\n");
                 }
             }
             logger.info("Saving the map of the room " + roomIndex);
+            // initialize the new map save
             int[][] map = roomMover.getRooms().get(roomIndex).getMap();
             for (int row = 0; row < getConfig().getScreenHeight() / 16; row++) {
                 if (row != 0) {
@@ -255,7 +282,8 @@ public class GamePanel extends JPanel implements Runnable{
             }
             savedString.append("\n");
         }
-            logger.info("opening file chooser");
+            logger.info("opening file chooser, user choosing file ");
+            // user is choosing the file.
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/savegame"));
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt", "text"); //adds txt filter
@@ -289,7 +317,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
-
+    /**
+     * This function is called to stop the game and close the game window.
+     */
     public void exitGame(){
         logger.info("Exiting game");
         launcher.getLauncher().setVisible(true);
@@ -561,5 +591,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GUIView getGuiView() {
         return guiView;
+    }
+
+    public MapView getMapView() {
+        return mapView;
     }
 }

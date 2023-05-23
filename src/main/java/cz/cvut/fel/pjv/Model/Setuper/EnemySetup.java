@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * setups the enemy textures so they load only once.
+ */
 public class EnemySetup {
     private static final Logger logger = Logger.getLogger(EnemySetup.class.getName());
     ErrorWindow err;

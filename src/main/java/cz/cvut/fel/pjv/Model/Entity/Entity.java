@@ -3,6 +3,9 @@ package cz.cvut.fel.pjv.Model.Entity;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 import cz.cvut.fel.pjv.Model.Utils.Inventory;
 
+/**
+ * Parent class of every entity.
+ */
 public class Entity {
     protected int actualX;
     protected int actualY;

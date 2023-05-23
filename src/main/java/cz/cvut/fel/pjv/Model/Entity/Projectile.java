@@ -10,6 +10,14 @@ public class Projectile extends Entity {
     GamePanel gp;
     ErrorWindow err;
     DirectionsEnum.Directions direction;
+
+    /**
+     * Projectile shot by player.
+     * @param actualX coords
+     * @param actualY coords
+     * @param direction direction E
+     * @param gp
+     */
     public Projectile(int actualX, int actualY, DirectionsEnum.Directions direction, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;

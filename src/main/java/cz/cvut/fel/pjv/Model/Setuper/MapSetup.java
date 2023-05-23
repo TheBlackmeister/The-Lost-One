@@ -17,20 +17,18 @@ import java.util.logging.Logger;
  */
 public class MapSetup {
     private static final Logger logger = Logger.getLogger(MapSetup.class.getName());
-    private ArrayList<Room> rooms;
-    private ErrorWindow err;
-    private File mapFile;
-    private BufferedReader bReader;
+    private final ArrayList<Room> rooms;
+    private final ErrorWindow err;
+    private final File mapFile;
     private BufferedImage tile0, tile1;
-    private int upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex, numberOfEnemies, numberOfTowers, numberOfFountains;
-    private boolean closed;
-    private int[][] map;
-    private int rows;
-    private int cols;
-    private int numberOfMaps;
     private Tuple playerStartingCoords;
     private int playerStartingRoom, playerStartingHP;
     private int firstInvIndex, secondInvIndex, thirdInvIndex;
+
+    /**
+     * constructor
+     * @param mapFilePath selects the level file to be opened
+     */
     public MapSetup(String mapFilePath){
         mapFile = new File(mapFilePath);
         err = new ErrorWindow();
@@ -38,10 +36,15 @@ public class MapSetup {
         mapInit();
         tileInit();
     }
+
+    /**
+     * loading the map
+     */
     public void mapInit(){
         /*
         loading the map and init the scanner
          */
+        BufferedReader bReader;
         try {
             bReader = new BufferedReader(new FileReader(mapFile));
         } catch (FileNotFoundException e) {
@@ -52,9 +55,9 @@ public class MapSetup {
         catching the config info from map file
          */
         try {
-            rows = Integer.parseInt(bReader.readLine()); // *16 == image height
-            cols = Integer.parseInt(bReader.readLine()); // *16 == image width
-            numberOfMaps = Integer.parseInt(bReader.readLine());
+            int rows = Integer.parseInt(bReader.readLine()); // *16 == image height
+            int cols = Integer.parseInt(bReader.readLine()); // *16 == image width
+            int numberOfMaps = Integer.parseInt(bReader.readLine());
 
             String coordsTMP = bReader.readLine();
             coordsTMP = coordsTMP.substring(1,coordsTMP.length()-1);
@@ -70,14 +73,14 @@ public class MapSetup {
             thirdInvIndex = Integer.parseInt(bReader.readLine()); // starting inventory
 
             for (int mapIndex = 0; mapIndex < numberOfMaps; mapIndex++) {
-                upRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room above?
-                rightRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
-                downRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room under?
-                leftRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
-                closed = Boolean.parseBoolean(bReader.readLine()); // is it closed?
-                numberOfEnemies = Integer.parseInt(bReader.readLine()); // how many enemies are in the room?
-                numberOfTowers = Integer.parseInt(bReader.readLine()); // how many towers are in the room?
-                numberOfFountains  = Integer.parseInt(bReader.readLine()); // how many fountains are in the room?
+                int upRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room above?
+                int rightRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
+                int downRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room under?
+                int leftRoomIndex = Integer.parseInt(bReader.readLine()); // does the Room have room next to it?
+                boolean closed = Boolean.parseBoolean(bReader.readLine()); // is it closed?
+                int numberOfEnemies = Integer.parseInt(bReader.readLine()); // how many enemies are in the room?
+                int numberOfTowers = Integer.parseInt(bReader.readLine()); // how many towers are in the room?
+                int numberOfFountains = Integer.parseInt(bReader.readLine()); // how many fountains are in the room?
 
                 ArrayList<Tuple> listOfEnemies = new ArrayList<>();
                 ArrayList<Tuple> listOfTowers = new ArrayList<>();
@@ -109,7 +112,7 @@ public class MapSetup {
                 }
 
 
-                map = new int[rows][cols];
+                int[][] map = new int[rows][cols];
                 String lineTmp;
                 String[] nums;
                 try {
@@ -132,7 +135,7 @@ public class MapSetup {
                     throw new RuntimeException(new Exception("Incorrectly written or corrupted map!"));
                 }
 
-                Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers), new ArrayList<>(listOfFountains),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed);
+                Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers), new ArrayList<>(listOfFountains), map, upRoomIndex, rightRoomIndex, downRoomIndex, leftRoomIndex, closed);
                 rooms.add(newRoom);
                 listOfEnemies.clear();
                 listOfTowers.clear();
@@ -150,6 +153,10 @@ public class MapSetup {
 
         }
     }
+
+    /**
+     * This loads the tiles.
+     */
     public void tileInit(){
         try {
             tile0 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/0_passable.png")));
@@ -160,7 +167,6 @@ public class MapSetup {
             throw new RuntimeException(e);
         }
     }
-
     public int getFirstInvIndex() {
         return firstInvIndex;
     }

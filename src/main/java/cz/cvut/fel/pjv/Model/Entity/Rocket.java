@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Rocket fired from rocket launcher by the player.
+ * The rocket is programmed so that it explodes on contact with enemy soldier or tower or after a time delay.
+ * the rocket then deals damage in the explosion area for 0.1 secs.
+ */
 public class Rocket extends Entity{
     private static final Logger logger = Logger.getLogger(Rocket.class.getName());
     Sound explosion;
@@ -21,6 +26,7 @@ public class Rocket extends Entity{
     long afterExplosion;
     BufferedImage rocket,rocketBlast;
     boolean deleted;
+
     public Rocket(int X, int Y, GamePanel gp, DirectionsEnum.Directions direction) {
         this.err = new ErrorWindow();
         // 1 second until explosion
@@ -56,6 +62,10 @@ public class Rocket extends Entity{
         return deleted;
     }
 
+    /**
+     * It plays explosion sound, then sets the afterExplosion time - 0.1 sec
+     * that is the time for which the rocket deals damage in the explosion area.
+     */
     void kaboom(){
         explosion.setFile(11);
         explosion.play();
@@ -107,6 +117,7 @@ public class Rocket extends Entity{
                 actualX += speed;
             }
         }
+        //rocket exploded and dealt damage for 0.1 sec after explosion.
         if(afterExplosion != 0 && afterExplosion < System.nanoTime() && !deleted) {
             gp.rocketsToRemove.add(this);
             deleted = true;

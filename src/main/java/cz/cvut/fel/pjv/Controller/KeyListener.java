@@ -2,6 +2,9 @@ package cz.cvut.fel.pjv.Controller;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * implementation of a KeyListener
+ */
 public class KeyListener implements java.awt.event.KeyListener {
     protected boolean oPressed,nPressed,enterPressed, upPressed, downPressed, leftPressed, rightPressed, iPressed, escPressed, mPressed;
     protected boolean oReleased,nReleased,enterReleased, upReleased, downReleased, leftReleased, rightReleased, iReleased, escReleased, mReleased;

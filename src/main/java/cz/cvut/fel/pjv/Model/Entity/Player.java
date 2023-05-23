@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
-import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
+import cz.cvut.fel.pjv.Controller.*;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyListener;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;

@@ -1,5 +1,8 @@
 package cz.cvut.fel.pjv.Model.Utils;
 
+/**
+ * represents healthBar of the player.
+ */
 public class HealthBar {
     int health;
     int maxHealth;

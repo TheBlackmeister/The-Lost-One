@@ -18,7 +18,7 @@ import static javax.sound.sampled.AudioSystem.getClip;
  * class Sound adds sounds to the game
  * class Sound has several methods
  * I was inspired when creating this class by channel 'RYISnow'. The tutorial showed me how to work with sounds in java.
- * https://youtu.be/nUHh_J2Acy8
+ * <a href="https://youtu.be/nUHh_J2Acy8">...</a>
  */
 public class Sound {
     private static final Logger logger = Logger.getLogger(Sound.class.getName());

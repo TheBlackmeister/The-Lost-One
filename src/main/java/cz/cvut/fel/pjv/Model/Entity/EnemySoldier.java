@@ -1,8 +1,6 @@
 package cz.cvut.fel.pjv.Model.Entity;
 
-import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
-import cz.cvut.fel.pjv.Controller.CollisionTileChecker;
-import cz.cvut.fel.pjv.Controller.GamePanel;
+import cz.cvut.fel.pjv.Controller.*;
 import cz.cvut.fel.pjv.Model.Logic.Megamind;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 import cz.cvut.fel.pjv.Model.Utils.Sound;
@@ -18,6 +16,9 @@ import java.util.logging.Logger;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
+/**
+ * EnemySoldier entity.
+ */
 public class EnemySoldier extends Entity{
     private static final Logger logger = Logger.getLogger(EnemySoldier.class.getName());
     Sound shoot = new Sound();

@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Holds the inventory of the player.
+ * Uses 3 indexes to hold 3 different guns.
+ * 0 == pistol
+ * 1 == machine gun
+ * 2 == rocket launcher
+ */
 public class Inventory {
     private static final Logger logger = Logger.getLogger(Inventory.class.getName());
     ErrorWindow err;

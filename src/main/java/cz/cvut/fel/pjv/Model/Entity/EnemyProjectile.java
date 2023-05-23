@@ -8,12 +8,22 @@ import java.awt.image.BufferedImage;
 
 import static java.lang.Math.*;
 
+/**
+ * double coords are used to calculate the position with the direction vector.
+ */
 public class EnemyProjectile extends Entity{
     GamePanel gp;
     ErrorWindow err;
     double polar;
     double tmpX,tmpY;
 
+    /**
+     * Enemy projectile shot by a tower or a soldier
+     * @param actualX coords
+     * @param actualY coords
+     * @param polar direction vector
+     * @param gp GamePanel
+     */
     public EnemyProjectile(int actualX, int actualY, double polar, GamePanel gp) {
         this.actualX = actualX;
         this.actualY = actualY;

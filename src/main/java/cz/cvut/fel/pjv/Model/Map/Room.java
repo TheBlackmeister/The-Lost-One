@@ -4,7 +4,7 @@ import cz.cvut.fel.pjv.Model.Utils.Tuple;
 import java.util.ArrayList;
 
 /**
- * this class represents each room.
+ * Represents each room.
  */
 public class Room {
     private ArrayList<Tuple> enemies;

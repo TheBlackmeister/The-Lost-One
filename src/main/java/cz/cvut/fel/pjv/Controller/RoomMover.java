@@ -7,38 +7,53 @@ import cz.cvut.fel.pjv.Model.Utils.Tuple;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * RoomMover is moving between rooms when called function changeRoom.
+ */
 public class RoomMover {
     private static final Logger logger = Logger.getLogger(RoomMover.class.getName());
-    private ArrayList<Room> rooms;
+    private final ArrayList<Room> rooms;
     private Room actualRoom;
-    private GamePanel gp;
+    private final GamePanel gp;
     private int roomIndex;
-    private int moveOffset;
+    private final int moveOffset;
     private int playerX;
     private int playerY;
-    private ArrayList<Tuple> listOfEnemies;
-    private ArrayList<Tuple> listOfTowers;
-    private ArrayList<Tuple> listOfFountains;
+    private final ArrayList<Tuple> listOfEnemies;
+    private final ArrayList<Tuple> listOfTowers;
+    private final ArrayList<Tuple> listOfFountains;
 
+    /**
+     * it gets starting room via mapSetup and instantiates entities from tuples.
+     * @param rooms arraylist of rooms of the current level
+     * @param gp parent gamePanel
+     */
     public RoomMover(ArrayList<Room> rooms, GamePanel gp){
         this.rooms = rooms;
         this.gp = gp;
-        roomIndex = gp.mapsetup.getPlayerStartingRoom();
+        roomIndex = gp.getMapsetup().getPlayerStartingRoom();
         actualRoom = rooms.get(roomIndex);
         moveOffset = 50;
         listOfEnemies = new ArrayList<>(actualRoom.getEnemies());
         listOfTowers = new ArrayList<>(actualRoom.getTowers());
         listOfFountains = new ArrayList<>(actualRoom.getFountains());
         for (Tuple enemy:listOfEnemies) {
-            gp.enemySoldiers.add(new EnemySoldier(enemy.getFirst(), enemy.getSecond(), gp));
+            gp.enemySoldiers.add(new EnemySoldier(enemy.first(), enemy.second(), gp));
         }
         for (Tuple tower:listOfTowers) {
-            gp.towers.add(new Tower(tower.getFirst(), tower.getSecond(), gp));
+            gp.towers.add(new Tower(tower.first(), tower.second(), gp));
         }
         for (Tuple fountain:listOfFountains) {
-            gp.fountains.add(new Fountain(fountain.getFirst(), fountain.getSecond(), gp));
+            gp.fountains.add(new Fountain(fountain.first(), fountain.second(), gp));
         }
     }
+
+    /**
+     * ChangeRoom moves player to a new position based on the direction.
+     * Then it loads new map and entities.
+     * @param direction the direction of movement, ex. next room is on the left, LEFT is passed here
+     * @param newRoomIndex the index of the new room we are moving to.
+     */
     public void changeRoom(DirectionsEnum.Directions direction, int newRoomIndex){ // direction of movement from origin
         // update player coords
         logger.info("Changing room");
@@ -57,6 +72,7 @@ public class RoomMover {
         logger.info("Clearing after old room and saving it into roomMover");
         listOfTowers.clear();
         listOfEnemies.clear();
+        listOfFountains.clear();
         ArrayList<Tuple> tmpEnemies = new ArrayList<>();
         for (EnemySoldier enemy:gp.enemySoldiers) {
             tmpEnemies.add(new Tuple(enemy.getActualX(), enemy.getActualY()));
@@ -85,15 +101,15 @@ public class RoomMover {
         gp.fountains.clear();
         gp.objGunsToRemove.addAll(gp.objGuns);
         // update the mapView
-        gp.mapView.setRoom(actualRoom);
+        gp.getMapView().setRoom(actualRoom);
         for (Tuple enemy: actualRoom.getEnemies()) {
-            gp.enemySoldiers.add(new EnemySoldier(enemy.getFirst(), enemy.getSecond(), gp));
+            gp.enemySoldiers.add(new EnemySoldier(enemy.first(), enemy.second(), gp));
         }
         for (Tuple tower: actualRoom.getTowers()) {
-            gp.towers.add(new Tower(tower.getFirst(), tower.getSecond(), gp));
+            gp.towers.add(new Tower(tower.first(), tower.second(), gp));
         }
         for (Tuple fountain: actualRoom.getFountains()) {
-            gp.fountains.add(new Fountain(fountain.getFirst(), fountain.getSecond(), gp));
+            gp.fountains.add(new Fountain(fountain.first(), fountain.second(), gp));
         }
     }
 

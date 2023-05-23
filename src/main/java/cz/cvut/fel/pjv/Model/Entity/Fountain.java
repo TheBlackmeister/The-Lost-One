@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Fountain entity.
+ */
 public class Fountain extends Entity{
     private static final Logger logger = Logger.getLogger(Fountain.class.getName());
     CollisionEntityChecker collEntCheck;

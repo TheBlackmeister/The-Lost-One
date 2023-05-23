@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * class that draws the tiles, map.
+ */
 public class MapView {
     private int[][] map;
     GamePanel gp; // to access the tile textures and load them only once.

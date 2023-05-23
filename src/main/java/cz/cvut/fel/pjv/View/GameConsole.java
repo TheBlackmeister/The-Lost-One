@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * GameConsole creates text fields that print messages in GUI in reaction to some specific actions user made.
+ */
 public class GameConsole {
     JTextField myFPS;
     JTextField myOutput;

@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Class that draws inventory and guns in it.
+ * It also draws UI counters - health, attack speed and speed.
+ */
 public class GUIView {
     private static final Logger logger = Logger.getLogger(GUIView.class.getName());
     ErrorWindow err;
