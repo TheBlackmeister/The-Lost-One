@@ -9,8 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Rocket extends Entity{
+    private static final Logger logger = Logger.getLogger(Rocket.class.getName());
     Sound explosion;
     GamePanel gp;
     ErrorWindow err;
@@ -32,9 +34,11 @@ public class Rocket extends Entity{
         this.actualX = X;
         this.actualY = Y;
         try {
+            logger.info("Loading rocket textures");
             rocket = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/tower_bullet/tower_bullet.png")));
             rocketBlast = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/projectile/rocket/rocketBlast.png")));
         } catch (IOException | NullPointerException e) {
+            logger.severe("Rocket images NOT FOUND! Error: " + e);
             err.IOExceptionErrorHandler("Tower Image", 5);
             throw new RuntimeException(e);
         }
@@ -56,6 +60,7 @@ public class Rocket extends Entity{
         explosion.setFile(11);
         explosion.play();
         afterExplosion = System.nanoTime() + 100_000_000; //0.1 sec
+        logger.info("rocket exploded");
 
     }
     public void update(){
@@ -107,9 +112,7 @@ public class Rocket extends Entity{
             deleted = true;
         }
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         if(afterExplosion == 0) g2d.drawImage(rocket,actualX,actualY,16,16,null);
         if(afterExplosion != 0 && afterExplosion > System.nanoTime()) g2d.drawImage(rocketBlast,actualX-50,actualY-50,100,100,null);
     }

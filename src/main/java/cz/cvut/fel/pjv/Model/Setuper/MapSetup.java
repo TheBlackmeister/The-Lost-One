@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.Model.Setuper;
 
-import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Model.Map.Room;
 import cz.cvut.fel.pjv.Model.Utils.Tuple;
 import cz.cvut.fel.pjv.View.ErrorWindow;
@@ -10,14 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Class to set up the maps and tiles.
  * basic inspiration from 'ForeignGuyMike',26. 1. 2013 (https://youtu.be/FUgn-PA7yzc), yet it is already very different.
  */
 public class MapSetup {
+    private static final Logger logger = Logger.getLogger(MapSetup.class.getName());
     private ArrayList<Room> rooms;
-    private GamePanel gp;
     private ErrorWindow err;
     private File mapFile;
     private BufferedReader bReader;
@@ -31,11 +31,10 @@ public class MapSetup {
     private Tuple playerStartingCoords;
     private int playerStartingRoom, playerStartingHP;
     private int firstInvIndex, secondInvIndex, thirdInvIndex;
-    public MapSetup(GamePanel gp, String mapFilePath){
+    public MapSetup(String mapFilePath){
         mapFile = new File(mapFilePath);
         err = new ErrorWindow();
-        rooms = new ArrayList<Room>();
-        this.gp = gp;
+        rooms = new ArrayList<>();
         mapInit();
         tileInit();
     }
@@ -80,9 +79,9 @@ public class MapSetup {
                 numberOfTowers = Integer.parseInt(bReader.readLine()); // how many towers are in the room?
                 numberOfFountains  = Integer.parseInt(bReader.readLine()); // how many fountains are in the room?
 
-                ArrayList<Tuple> listOfEnemies = new ArrayList<Tuple>();
-                ArrayList<Tuple> listOfTowers = new ArrayList<Tuple>();
-                ArrayList<Tuple> listOfFountains = new ArrayList<Tuple>();
+                ArrayList<Tuple> listOfEnemies = new ArrayList<>();
+                ArrayList<Tuple> listOfTowers = new ArrayList<>();
+                ArrayList<Tuple> listOfFountains = new ArrayList<>();
 
                 for (int enemy = 0; enemy < numberOfEnemies; enemy++) {
                     String enemyTmp = bReader.readLine();
@@ -113,13 +112,24 @@ public class MapSetup {
                 map = new int[rows][cols];
                 String lineTmp;
                 String[] nums;
-                for (int row = 0; row < rows; row++) {
-                    lineTmp = bReader.readLine();
-                    nums = lineTmp.split(" ");
-                    for (int col = 0; col < cols; col++) {
-                        map[row][col] = Integer.parseInt(nums[col]);
+                try {
+                    for (int row = 0; row < rows; row++) {
+                        lineTmp = bReader.readLine();
+                        nums = lineTmp.split(" ");
+                        for (int col = 0; col < cols; col++) {
+                            map[row][col] = Integer.parseInt(nums[col]);
+                            if (map[row][col] > 1) {
+                                logger.severe("Incorrectly written or corrupted map!");
+                                err.IOExceptionErrorHandler("Map", 8);
+                                throw new RuntimeException(new Exception("Incorrectly written or corrupted map!"));
+                            }
 
+                        }
                     }
+                }catch (Exception e){
+                    logger.severe("Incorrectly written or corrupted map!");
+                    err.IOExceptionErrorHandler("Map", 8);
+                    throw new RuntimeException(new Exception("Incorrectly written or corrupted map!"));
                 }
 
                 Room newRoom = new Room(new ArrayList<>(listOfEnemies),new ArrayList<>(listOfTowers), new ArrayList<>(listOfFountains),map,upRoomIndex,rightRoomIndex,downRoomIndex,leftRoomIndex,closed);
@@ -136,7 +146,7 @@ public class MapSetup {
             throw new RuntimeException(e);
         }
         catch (Exception e) {
-            err.BadConfigFileErrorHandler("Selected map",4);
+            err.BadConfigFileErrorHandler("Selected map",8);
 
         }
     }
@@ -145,7 +155,8 @@ public class MapSetup {
             tile0 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/0_passable.png")));
             tile1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/1_notpassable.png")));
         } catch (IOException | NullPointerException e) {
-            err.IOExceptionErrorHandler("Player Image", 5);
+            logger.severe("Tile Images not found!");
+            err.IOExceptionErrorHandler("Tile images", 5);
             throw new RuntimeException(e);
         }
     }

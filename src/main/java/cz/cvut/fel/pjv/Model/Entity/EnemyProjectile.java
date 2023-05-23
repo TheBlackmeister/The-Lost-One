@@ -20,7 +20,7 @@ public class EnemyProjectile extends Entity{
         this.polar = polar;
         tmpX = actualX; //tmp variable because it has to be double
         tmpY = actualY; //tmp variable because it has to be double
-        this.speed = 5; //todo test
+        this.speed = 5;
         this.gp = gp;
         err = new ErrorWindow();
         gp.twSetup.setUpTower();
@@ -33,9 +33,7 @@ public class EnemyProjectile extends Entity{
             gp.enemyProjectileToRemove.add(this); //this adds the projectile to the arraylist used to remove it from main arraylist
         }
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage PlayerImage = gp.twSetup.getTowerImageBullet();
 
         g2d.drawImage(PlayerImage,(int) tmpX,(int)tmpY,16,16,null);

@@ -13,11 +13,13 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class EnemySoldier extends Entity{
+    private static final Logger logger = Logger.getLogger(EnemySoldier.class.getName());
     Sound shoot = new Sound();
     Random random;
     CollisionTileChecker collTileCheck;
@@ -64,6 +66,7 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 1){
             healthBar.decreaseHealth();
             if(healthBar.getHealth()<0){
+                logger.info("Soldier has died");
                 if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(random.nextInt(4) + 16);
@@ -75,6 +78,7 @@ public class EnemySoldier extends Entity{
         if(collEntCheck.checkEntityCollisionEnemy(this) == 2){
             healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
+                logger.info("Soldier has died");
                 if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(random.nextInt(4) + 16);
@@ -101,9 +105,7 @@ public class EnemySoldier extends Entity{
         }
     }
 
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage origImage = gp.enSetup.getEnemyImage();
         int cx = origImage.getWidth() / 2;
         int cy = origImage.getHeight() / 2;
@@ -112,7 +114,7 @@ public class EnemySoldier extends Entity{
         rotationTransform.translate(tmpX, tmpY);
         rotationTransform.rotate(directionValue, cx, cy);
 
-        hbEnUI.draw(g);
+        hbEnUI.draw(g2d);
         g2d.drawImage(origImage,rotationTransform,null);
     }
 }

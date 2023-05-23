@@ -33,4 +33,8 @@ public class Entity {
     public void setActualY(int actualY) {
         this.actualY = actualY;
     }
+
+    public int getSpeed() {
+        return this.speed;
+    }
 }

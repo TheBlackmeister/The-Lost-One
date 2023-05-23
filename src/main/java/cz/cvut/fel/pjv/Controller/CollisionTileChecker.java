@@ -27,6 +27,7 @@ public class CollisionTileChecker {
                     tileY = row * 16;
                     Rectangle rectT = new Rectangle(tileX,tileY,tileWidth,tileHeight);
                     if(rectT.intersects(rectP)){
+
                         return true;
                     }
                 }
@@ -48,6 +49,7 @@ public class CollisionTileChecker {
                     tileY = row * 16;
                     Rectangle rectT = new Rectangle(tileX,tileY,tileWidth,tileHeight);
                     if(rectT.intersects(rectE)){
+
                         return true;
                     }
                 }

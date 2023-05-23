@@ -12,6 +12,7 @@ import javax.swing.*;
  * 5 == texture not found
  * 6 == saving the game problems
  * 7 == sound not found or corrupted
+ * 8 == map file corrupted or badly written
  */
 public class ErrorWindow {
 

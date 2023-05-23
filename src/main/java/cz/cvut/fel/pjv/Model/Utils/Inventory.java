@@ -7,8 +7,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Inventory {
+    private static final Logger logger = Logger.getLogger(Inventory.class.getName());
     ErrorWindow err;
     BufferedImage inventoryGUIImage;
     private int[] inv;
@@ -18,8 +20,10 @@ public class Inventory {
         this.gp = gp;
         err = new ErrorWindow();
         try {
+            logger.info("Loading inventory image");
             inventoryGUIImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/inv/inventory_GUIWIcons.png")));
         } catch (IOException | NullPointerException e) {
+            logger.severe("Inventory images not found!");
             err.IOExceptionErrorHandler("Inventory Image", 5);
             throw new RuntimeException(e);
         }
@@ -32,10 +36,15 @@ public class Inventory {
 
 
     public boolean addIntoInventory(int index){
-        if(inv[index] >= 1) return false;
+
+        if(inv[index] >= 1) {
+            logger.warning("Player already has the item!");
+            return false;
+        }
         else {
             if(inv[0] == 0 && inv[1]  == 0 && inv[2] == 0) gp.getPlayer().setSelectedInventoryIndex(index);
             inv[index] = 1;
+            logger.info("Item added to the inventory.");
             return true;
         }
     }

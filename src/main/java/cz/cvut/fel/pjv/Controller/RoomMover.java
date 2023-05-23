@@ -5,8 +5,10 @@ import cz.cvut.fel.pjv.Model.Map.Room;
 import cz.cvut.fel.pjv.Model.Utils.Tuple;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class RoomMover {
+    private static final Logger logger = Logger.getLogger(RoomMover.class.getName());
     private ArrayList<Room> rooms;
     private Room actualRoom;
     private GamePanel gp;
@@ -39,6 +41,7 @@ public class RoomMover {
     }
     public void changeRoom(DirectionsEnum.Directions direction, int newRoomIndex){ // direction of movement from origin
         // update player coords
+        logger.info("Changing room");
         if(direction == DirectionsEnum.Directions.LEFT){
             gp.getPlayer().setActualX(gp.getConfig().getScreenWidth()-moveOffset);
         }
@@ -51,7 +54,7 @@ public class RoomMover {
         if(direction == DirectionsEnum.Directions.DOWN){
             gp.getPlayer().setActualY(moveOffset);
         }
-
+        logger.info("Clearing after old room and saving it into roomMover");
         listOfTowers.clear();
         listOfEnemies.clear();
         ArrayList<Tuple> tmpEnemies = new ArrayList<>();
@@ -99,15 +102,19 @@ public class RoomMover {
         playerY = gp.getPlayer().getActualY();
         if(!actualRoom.isClosed()) {
             if (playerX < 0 && actualRoom.getLeftRoomIndex() != -1) {
+                logger.info("Changing room to the LEFT!");
                 changeRoom(DirectionsEnum.Directions.LEFT, actualRoom.getLeftRoomIndex());
             }
             if (playerX > gp.getConfig().getScreenWidth() && actualRoom.getRightRoomIndex() != -1) {
+                logger.info("Changing room to the RIGHT!");
                 changeRoom(DirectionsEnum.Directions.RIGHT, actualRoom.getRightRoomIndex());
             }
             if (playerY < 0 && actualRoom.getUpRoomIndex() != -1) {
+                logger.info("Changing room to the UP!");
                 changeRoom(DirectionsEnum.Directions.UP, actualRoom.getUpRoomIndex());
             }
             if (playerY > gp.getConfig().getScreenHeight() && actualRoom.getDownRoomIndex() != -1) {
+                logger.info("Changing room to the DOWN!");
                 changeRoom(DirectionsEnum.Directions.DOWN, actualRoom.getDownRoomIndex());
             }
         }

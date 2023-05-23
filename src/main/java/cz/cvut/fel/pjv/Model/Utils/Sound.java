@@ -8,6 +8,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import static javax.sound.sampled.AudioSystem.getAudioInputStream;
 import static javax.sound.sampled.AudioSystem.getClip;
@@ -20,6 +21,7 @@ import static javax.sound.sampled.AudioSystem.getClip;
  * https://youtu.be/nUHh_J2Acy8
  */
 public class Sound {
+    private static final Logger logger = Logger.getLogger(Sound.class.getName());
     ErrorWindow err;
     Clip clip;
     URL[] soundURL = new URL[25];
@@ -27,6 +29,7 @@ public class Sound {
     public Sound(){
         err = new ErrorWindow();
         try {
+            logger.info("Loading sounds");
             soundURL[0] = getClass().getResource("/sound/gun/pistolShot1.wav"); // pistol sound 1
             soundURL[1] = getClass().getResource("/sound/gun/pistolShot2.wav"); // pistol sound 2
             soundURL[2] = getClass().getResource("/sound/gun/pistolShot3.wav"); // pistol sound 3
@@ -50,7 +53,8 @@ public class Sound {
             soundURL[20] = getClass().getResource("/sound/entity/death5.wav"); // death
         }
         catch (Exception e1) {
-            err.IOExceptionErrorHandler("Initializing the sounds",7);
+            logger.severe("Sound files not found or have the wrong encoding.");
+            err.badOpenedSoundFile("Initializing the sounds",7);
             throw new RuntimeException(e1);
         }
     }

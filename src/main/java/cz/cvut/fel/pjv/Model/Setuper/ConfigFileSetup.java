@@ -1,20 +1,18 @@
 package cz.cvut.fel.pjv.Model.Setuper;
 
-import cz.cvut.fel.pjv.Model.Entity.Entity;
 import cz.cvut.fel.pjv.View.ErrorWindow;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * class used to read the configuration file and write the into variables.
  */
 public class ConfigFileSetup {
+    private static final Logger logger = Logger.getLogger(ConfigFileSetup.class.getName());
     ErrorWindow err;
     Scanner scanner;
 
@@ -29,6 +27,7 @@ public class ConfigFileSetup {
 
     public void getTheConfig(){
         try {
+            logger.info("Scanning config file");
             scanner = new Scanner(new FileInputStream("./src/main/resources/config/config.txt"), StandardCharsets.UTF_8);
             try{
                 mapName = scanner.nextLine();
@@ -36,6 +35,7 @@ public class ConfigFileSetup {
                 screenHeight = scanner.nextInt();
                 scanner.close();
             } catch (Exception e) {
+                logger.severe("Incorrectly written or corrupted config file!");
                 err.BadConfigFileErrorHandler("Config file", 3);
                 throw new RuntimeException(e);
             }

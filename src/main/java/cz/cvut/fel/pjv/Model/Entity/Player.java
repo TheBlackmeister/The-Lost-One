@@ -1,4 +1,5 @@
 package cz.cvut.fel.pjv.Model.Entity;
+
 import cz.cvut.fel.pjv.Controller.CollisionEntityChecker;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Controller.KeyListener;
@@ -13,11 +14,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * This is the Player class. it
  */
 public class Player extends Entity{
+    private static final Logger logger = Logger.getLogger(Player.class.getName());
     int selectedInventoryIndex = 0;
     CollisionEntityChecker collEntCheck;
     GamePanel gp;
@@ -49,6 +52,7 @@ public class Player extends Entity{
     }
     public void setUpPlayer() {
         try {
+            logger.info("Loading player images");
             playerImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/greensoldier_UP.png")));
             playerImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/greensoldier_DOWN.png")));
             playerImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/greensoldier_LEFT.png")));
@@ -61,6 +65,7 @@ public class Player extends Entity{
             // Other colors are colored by me.
             direction = DirectionsEnum.Directions.DOWN;
         } catch (IOException | NullPointerException e) {
+            logger.severe("Error loading player images!");
             err.IOExceptionErrorHandler("Player Image", 5);
             throw new RuntimeException(e);
         }
@@ -84,7 +89,7 @@ public class Player extends Entity{
         if (switchTimer < timePressed - 250_000_000){ // 0.25 secs
             walkingSound.setFile(12);
             walkingSound.play();
-            if(inv.getInv()[0] == 0 && inv.getInv()[1]  == 0 && inv.getInv()[2] == 0){
+            if(inv.getInv()[0] == 0 && inv.getInv()[1] == 0 && inv.getInv()[2] == 0){
                 switchTimer = timePressed;
                 return;
             }
@@ -96,15 +101,31 @@ public class Player extends Entity{
                 if(selectedInventoryIndex > 2) selectedInventoryIndex = 0;
             }
             switchTimer = timePressed;
+            double attackSpeed = 0;
+            if(selectedInventoryIndex == 0){
+                attackSpeed = 1.25;
+            }
+            else if(selectedInventoryIndex == 1){
+                attackSpeed = 6.66;
+            }
+            else if(selectedInventoryIndex == 2){
+                attackSpeed = 0.5;
+            }
+            gp.getGuiView().setMyAttackSpeed(String.valueOf(attackSpeed));
         }
     }
 
     public void update(){
         if(collEntCheck.checkEntityCollisionPlayer(this)){
             healthBar.decreaseHealth();
+            gp.getGuiView().setMyHealth(String.valueOf(healthBar.getHealth()));
         }
         if(keyList.isoPressed()){
-            if(inv.dropTheGun(selectedInventoryIndex)) gp.objGuns.add(new ObjGun(actualX,actualY,selectedInventoryIndex,gp));
+
+            if(inv.dropTheGun(selectedInventoryIndex)) {
+                gp.objGuns.add(new ObjGun(actualX,actualY,selectedInventoryIndex,gp));
+                logger.info("Gun dropped!");
+            }
         }
         if(keyList.isnPressed()) {
             canBeSwitchedThenSwitch(System.nanoTime());
@@ -216,9 +237,7 @@ public class Player extends Entity{
             direction = DirectionsEnum.Directions.UPRIGHT;
         }
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage PlayerImage = null;
 
         switch (direction){

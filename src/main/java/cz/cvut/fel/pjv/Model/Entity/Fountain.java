@@ -11,8 +11,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Fountain extends Entity{
+    private static final Logger logger = Logger.getLogger(Fountain.class.getName());
     CollisionEntityChecker collEntCheck;
     ErrorWindow err;
     BufferedImage fountainImage;
@@ -30,6 +32,7 @@ public class Fountain extends Entity{
         try {
             fountainImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/fountain/fountain.png")));
         } catch (IOException | NullPointerException e) {
+            logger.severe("Fountain Image NOT FOUND!");
             err.IOExceptionErrorHandler("Fountain Image", 5);
             throw new RuntimeException(e);
         }
@@ -43,13 +46,12 @@ public class Fountain extends Entity{
             sound.setFile(13);
             sound.play();
             JOptionPane.showMessageDialog(null,"Congratulations! You completed the level!");
+            logger.info("Game ended, player won.");
             gp.exitGame();
         }
     }
 
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         g2d.drawImage(fountainImage,actualX,actualY,null);
     }
 }

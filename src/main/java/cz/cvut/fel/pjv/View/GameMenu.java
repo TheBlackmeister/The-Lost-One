@@ -9,8 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class GameMenu implements Runnable {
+    private static final Logger logger = Logger.getLogger(GameMenu.class.getName());
     ErrorWindow err;
     GamePanel gp;
     KeyListener keyListener;
@@ -29,9 +31,11 @@ public class GameMenu implements Runnable {
         guiThread.start();
 
         try {
+            logger.info("Loading GameMenu images");
             backMenu = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/gui/backgroundMenu.png")));
             arrow = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/gui/arrow.png")));
         } catch (IOException | NullPointerException e) {
+            logger.severe("GameMenu images NOT FOUND!");
             err.IOExceptionErrorHandler("GameMenu", 5);
             throw new RuntimeException(e);
         }
@@ -103,6 +107,7 @@ public class GameMenu implements Runnable {
 
 
     public void resetGame(){
+        logger.warning("Resetting game");
         JButton starter = gp.getLauncher().starter;
         gp.exitGame();
         starter.doClick();
@@ -145,9 +150,7 @@ public class GameMenu implements Runnable {
     }
 
 
-    public void draw(Graphics g) {
-        Graphics2D g2d;
-        g2d = (Graphics2D) g;
+    public void draw(Graphics2D g2d) {
         g2d.setColor(Color.red);
         g2d.drawImage(backMenu, 0, 0, gp.getConfig().getScreenWidth(), gp.getConfig().getScreenHeight(), null);
 

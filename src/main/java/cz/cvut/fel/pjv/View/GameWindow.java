@@ -3,16 +3,16 @@ package cz.cvut.fel.pjv.View;
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.Model.Setuper.ConfigFileSetup;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.util.logging.Logger;
 
 public class GameWindow {
+    private static final Logger logger = Logger.getLogger(GameWindow.class.getName());
     Launcher launcher;
     JFrame gameWindow = new JFrame(); // nove okno - hlavni okno
     String mapFilePath;
-    GameWindow(Launcher launcher, String filePath) {
+    public GameWindow(Launcher launcher, String filePath) {
         this.launcher = launcher;
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to be able to close the window
         gameWindow.setResizable(false); // nemenna velikost
@@ -20,8 +20,10 @@ public class GameWindow {
         ConfigFileSetup config = new ConfigFileSetup();
         config.getTheConfig();
         if(filePath != null){
+            logger.info("Loading level from save");
             this.mapFilePath = filePath;
         } else {
+            logger.info("Loading default Demo level");
             this.mapFilePath = config.getMapName();
         }
         gameWindow.setPreferredSize(new Dimension(config.getScreenWidth(),config.getScreenHeight())); // size of the window
@@ -32,5 +34,10 @@ public class GameWindow {
         gameWindow.pack();
         gameWindow.setLocationRelativeTo(null); // window will be centered
         gameWindow.setVisible(true);
+        logger.info("GameWindow opened");
+    }
+
+    public String getMapFilePath() {
+        return mapFilePath;
     }
 }

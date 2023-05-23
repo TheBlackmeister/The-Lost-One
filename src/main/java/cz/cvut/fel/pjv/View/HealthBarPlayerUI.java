@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.View;
 
 import cz.cvut.fel.pjv.Controller.GamePanel;
-import cz.cvut.fel.pjv.Model.Entity.Entity;
 import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 
 import javax.imageio.ImageIO;
@@ -9,8 +8,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class HealthBarPlayerUI {
+    private static final Logger logger = Logger.getLogger(HealthBarPlayerUI.class.getName());
     GamePanel gp;
     HealthBar hb;
     ErrorWindow err;
@@ -26,9 +27,11 @@ public class HealthBarPlayerUI {
         currentHealth = hb.getHealth();
         percentage = currentHealth / maxHealth;
         try {
+            logger.info("Loading Healthbar images");
             healthBar = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/gui/healthBar.png")));
             heart = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/gui/heart.png")));
         } catch (IOException | NullPointerException e) {
+            logger.info("HealthBar images NOT FOUND!");
             err.IOExceptionErrorHandler("GUI Images", 5);
             throw new RuntimeException(e);
         }

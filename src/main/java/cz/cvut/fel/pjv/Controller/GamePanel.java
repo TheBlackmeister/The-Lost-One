@@ -14,11 +14,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * GamePanel is one of the main classes of the project. It updates the game status.
  */
 public class GamePanel extends JPanel implements Runnable{
+    private static final Logger logger = Logger.getLogger(GamePanel.class.getName());
     GameConsole gameConsole;
     ErrorWindow err;
     boolean isPaused = false;
@@ -64,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
         * config is used to initialize and hold all the configuration variables.
         */
         err = new ErrorWindow();
-        gameConsole = new GameConsole(this);
+        gameConsole = new GameConsole();
         this.gw = gw;
         this.launcher = launcher;
         config = new ConfigFileSetup();
@@ -94,10 +96,24 @@ public class GamePanel extends JPanel implements Runnable{
         rocketsToRemove = new ArrayList<>();
         objGuns = new ArrayList<>();
         objGunsToRemove = new ArrayList<>();
-        mapsetup = new MapSetup(this,mapFilePath);
+        mapsetup = new MapSetup(mapFilePath);
         player = new Player(mapsetup.getPlayerStartingCoords().getFirst(),mapsetup.getPlayerStartingCoords().getSecond(), keyList, this);
-        roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
         guiView = new GUIView(player.getInv(),this);
+        guiView.setMyHealth(String.valueOf(mapsetup.getPlayerStartingHP()));
+        double attackSpeed = 0;
+        if(player.getSelectedInventoryIndex() == 0){
+            attackSpeed = 1.25;
+        }
+        if(player.getSelectedInventoryIndex() == 1){
+            attackSpeed = 6.66;
+        }
+        if(player.getSelectedInventoryIndex() == 2){
+            attackSpeed = 0.5;
+        }
+        guiView.setMySpeed(String.valueOf(player.getSpeed()));
+        guiView.setMyAttackSpeed(String.valueOf(attackSpeed));
+        roomMover = new RoomMover(mapsetup.getRooms(),this); // i need gp to get playerXY
+
         mapView = new MapView(mapsetup.getRooms().get(mapsetup.getPlayerStartingRoom()),this); // zero is the first and default starting room.
 
         collCheck = new CollisionTileChecker(this);
@@ -110,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void startGameThread() {
         gameThread = new Thread(this);
+        logger.info("Started game thread");
         gameThread.start(); // starting loop
     } // starting main game thread
     public void setupGame(){
@@ -155,19 +172,23 @@ public class GamePanel extends JPanel implements Runnable{
                 gameConsole.changeLabelFPS("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
+                logger.finest("FPS:" + drawCount);
             } // FPS COUNTER
             /*
              * fps counter end
              */
             if(player.getHealthBar().getHealth()<0){
                 JOptionPane.showMessageDialog(null,"You died!");
+                logger.info("Player has died, his/her health is below zero.");
                 exitGame();
             }
         }
     }
     public void saveGame() {
+        logger.info("Started saving the game");
         String filePath;
         StringBuilder savedString = new StringBuilder();
+        logger.info("Made new StringBuilder");
         savedString.append(getConfig().getScreenHeight() / 16).append("\n");
         savedString.append(getConfig().getScreenWidth() / 16).append("\n");
         savedString.append(roomMover.getRooms().size()).append("\n");
@@ -177,8 +198,9 @@ public class GamePanel extends JPanel implements Runnable{
         savedString.append(mapsetup.getFirstInvIndex()).append("\n");
         savedString.append(mapsetup.getSecondInvIndex()).append("\n");
         savedString.append(mapsetup.getThirdInvIndex()).append("\n");
-
+        logger.info("Saved player");
         for (int roomIndex = 0; roomIndex < roomMover.getRooms().size(); roomIndex++) {
+            logger.info("Started saving rooms");
             if(roomIndex == roomMover.getRooms().indexOf(roomMover.getActualRoom())){
                 savedString.append(roomMover.getActualRoom().getUpRoomIndex()).append("\n");
                 savedString.append(roomMover.getActualRoom().getRightRoomIndex()).append("\n");
@@ -188,7 +210,7 @@ public class GamePanel extends JPanel implements Runnable{
                 savedString.append(enemySoldiers.size()).append("\n");
                 savedString.append(towers.size()).append("\n");
                 savedString.append(fountains.size()).append("\n");
-
+                logger.info("Started saving entities from active room");
                 for (EnemySoldier enemy : enemySoldiers) {
                     savedString.append("(").append(enemy.getActualX()).append(",").append(enemy.getActualY()).append(")\n");
                 }
@@ -200,6 +222,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
 
             } else{
+                logger.info("Saving room " + roomIndex);
                 Room room = roomMover.getRooms().get(roomIndex);
                 savedString.append(room.getUpRoomIndex()).append("\n");
                 savedString.append(room.getRightRoomIndex()).append("\n");
@@ -209,7 +232,7 @@ public class GamePanel extends JPanel implements Runnable{
                 savedString.append(room.getEnemies().size()).append("\n");
                 savedString.append(room.getTowers().size()).append("\n");
                 savedString.append(room.getFountains().size()).append("\n");
-
+                logger.info("Saving entities from room " + roomIndex);
                 for (Tuple enemy : room.getEnemies()) {
                     savedString.append("(").append(enemy.getFirst()).append(",").append(enemy.getSecond()).append(")\n");
                 }
@@ -220,6 +243,7 @@ public class GamePanel extends JPanel implements Runnable{
                     savedString.append("(").append(fountain.getFirst()).append(",").append(fountain.getSecond()).append(")\n");
                 }
             }
+            logger.info("Saving the map of the room " + roomIndex);
             int[][] map = roomMover.getRooms().get(roomIndex).getMap();
             for (int row = 0; row < getConfig().getScreenHeight() / 16; row++) {
                 if (row != 0) {
@@ -231,19 +255,21 @@ public class GamePanel extends JPanel implements Runnable{
             }
             savedString.append("\n");
         }
+            logger.info("opening file chooser");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/savegame"));
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt", "text"); //adds txt filter
             fileChooser.setFileFilter(filter);
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
+                logger.info("User selected the save directory and approved save");
                 // User chooses a file
                 try {
                     filePath = fileChooser.getSelectedFile().getAbsolutePath();
-
+                    logger.info("The path will be: " + filePath);
                     // Create a BufferedWriter to write the string to the file
                     BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-
+                    logger.info("Writing to the specified file");
                     // Write your string to the file
                     writer.write(String.valueOf(savedString));
 
@@ -251,11 +277,12 @@ public class GamePanel extends JPanel implements Runnable{
                     writer.close();
 
                     // Display a success message
-                    System.out.println("String saved to file: " + filePath);
+                    logger.info("String saved to file: " + filePath);
                     JOptionPane.showMessageDialog(null,"The game has been saved into \""+ filePath +"\".");
                 } catch (IOException e) {
                     // Handle any errors that may occur during file writing
                     err.IOExceptionErrorHandler("Saving the map",6);
+                    logger.severe("Error while saving the level: " + e);
                 }
             }
 
@@ -264,11 +291,14 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     public void exitGame(){
+        logger.info("Exiting game");
         launcher.getLauncher().setVisible(true);
         this.gw.remove(this);
         this.gw.setVisible(false);
         gameThread = null;
+        logger.warning("Game thread has been shut down.");
         gameMenu.setGuiThread(null);
+        logger.warning("GUI thread has been shut down.");
     }
 
     public void update() {
@@ -321,7 +351,7 @@ public class GamePanel extends JPanel implements Runnable{
 
             if (!enemySoldiers.isEmpty()) {
                 for (EnemySoldier enemySoldierTmp : enemySoldiers) {
-                    enemySoldierTmp.update();
+                        enemySoldierTmp.update();
                 }
                 enemySoldiers.removeAll(enemySoldiersToRemove);
                 enemySoldiersToRemove.clear();
@@ -372,10 +402,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        mapView.draw(g);
-        player.draw(g);
-        hbUI.draw(g);
+        Graphics2D g2d;
+        g2d = (Graphics2D)g;
+        mapView.draw(g2d);
+        player.draw(g2d);
+        hbUI.draw(g2d);
 
         /*
          * drawing player projectile
@@ -383,7 +414,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if (!projectile.isEmpty()) {
             for (Projectile projectileTmp : projectile) {
-                projectileTmp.draw(g);
+                projectileTmp.draw(g2d);
             }
             projectile.removeAll(toRemove);
             toRemove.clear();
@@ -396,7 +427,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if (!enemyProjectile.isEmpty()) {
             for (EnemyProjectile enemyProjectileTmp : enemyProjectile) {
-                enemyProjectileTmp.draw(g);
+                enemyProjectileTmp.draw(g2d);
             }
             enemyProjectile.removeAll(enemyProjectileToRemove);
             enemyProjectileToRemove.clear();
@@ -409,7 +440,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(!towers.isEmpty()){
             for (Tower towerTmp : towers) {
-                towerTmp.draw(g);
+                towerTmp.draw(g2d);
             }
             towers.removeAll(towersToRemove);
             towersToRemove.clear();
@@ -421,7 +452,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(!enemySoldiers.isEmpty()){
             for (EnemySoldier enemySoldierTmp : enemySoldiers) {
-                enemySoldierTmp.draw(g);
+                enemySoldierTmp.draw(g2d);
             }
             enemySoldiers.removeAll(enemySoldiersToRemove);
             enemySoldiersToRemove.clear();
@@ -433,7 +464,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(!fountains.isEmpty()){
             for (Fountain fountainTmp : fountains) {
-                fountainTmp.draw(g);
+                fountainTmp.draw(g2d);
             }
             fountains.removeAll(fountainsToRemove);
             fountainsToRemove.clear();
@@ -446,7 +477,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(!rockets.isEmpty()){
             for (Rocket rocketTmp : rockets) {
-                rocketTmp.draw(g);
+                rocketTmp.draw(g2d);
             }
             rockets.removeAll(rocketsToRemove);
             rocketsToRemove.clear();
@@ -459,7 +490,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(!objGuns.isEmpty()){
             for (ObjGun gun : objGuns) {
-                gun.draw(g);
+                gun.draw(g2d);
             }
             objGuns.removeAll(objGunsToRemove);
             objGunsToRemove.clear();
@@ -468,10 +499,10 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-        guiView.draw(g);
-        gameConsole.draw(g);
+        guiView.draw(g2d);
+        gameConsole.draw(g2d);
         if(menuOpen){
-            gameMenu.draw(g);
+            gameMenu.draw(g2d);
         }
 
     }
@@ -526,5 +557,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GameConsole getGameConsole() {
         return gameConsole;
+    }
+
+    public GUIView getGuiView() {
+        return guiView;
     }
 }

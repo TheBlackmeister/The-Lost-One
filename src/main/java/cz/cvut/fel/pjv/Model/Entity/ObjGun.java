@@ -8,8 +8,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class ObjGun extends Entity{
+    private static final Logger logger = Logger.getLogger(ObjGun.class.getName());
     GamePanel gp;
     int type;
     BufferedImage mg,rl,pistol;
@@ -22,10 +24,12 @@ public class ObjGun extends Entity{
         this.type = type;
 
         try {
+            logger.info("Loading Gun images");
             mg = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/obj/scar.png")));
             pistol = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/obj/pistol.png")));
             rl = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/obj/rpg45.png")));
         } catch (IOException | NullPointerException e) {
+            logger.info("Gun images not found!");
             err.IOExceptionErrorHandler("Gun Images", 5);
             throw new RuntimeException(e);
         }
@@ -38,9 +42,7 @@ public class ObjGun extends Entity{
             }
         }
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D) g;
+    public void draw(Graphics2D g2d){
         switch (type){
             case 0 -> g2d.drawImage(pistol,actualX,actualY,32,25, null);
             case 1 -> g2d.drawImage(mg,actualX,actualY,32,15, null);

@@ -10,29 +10,21 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MapView {
-    private ArrayList<EnemySoldier> enemies;
-    private ArrayList<Tower> towers;
     private int[][] map;
     GamePanel gp; // to access the tile textures and load them only once.
 
     public MapView(Room room, GamePanel gp) {
-//        this.enemies = room.getEnemies();
-//        this.towers = room.getTowers();
         this.map = room.getMap();
         this.gp = gp;
     }
     public void setRoom(Room room) {
-//        this.enemies = room.getEnemies();
-//        this.towers = room.getTowers();
         this.map = room.getMap();
     }
 
     public void update(){
 
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage tileImage = null;
 
         for (int row = 0; row < 45; row++) {

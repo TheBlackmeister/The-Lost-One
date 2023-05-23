@@ -6,8 +6,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class EnemySetup {
+    private static final Logger logger = Logger.getLogger(EnemySetup.class.getName());
     ErrorWindow err;
     BufferedImage enemyImage,enemyImageBullet;
 
@@ -16,9 +18,11 @@ public class EnemySetup {
     }
     public void setUpEnemy(){
         try {
+            logger.info("Loading enemy soldier images");
             enemyImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/player/redsoldier.png")));
             enemyImageBullet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/entity/tower_bullet/tower_bullet.png")));
         } catch (IOException | NullPointerException e) {
+            logger.severe("Enemy soldier image not found!");
             err.IOExceptionErrorHandler("Enemy Soldier Image", 5);
             throw new RuntimeException(e);
         }

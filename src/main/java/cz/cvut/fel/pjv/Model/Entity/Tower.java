@@ -10,11 +10,13 @@ import cz.cvut.fel.pjv.View.HealthBarTowerUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * This class represents enemy towers throughout the map.
  */
 public class Tower extends Entity{
+    private static final Logger logger = Logger.getLogger(Tower.class.getName());
     Random random;
     Sound shoot;
     CollisionEntityChecker collEntCheck;
@@ -68,6 +70,7 @@ public class Tower extends Entity{
         if(collEntCheck.checkEntityCollisionTower(this) == 1){
             healthBar.decreaseHealth();
             if(healthBar.getHealth()<0){
+                logger.info("A tower has been destroyed.");
                 if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(15);
@@ -79,6 +82,7 @@ public class Tower extends Entity{
         if(collEntCheck.checkEntityCollisionTower(this) == 2){
             healthBar.decreaseHealthBy(16);
             if(healthBar.getHealth()<0){
+                logger.info("A tower has been destroyed.");
                 if(random.nextBoolean()) gp.objGuns.add(new ObjGun(actualX, actualY, random.nextInt(3), gp));
                 Sound sound = new Sound();
                 sound.setFile(15);
@@ -98,13 +102,11 @@ public class Tower extends Entity{
 
     /**
      * draws towers from the main thread
-     * @param g graphics
+     * @param g2d graphics
      */
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage tmpImage = gp.twSetup.getTowerImage();
-        hbTwUI.draw(g);
+        hbTwUI.draw(g2d);
         g2d.drawImage(tmpImage,actualX,actualY,null);
     }
 }

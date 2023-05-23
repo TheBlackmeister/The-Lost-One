@@ -6,6 +6,7 @@ import cz.cvut.fel.pjv.Model.Utils.HealthBar;
 
 import java.awt.*;
 
+
 public class HealthBarEnemyUI {
     GamePanel gp;
     EnemySoldier enemy;

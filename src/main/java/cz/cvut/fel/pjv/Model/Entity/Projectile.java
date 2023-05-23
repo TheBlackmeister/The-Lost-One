@@ -39,9 +39,7 @@ public class Projectile extends Entity {
 
 
     }
-    public void draw(Graphics g){
-        Graphics2D g2d;
-        g2d = (Graphics2D)g;
+    public void draw(Graphics2D g2d){
         BufferedImage PlayerImage = null;
 
         switch (direction){
