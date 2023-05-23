@@ -1,3 +1,4 @@
+package Tests;
 
 import cz.cvut.fel.pjv.View.GameConsole;
 import org.junit.jupiter.api.Assertions;

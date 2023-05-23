@@ -1,3 +1,5 @@
+package Tests;
+
 import cz.cvut.fel.pjv.Controller.GamePanel;
 import cz.cvut.fel.pjv.View.GameWindow;
 import cz.cvut.fel.pjv.View.Launcher;

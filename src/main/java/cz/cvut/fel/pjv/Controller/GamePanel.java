@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 /**
  * GamePanel is one of the main classes of the project. It updates the game status, draws classes that are being updated.
+ * Only variables that are public are the ArrayLists. I found out that getters were slowing the runtime, so I chose the public scope for a better performance.
  */
 public class GamePanel extends JPanel implements Runnable{
     private static final Logger logger = Logger.getLogger(GamePanel.class.getName());

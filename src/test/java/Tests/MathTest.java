@@ -1,3 +1,5 @@
+package Tests;
+
 import cz.cvut.fel.pjv.Model.Logic.Megamind;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
