@@ -17,7 +17,8 @@ Autorem je [Martin Černý](https://www.linkedin.com/in/martin--cerny/), ČVUT F
     2. [Struktura aplikace](#42-struktura-aplikace)
     3. [Design projektu](#43-design-projektu)
     4. [Použité technologie](#44-použité-technologie)
-    5. [Zdroje](#45-zdroje)
+    5. [Page Object Model](#45-page-object-model)
+    6. [Zdroje](#46-zdroje) 
 
 
 ## 1. Přehled projektu
@@ -320,8 +321,12 @@ Pro vytváření nové vektorové grafiky používané v programu.
 #### FastStoneImageViewer
 #### PowerTools
 
+### 4.5 Page Object Model
 
-### 4.5 Zdroje
+![POM](src/main/resources/docs/diagram/ProjectObjectModel.png)
+
+
+### 4.6 Zdroje
 Použité obrázky jsou buď mé, nebo mají v podrobnostech URL, nebo jsou zdarma z veřejných webů.
 
 Použité Zvuky jsou zdarma z webu FreeSound.org. Zvuk umírání a padání věže je ze hry Age of Empires 2.
